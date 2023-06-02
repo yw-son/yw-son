@@ -187,7 +187,11 @@
 						$('#timer').hide();
 						$email.prop('readonly', false);
 						emconfirmchk = true;
-						alert('인증번호 유효시간이 만료하였습니다 재발급 받으시길 바랍니다.');
+						 Swal.fire({
+       				 		title: 'Warning!',
+        					html: '<b>인증번호가 만료되었습니다 다시 시도해주세요</b>',
+        				    icon: 'warning'
+      						});
 						$signupButton.prop('disabled', true);
 						$checkEmailNumber.prop('disabled', false);
 						$check.prop('disabled', true);
@@ -229,18 +233,19 @@ $modal2.on('click', function () {
 		<div class="mb-3">
 			<label for="username" class="form-label">사용자ID</label>
 			<input type="text" th:field="*{username}" class="username" placeholder="6-12 길이의 문자열 입력">
-			<div id="username-error"></div>
-		</div><br>
+		</div>
+		<div id="username-error"></div>
+		<br>
 		<div class="mb-3">
 			<label for="password1" class="form-label">비밀번호</label>
 			<input type="password" th:field="*{password1}" id="password1" class="password1" placeholder="영문자와 숫자,특수기호 포함한 6-12자리 사이">
-			<div id="password1-error"></div>
-		</div><br>
+		</div>
+		<div id="password1-error"></div><br>
 		<div class="mb-3">
 			<label for="password2" class="form-label">비밀번호 확인</label>
-			<input type="password" th:field="*{password2}" class="password2" placeholder="다시 비밀번호를 입력하세요">
-			<div id="password2-error"></div>
-		</div><br>
+			<input type="password" th:field="*{password2}" class="password2" placeholder="다시 비밀번호를 입력하세요">			
+		</div>
+		<div id="password2-error"></div><br>
 		<div class="mb-3">
 			<label for="email" class="form-label">이메일</label><br>
 			<input type="email" th:field="*{email}" class="email" placeholder="이메일을 입력해주세요">

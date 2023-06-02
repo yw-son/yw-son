@@ -41,7 +41,7 @@ public class Users {
 	private int admin_code; // 관리자 여부 1: 관리자임
 	
 	@Enumerated(EnumType.STRING)
-	private UserRole role;
+	private UserRole role = UserRole.USER;
 
 	private String sns;
 

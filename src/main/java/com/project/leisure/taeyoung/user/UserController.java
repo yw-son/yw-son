@@ -62,7 +62,7 @@ public class UserController {
 
 	@GetMapping("/login")
 	public String login() {
-		return "login_form";
+		return "kty/login_form";
 	}
 
 	/* 회원가입 유효성 검증 post */
