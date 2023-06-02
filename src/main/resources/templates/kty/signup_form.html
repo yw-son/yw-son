@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>저기어때</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<link rel="preconnect" href="https://fonts.gstatic.com" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cherry+Bomb+One&family=Rubik+Puddles&display=swap" rel="stylesheet">
+	<script>
+		$(function () {
+
+			// username 유효성 검증
+			var $username = $('#username');
+			var $usernameError = $('#username-error');
+
+			$username.on('input focusout', function () {
+				var username = $username.val();
+
+				if (username.trim() === '') {
+					$usernameError.text(' 아이디는 필수 값입니다.').show();
+				} else if (username.length < 6 || username.length > 12) {
+					$usernameError.text('아이디는 6-12자리여야 합니다.').show();
+				} else {
+					$usernameError.hide();
+
+					$.ajax({
+						type: 'POST',
+						url: '/user/check', // 중복 아이디 검증을 위한 엔드포인트
+						data: {"username": username},
+						dataType: 'json',
+						success: function (data) {
+							if (data == 1) {
+								$usernameError.text('이미 존재하는 아이디입니다.').show();
+							} else {
+								$usernameError.text('사용 가능한 아이디입니다.').show();
+							}
+						}
+					});
+				}
+			});
+			
+			
+			
+			// password 유효성 검증
+			var $password1 = $('#password1');
+			var $passwordError = $('#password1-error');
+
+			$password1.on('input focusout', function () {
+				var password = $password1.val();
+
+				var pattern = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*]).{6,12}$/;
+
+				if (password.trim() === '') {
+					$passwordError.text('패스워드는 필수 값입니다.').show();
+				} else if (!pattern.test(password)) {
+					$passwordError.text('패스워드 입력 규칙이 맞지 않습니다.').show();
+				} else {
+					$passwordError.hide();
+				}
+			});
+
+
+			// 인증번호 발송
+			var $checkEmailNumber = $('#checkEmailNumber');
+			var $email = $('#email');
+			var $email_error = $('#email-error');
+			var $inputCode = $('#inputCode');
+			var $inputCode_error = $('#inputCode_error');
+			var $check = $('#check');
+			var interval; // 전역 변수로 선언
+			var data; // 인증번호 데이터 전역 변수로 선언
+ 			var $modal = $('#modal');
+ 			var $modal2 = $('#modal2');
+			$checkEmailNumber.on('click', function () {
+				var email = $email.val()
+				emconfirmchk = false;
+				if (email.trim() !== '') {
+					$.ajax({
+						url: "/user/emailcode",
+						type: "POST",
+						data: {
+							"email": email
+						},
+						success: function (response) {
+							data = response; // 인증번호 데이터 저장
+							$modal.css('display', 'block');
+							$check.prop('disabled', false);
+							startStopwatch($('#timer'));
+							$checkEmailNumber.prop('disabled', true);
+							$email.prop('readonly', true);
+							$('#timer').show();
+						},
+						error: function () {
+							$modal2.css('display', 'block');
+							$email.prop('readonly', false);
+						}
+					});
+				} else{
+					$email_error.text('이메일을 입력하세요').show();
+				}
+				
+			
+			});
+
+				$email.on('input focusout', function(){
+					var email = $('#email').val();
+					if(email.trim() !==''){
+						$email_error.hide();
+					}
+				});
+
+
+			$check.on("click", function () {
+				if (emconfirmchk == false && data == $inputCode.val()) {
+					alert("인증번호 확인되었습니다.");
+					$('#timer').hide();
+					$checkEmailNumber.prop('disabled', true);
+					$email.prop('readonly', true);
+					$signupButton.prop('disabled', false);
+					$check.prop('disabled', true);
+					clearInterval(interval); // 전역 변수인 interval 사용
+				} else if (emconfirmchk == true && data == $inputCode.val()) {
+					alert("인증번호가 틀립니다 이메일 또는 인증번호를 다시 확인하세요");
+					$email.prop('readonly', false);
+					$checkEmailNumber.prop('disabled', false);
+					emconfirmchk = false;
+					$signupButton.prop('disabled', true);
+				} else if (emconfirmchk == false && data !== $inputCode.val()) {
+					alert("인증번호가 틀립니다 이메일 또는 인증번호를 다시 확인하세요");
+					$email.prop('readonly', false);
+					$checkEmailNumber.prop('disabled', false);
+					emconfirmchk = false;
+					$signupButton.prop('disabled', true);
+				} else if (emconfirmchk == true && data == $inputCode.val()) {
+					alert("인증번호가 틀립니다 이메일 또는 인증번호를 다시 확인하세요");
+					$email.prop('readonly', false);
+					$checkEmailNumber.prop('disabled', false);
+					emconfirmchk = false;
+					$signupButton.prop('disabled', true);
+				}
+			});
+
+
+			// 스톱워치
+			function startStopwatch(display) {
+				var stopwatch = 180; // 초기 스톱워치 값 (60초)
+				interval = setInterval(function () {
+					var minutes = Math.floor(stopwatch / 60);
+					var seconds = stopwatch % 60;
+
+					minutes = minutes < 10 ? "0" + minutes : minutes;
+					seconds = seconds < 10 ? "0" + seconds : seconds;
+
+					display.text(minutes + ":" + seconds);
+
+					if (stopwatch <= 0) {
+						clearInterval(interval); // 전역 변수인 interval 사용
+						$('#timer').hide();
+						$email.prop('readonly', false);
+						emconfirmchk = true;
+						alert('인증번호 유효시간이 만료하였습니다 재발급 받으시길 바랍니다.');
+						$signupButton.prop('disabled', true);
+						$checkEmailNumber.prop('disabled', false);
+						$check.prop('disabled', true);
+					}
+
+					stopwatch--;
+				}, 1000);
+			}
+
+			var $signupButton = $('button[type="submit"]');
+			$signupButton.prop('disabled', true);
+
+$modal.on('click', function () {
+    // 모달 창 영역을 클릭한 경우는 제외하고 숨기기
+      $modal.css('display', 'none');
+    });
+  
+$modal2.on('click', function () {
+    // 모달 창 영역을 클릭한 경우는 제외하고 숨기기
+      $modal2.css('display', 'none');
+    });
+  
+
+
+
+		});
+	
+
+	</script>
+</head>
+<div class="container_my-3">
+	<div class="my-3 border-bottom">
+		<div>
+			<h4>저기어때</h4>
+		</div>
+	</div>
+	<form th:action="@{/user/signup}" th:object="${userCreateForm}" method="post">
+		<div class="mb-3">
+			<label for="username" class="form-label">사용자ID</label>
+			<input type="text" th:field="*{username}" class="username" placeholder="6-12 길이의 문자열 입력">
+			<div id="username-error"></div>
+		</div><br>
+		<div class="mb-3">
+			<label for="password1" class="form-label">비밀번호</label>
+			<input type="password" th:field="*{password1}" id="password1" class="password1" placeholder="영문자와 숫자,특수기호 포함한 6-12자리 사이">
+			<div id="password1-error"></div>
+		</div><br>
+		<div class="mb-3">
+			<label for="password2" class="form-label">비밀번호 확인</label>
+			<input type="password" th:field="*{password2}" class="password2" placeholder="다시 비밀번호를 입력하세요">
+			<div id="password2-error"></div>
+		</div><br>
+		<div class="mb-3">
+			<label for="email" class="form-label">이메일</label><br>
+			<input type="email" th:field="*{email}" class="email" placeholder="이메일을 입력해주세요">
+			<input class="checkEmailNumber" name="checkEmailNumber" id="checkEmailNumber" type="button"
+				value="인증번호 발송">
+			<div id="email-error"></div>
+		</div><br>
+		<div class="mb-3">
+			<label for="code" class="form-label">인증번호</label><br>
+			<input type="text" class="form-control" name="inputCode" id="inputCode" maxlength="6"
+				placeholder="인증번호를 입력해주세요">
+			<input class="check" name="check" id="check" type="button" value="인증번호 확인">
+					
+		</div>
+	
+
+		<button type="submit" id="join_up" class="btn btn-primary">JOIN</button>
+	</form>
+	<span id="timer">03:00</span><br>
+</div>
+
+
+
+<!-- 모달창 -->
+<div id="modal" class="modal"  tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-content">
+                        <span class="modal-close">&times;</span>
+                        <h5 class="modal-title" id="exampleModalLabel">인증번호 발송</h5>
+                        <div class="modal-body">
+                            인증번호가 발송되었습니다 3분안에 인증을 진행해 주세요
+                          </div>
+                        
+                    </div>
+                    </div>
+                </div>  
+<div id="modal2" class="modal2"  tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-content">
+                        <span class="modal-close">&times;</span>
+                        <h5 class="modal-title" id="exampleModalLabel">인증번호 발송 실패</h5>
+                        <div class="modal-body">
+                            인증번호가 발송 실패하였습니다 다시 시도하여 주십시오
+                          </div>
+                        
+                    </div>
+                    </div>
+                </div>  
+
+<style>
+	#username-error {
+		font-size: 12px
+	}
+
+	#password1-error {
+		font-size: 12px
+	}
+
+	#password2-error {
+		font-size: 12px
+	}
+
+	#email-error {
+		font-size: 12px
+	}
+
+	#inputCode_error {
+		font-size: 1px;
+	}
+
+	#timer {
+		 position: absolute;
+		display: none;
+		color: red;
+		margin-left:450px;
+		margin-top: 380px;
+	
+	}
+	
+	/*================================*/
+	
+	   .container_my-3 {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            
+            height: 100vh;
+            /* 변경: 전체 뷰포트 높이로 설정 */
+        }
+		h4{
+            font-family: 'Rubik Puddles', cursive;
+
+            margin-left:30px;
+            margin-top: -70px;
+            font-size: 50px;
+		}
+		
+		.mb-3 {
+            border-bottom: 2px solid #adadad;
+            padding: 10px 10px;
+            flex: 1;
+        }
+        
+     	.username,
+        .password1,
+        .password2
+         {
+            width: 100%;
+            border: none;
+            outline: none;
+            color: #636e72;
+            font-size: 16px;
+            height: 25px;
+            background: none;
+        }
+
+
+		.email, #inputCode{
+			border: none;
+		}
+
+
+
+
+
+
+	.checkEmailNumber{
+		background-color: #77af9c;
+		color: rgb(244, 245, 244);
+		height: 40px;
+            /* 버튼 디자인 */
+            border: none;
+            display: inline-block;
+            border-radius: 15px;
+            font-weight: 600;
+            margin-left: 100px;
+	}
+	.checkEmailNumber:hover{
+
+		   cursor: pointer;
+	}
+
+	.check{
+		background-color: #77af9c;
+		color: rgb(244, 245, 244);
+		height: 40px;
+            /* 버튼 디자인 */
+            border: none;
+            display: inline-block;
+            border-radius: 15px;
+            font-weight: 600;
+             margin-left: 100px;
+	}
+	.check:hover{
+
+		   cursor: pointer;
+	}
+
+	#join_up{
+  background:#1AAB8A;
+  color:#fff;
+  border:none;
+  position:relative;
+  height:60px;
+  font-size:1.6em;
+  bottom: -20px;
+  width: 100%;
+  right: -5px;
+  padding:0 2em;
+  cursor:pointer;
+  transition:800ms ease all;
+  outline:none;
+}
+#join_up:hover{
+  background:hsl(166, 81%, 84%);
+  color:hsl(166, 74%, 39%);
+}
+#join_up:before,button:after{
+  content:'';
+  position:absolute;
+  top:0;
+  right:0;
+  height:2px;
+  width:0;
+  background: #1AAB8A;
+  transition:400ms ease all;
+}
+#join_up:after{
+  right:inherit;
+  top:inherit;
+  left:0;
+  bottom:0;
+}
+#join_up:hover:before,button:hover:after{
+  width:100%;
+  transition:800ms ease all;
+}
+
+
+
+
+
+/* 모달창 */
+.modal, .modal2 {
+            position: absolute;
+            display: none;
+         
+            z-index: 1;
+            left: 0;
+            top: 0;
+           
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-content {
+
+
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            height: 100px;
+            margin-left: 900px;
+            margin-top: 500px;
+            max-width: 500px;
+            text-align: center;
+            border-radius: 5px;
+
+        }
+
+        .modal-close{
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .modal-body{
+            font-size: 15px;
+            font-weight: bold;
+            font-family: Verdana, Geneva, Tahoma, sans-serif
+        }
+
+
+
+
+
+
+	
+</style>
+
+</html>
