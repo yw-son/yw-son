@@ -9,6 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cherry+Bomb+One&family=Rubik+Puddles&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 	<script>
 		$(function () {
 
@@ -72,8 +73,8 @@
 			var $check = $('#check');
 			var interval; // 전역 변수로 선언
 			var data; // 인증번호 데이터 전역 변수로 선언
- 			var $modal = $('#modal');
- 			var $modal2 = $('#modal2');
+ 			//var $modal = $('#modal');
+ 			//var $modal2 = $('#modal2');
 			$checkEmailNumber.on('click', function () {
 				var email = $email.val()
 				emconfirmchk = false;
@@ -86,7 +87,12 @@
 						},
 						success: function (response) {
 							data = response; // 인증번호 데이터 저장
-							$modal.css('display', 'block');
+							 Swal.fire({
+       				 		title: 'Success',
+        					html: '<b>인증번호를 발송하였습니다 3분안에 입력해주세요</b>',
+        					icon: 'success'
+      						});
+                           
 							$check.prop('disabled', false);
 							startStopwatch($('#timer'));
 							$checkEmailNumber.prop('disabled', true);
@@ -94,7 +100,11 @@
 							$('#timer').show();
 						},
 						error: function () {
-							$modal2.css('display', 'block');
+							 Swal.fire({
+       				 		title: 'Error!',
+        					html: '<b>인증번호 발송에 실패하였습니다 다시 시도해 주세요</b>',
+        					icon: 'error'
+      						});
 							$email.prop('readonly', false);
 						}
 					});
@@ -115,7 +125,11 @@
 
 			$check.on("click", function () {
 				if (emconfirmchk == false && data == $inputCode.val()) {
-					alert("인증번호 확인되었습니다.");
+					 Swal.fire({
+       				 		title: 'Success',
+        					html: '<b>인증이 완료되었습니다.</b>',
+        					icon: 'success'
+      						});
 					$('#timer').hide();
 					$checkEmailNumber.prop('disabled', true);
 					$email.prop('readonly', true);
@@ -123,19 +137,31 @@
 					$check.prop('disabled', true);
 					clearInterval(interval); // 전역 변수인 interval 사용
 				} else if (emconfirmchk == true && data == $inputCode.val()) {
-					alert("인증번호가 틀립니다 이메일 또는 인증번호를 다시 확인하세요");
+					 Swal.fire({
+       				 		title: 'Error!',
+        					html: '<b>인증번호가 맞지 않습니다 다시 확인해주세요.</b>',
+        				    icon: 'error'
+      						});
 					$email.prop('readonly', false);
 					$checkEmailNumber.prop('disabled', false);
 					emconfirmchk = false;
 					$signupButton.prop('disabled', true);
 				} else if (emconfirmchk == false && data !== $inputCode.val()) {
-					alert("인증번호가 틀립니다 이메일 또는 인증번호를 다시 확인하세요");
+					Swal.fire({
+       				 		title: 'Error!',
+        					html: '<b>인증번호가 맞지 않습니다 다시 확인해주세요.</b>',
+        				    icon: 'error'
+      						});
 					$email.prop('readonly', false);
 					$checkEmailNumber.prop('disabled', false);
 					emconfirmchk = false;
 					$signupButton.prop('disabled', true);
 				} else if (emconfirmchk == true && data == $inputCode.val()) {
-					alert("인증번호가 틀립니다 이메일 또는 인증번호를 다시 확인하세요");
+					Swal.fire({
+       				 		title: 'Error!',
+        					html: '<b>인증번호가 맞지 않습니다 다시 확인해주세요.</b>',
+        				    icon: 'error'
+      						});
 					$email.prop('readonly', false);
 					$checkEmailNumber.prop('disabled', false);
 					emconfirmchk = false;
@@ -173,7 +199,7 @@
 
 			var $signupButton = $('button[type="submit"]');
 			$signupButton.prop('disabled', true);
-
+/*
 $modal.on('click', function () {
     // 모달 창 영역을 클릭한 경우는 제외하고 숨기기
       $modal.css('display', 'none');
@@ -183,10 +209,9 @@ $modal2.on('click', function () {
     // 모달 창 영역을 클릭한 경우는 제외하고 숨기기
       $modal2.css('display', 'none');
     });
-  
+  */
 
-
-
+      
 		});
 	
 
@@ -199,6 +224,8 @@ $modal2.on('click', function () {
 		</div>
 	</div>
 	<form th:action="@{/user/signup}" th:object="${userCreateForm}" method="post">
+		<div th:if="${#fields.hasGlobalErrors()}" th:each="err : ${#fields.globalErrors()}" class="alert alert-danger"
+			role="alert" th:text="${err}"></div>
 		<div class="mb-3">
 			<label for="username" class="form-label">사용자ID</label>
 			<input type="text" th:field="*{username}" class="username" placeholder="6-12 길이의 문자열 입력">
@@ -415,7 +442,7 @@ $modal2.on('click', function () {
 
 
 
-/* 모달창 */
+/* 모달창 
 .modal, .modal2 {
             position: absolute;
             display: none;
@@ -463,7 +490,7 @@ $modal2.on('click', function () {
         }
 
 
-
+*/
 
 
 

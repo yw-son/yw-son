@@ -3,6 +3,7 @@ package com.project.leisure.taeyoung.user;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -29,23 +30,34 @@ public class UserController {
 
 	@GetMapping("/signup")
 	public String signup(UserCreateForm userCreateForm) {
-		return "/kty/signup_form";
+		return "kty/signup_form";
 	}
 
 	@PostMapping("/signup")
 	public String signup(@Valid UserCreateForm userCreateForm, BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
-			return "/kty/signup_form";
+			return "kty/signup_form";
 		}
 
 		if (!userCreateForm.getPassword1().equals(userCreateForm.getPassword2())) {
 			bindingResult.rejectValue("password2", "passwordInCorrect", "2개의 패스워드가 일치하지 않습니다.");
-			return "/kty/signup_form";
+			return "kty/signup_form";
 		}
 
-		userService.create(userCreateForm.getUsername(), userCreateForm.getEmail(), userCreateForm.getPassword1());
+		   try {
+	            userService.create(userCreateForm.getUsername(), 
+	                    userCreateForm.getEmail(), userCreateForm.getPassword1());
+	        }catch(DataIntegrityViolationException e) {
+	            e.printStackTrace();
+	            bindingResult.reject("signupFailed", "이미 등록된 사용자입니다.");
+	            return "kty/signup_form";
+	        }catch(Exception e) {
+	            e.printStackTrace();
+	            bindingResult.reject("signupFailed", e.getMessage());
+	            return "kty/signup_form";
+	        }
 
-		  return "redirect:/";
+		return "redirect:/";
 	}
 
 	@GetMapping("/login")
@@ -61,14 +73,12 @@ public class UserController {
 		int result = (users != null && !users.isEmpty()) ? 1 : 0;
 		return ResponseEntity.ok(result);
 	}
-/*
+
 	@GetMapping("/sign")
 	public String logi2n() {
-		return "signup_form";
+		return "signup";
 	}
-*/
-	
-	
+
 	private final EmailService emailService;
 	private final PasswordEncoder passwordEncoder;
 
