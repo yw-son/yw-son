@@ -91,7 +91,7 @@ public class UserController {
 
 	@GetMapping("/find_pw")
 	public String findPW() {
-		return "find_pw";
+		return "/kty/find_pw";
 	}
 
 	@PostMapping("/temp_pwd")
@@ -118,7 +118,7 @@ public class UserController {
 
 	@GetMapping("/find_id")
 	public String findID() {
-		return "find_id";
+		return "/kty/find_id";
 	}
 
 	@PostMapping("/find_id")
@@ -149,5 +149,8 @@ public class UserController {
 			return result;
 		}
 	}
+	
+	
+	
 
 }
