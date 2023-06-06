@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.thymeleaf.util.StringUtils;
 
-import com.project.leisure.taeyoung.user.email.EmailService;
+import com.project.leisure.taeyoung.email.EmailService;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

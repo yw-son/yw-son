@@ -1,4 +1,4 @@
-package com.project.leisure.taeyoung.user.email;
+package com.project.leisure.taeyoung.email;
 
 import java.util.ArrayList;
 import java.util.List;

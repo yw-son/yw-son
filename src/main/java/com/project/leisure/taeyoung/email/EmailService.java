@@ -1,4 +1,4 @@
-package com.project.leisure.taeyoung.user.email;
+package com.project.leisure.taeyoung.email;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Random;

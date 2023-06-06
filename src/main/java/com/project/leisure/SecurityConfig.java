@@ -14,7 +14,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.header.writers.frameoptions.XFrameOptionsHeaderWriter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-import com.project.leisure.taeyoung.user.email.CustomOAuth2UserService;
+import com.project.leisure.taeyoung.email.CustomOAuth2UserService;
 
 import lombok.RequiredArgsConstructor;
 

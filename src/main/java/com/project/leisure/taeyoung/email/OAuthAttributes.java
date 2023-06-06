@@ -1,5 +1,4 @@
-package com.project.leisure.taeyoung.user.email;
-
+package com.project.leisure.taeyoung.email;
 import java.util.Map;
 
 import com.project.leisure.taeyoung.user.UserRole;
