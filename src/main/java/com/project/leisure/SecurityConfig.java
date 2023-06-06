@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -15,6 +16,7 @@ import org.springframework.security.web.header.writers.frameoptions.XFrameOption
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.project.leisure.taeyoung.email.CustomOAuth2UserService;
+import com.project.leisure.taeyoung.user.UserService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -24,8 +26,12 @@ import lombok.RequiredArgsConstructor;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+	
 	@Autowired
 	private  CustomOAuth2UserService customOAuth2UserService;
+	
+	@Autowired
+	private  UserDetailsService userDetailsService;
 	
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -49,8 +55,12 @@ public class SecurityConfig {
    	 		.userInfoEndpoint()
    	 		.userService(customOAuth2UserService);
    	 		
-    	
-    	
+    	 http.rememberMe() // 사용자 계정 저장
+         .rememberMeParameter("remember") // default 파라미터는 remember-me
+         .tokenValiditySeconds(604800) // 7일(default 14일)
+         .alwaysRemember(false) // remember-me 기능 항상 실행
+         .userDetailsService(userDetailsService); // 사용자 계정 조회
+    
         return http.build();
         }   
     
@@ -65,5 +75,5 @@ public class SecurityConfig {
     AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
- 
+   
 }
