@@ -69,6 +69,6 @@ public class Users {
 	public String getRoleKey() {
 		return this.role.getValue();
 	}
-
+	
 	
 }

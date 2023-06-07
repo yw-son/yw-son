@@ -67,7 +67,7 @@ public class OAuthAttributes {
 	}
 
 	public Users toEntity() {
-		return Users.builder().nickname(nickname).email(email).sns(sns).role(UserRole.USER).build();
+		return Users.builder().nickname(nickname).email(email).sns(sns).role(UserRole.SNS_USER).build();
 	}
 
 }

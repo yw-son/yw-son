@@ -8,8 +8,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.nimbusds.oauth2.sdk.Role;
 
-
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.Query;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -52,4 +55,8 @@ public class UserService {
         System.out.println("Saving user: " + user.getUsername() + ", Password: " + user.getPassword());
     }
   
+  public List<Users> nick(String nickname) {
+	  return userRepository.findByNickname(nickname);
+  }
+   
 }

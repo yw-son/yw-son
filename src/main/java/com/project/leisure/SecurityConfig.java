@@ -38,6 +38,8 @@ public class SecurityConfig {
     	   
     	http.authorizeHttpRequests().requestMatchers(
     	            new AntPathRequestMatcher("/admin/*")).hasRole("ADMIN")
+    	    /*.requestMatchers(
+    	    		new AntPathRequestMatcher("/user/mypage/*")).hasRole("USER") */
    	 		.anyRequest().permitAll()
    	 		.and()
    	 		.csrf().disable()

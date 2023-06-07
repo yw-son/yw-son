@@ -1,12 +1,25 @@
 package com.project.leisure.taeyoung.user;
 
+import java.nio.channels.MembershipKey;
+import java.security.Principal;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,8 +28,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.thymeleaf.util.StringUtils;
 
+import com.nimbusds.oauth2.sdk.Role;
 import com.project.leisure.taeyoung.email.EmailService;
+import com.project.leisure.taeyoung.email.PrincipalDetails;
+import com.project.leisure.taeyoung.email.SessionUser;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
@@ -150,7 +168,46 @@ public class UserController {
 		}
 	}
 	
+/* 마이페이지 
+	@GetMapping("/mypage/me")
+	public String mypage(Principal principal, Model model,OAuth2AuthenticationToken authentication) {
+		//일반 로그인 사용자 정보 
+		
+		String username = principal.getName();
+		 List<Users> users = userService.check(username);
+		 model.addAttribute("users",users);
+		 
+		
+	    return "kty/mypage";
+	}
+		*/
 	
-	
+	// 마이페이지 
+	@GetMapping("/mypage/me")
+	 public String myPage(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Users users = new Users();
+        if (authentication != null && authentication.isAuthenticated()) {
+            String username = authentication.getName();
+            String email = users.getEmail();
+            Object authority = authentication.getAuthorities();
+       
+            // 필요한 사용자 정보를 가져와서 모델에 추가합니다.
+            model.addAttribute("username", username);
+            model.addAttribute("authority", authority);
+            model.addAttribute("email", email);
+            // 추가적인 사용자 정보를 가져오고 싶다면, Principal 객체를 확인하여 모델에 추가합니다.
+            Object principal = authentication.getPrincipal();
+      
+ 
+                
+            
 
+        }
+
+        return "kty/mypage";
+    }
+	
+	
+	
 }
