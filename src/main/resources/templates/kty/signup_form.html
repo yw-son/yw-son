@@ -46,7 +46,7 @@
 			
 			
 			// password 유효성 검증
-			var $password1 = $('#password1');
+			var $password1 = $('#join_password1');
 			var $passwordError = $('#password1-error');
 
 			$password1.on('input focusout', function () {
@@ -94,10 +94,10 @@
       						});
                            
 							$check.prop('disabled', false);
-							startStopwatch($('#timer'));
+							startStopwatch($('#join_timer'));
 							$checkEmailNumber.prop('disabled', true);
 							$email.prop('readonly', true);
-							$('#timer').show();
+							$('#join_timer').show();
 						},
 						error: function () {
 							 Swal.fire({
@@ -130,7 +130,7 @@
         					html: '<b>인증이 완료되었습니다.</b>',
         					icon: 'success'
       						});
-					$('#timer').hide();
+					$('#join_timer').hide();
 					$checkEmailNumber.prop('disabled', true);
 					$email.prop('readonly', true);
 					$signupButton.prop('disabled', false);
@@ -184,7 +184,7 @@
 
 					if (stopwatch <= 0) {
 						clearInterval(interval); // 전역 변수인 interval 사용
-						$('#timer').hide();
+						$('#join_timer').hide();
 						$email.prop('readonly', false);
 						emconfirmchk = true;
 						 Swal.fire({
@@ -224,47 +224,47 @@ $modal2.on('click', function () {
 <div class="container_my-3">
 	<div class="my-3 border-bottom">
 		<div>
-			<h4>저기어때</h4>
+			<h4 class="join_title">저기어때</h4>
 		</div>
 	</div>
 	<form th:action="@{/user/signup}" th:object="${userCreateForm}" method="post">
 		<div th:if="${#fields.hasGlobalErrors()}" th:each="err : ${#fields.globalErrors()}" class="alert alert-danger"
 			role="alert" th:text="${err}"></div>
-		<div class="mb-3">
+		<div class="mb-join">
 			<label for="username" class="form-label">사용자ID</label>
-			<input type="text" th:field="*{username}" class="username" placeholder="6-12 길이의 문자열 입력">
+			<input type="text" th:field="*{username}" class="join_username" placeholder="6-12 길이의 문자열 입력">
 		</div>
 		<div id="username-error"></div>
 		<br>
-		<div class="mb-3">
+		<div class="mb-join">
 			<label for="password1" class="form-label">비밀번호</label>
-			<input type="password" th:field="*{password1}" id="password1" class="password1" placeholder="영문자와 숫자,특수기호 포함한 6-12자리 사이">
+			<input type="password" th:field="*{password1}" id="join_password1" class="join_password1" placeholder="영문자와 숫자,특수기호 포함한 6-12자리 사이">
 		</div>
 		<div id="password1-error"></div><br>
-		<div class="mb-3">
+		<div class="mb-join">
 			<label for="password2" class="form-label">비밀번호 확인</label>
-			<input type="password" th:field="*{password2}" class="password2" placeholder="다시 비밀번호를 입력하세요">			
+			<input type="password" th:field="*{password2}" class="join_password2" placeholder="다시 비밀번호를 입력하세요">			
 		</div>
 		<div id="password2-error"></div><br>
-		<div class="mb-3">
+		<div class="mb-join">
 			<label for="email" class="form-label">이메일</label><br>
-			<input type="email" th:field="*{email}" class="email" placeholder="이메일을 입력해주세요">
+			<input type="email" th:field="*{email}" class="join_email" placeholder="이메일을 입력해주세요">
 			<input class="checkEmailNumber" name="checkEmailNumber" id="checkEmailNumber" type="button"
 				value="인증번호 발송">
 			<div id="email-error"></div>
 		</div><br>
-		<div class="mb-3">
+		<div class="mb-join">
 			<label for="code" class="form-label">인증번호</label><br>
 			<input type="text" class="form-control" name="inputCode" id="inputCode" maxlength="6"
 				placeholder="인증번호를 입력해주세요">
-			<input class="check" name="check" id="check" type="button" value="인증번호 확인">
+			<input class="join_check" name="check" id="check" type="button" value="인증번호 확인">
 					
 		</div>
 	
 
 		<button type="submit" id="join_up" class="btn btn-primary">JOIN</button>
 	</form>
-	<span id="timer">03:00</span><br>
+	<span id="join_timer">03:00</span><br>
 </div>
 
 
@@ -292,7 +292,7 @@ $modal2.on('click', function () {
 		font-size: 1px;
 	}
 
-	#timer {
+	#join_timer {
 		 position: absolute;
 		display: none;
 		color: red;
@@ -312,7 +312,7 @@ $modal2.on('click', function () {
             height: 100vh;
             /* 변경: 전체 뷰포트 높이로 설정 */
         }
-		h4{
+		.join_title{
             font-family: 'Rubik Puddles', cursive;
 
             margin-left:30px;
@@ -320,15 +320,15 @@ $modal2.on('click', function () {
             font-size: 50px;
 		}
 		
-		.mb-3 {
+		.mb-join {
             border-bottom: 2px solid #adadad;
             padding: 10px 10px;
             flex: 1;
         }
         
-     	.username,
-        .password1,
-        .password2
+     	.join_username,
+        .join_password1,
+        .join_password2
          {
             width: 100%;
             border: none;
@@ -340,7 +340,7 @@ $modal2.on('click', function () {
         }
 
 
-		.email, #inputCode{
+		.join_email, #inputCode{
 			border: none;
 		}
 
@@ -365,7 +365,7 @@ $modal2.on('click', function () {
 		   cursor: pointer;
 	}
 
-	.check{
+	.join_check{
 		background-color: #77af9c;
 		color: rgb(244, 245, 244);
 		height: 40px;
@@ -376,7 +376,7 @@ $modal2.on('click', function () {
             font-weight: 600;
              margin-left: 100px;
 	}
-	.check:hover{
+	.join_check:hover{
 
 		   cursor: pointer;
 	}
