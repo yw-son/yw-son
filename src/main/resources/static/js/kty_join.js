@@ -1,3 +1,7 @@
+
+	// 회원가입 js 부분 
+	
+	
 	$(function () {
 
 			// username 유효성 검증
@@ -204,3 +208,20 @@ $modal2.on('click', function () {
 
       
 		});
+		
+		
+		// 로그인 js 부분 
+		
+		$(document).ready(function() {
+  $("#kakao_login_btn").click(function() {
+    location.href = "/oauth2/authorization/kakao";
+  });
+
+  $("#google_login_btn").click(function() {
+    location.href = "/oauth2/authorization/google";
+  });
+
+  $("#naver_login_btn").click(function() {
+    location.href = "/oauth2/authorization/naver";
+  });
+});
