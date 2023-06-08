@@ -1,4 +1,7 @@
 
+/* 회원가입 css */
+
+
 	#username-error {
 		font-size: 12px
 	}
@@ -152,56 +155,83 @@
 
 
 
-/* 모달창 
-.modal, .modal2 {
-            position: absolute;
-            display: none;
-         
-            z-index: 1;
-            left: 0;
-            top: 0;
-           
+
+/* 로그인 css */
+
+ .container_my-3 {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            
+            height: 100vh;
+            /* 변경: 전체 뷰포트 높이로 설정 */
+        }
+		.login_title{
+            font-family: 'Rubik Puddles', cursive;
+
+            margin-left:30px;
+            margin-top: -70px;
+            font-size: 50px;
+		}
+		
+		.mb-login {
+            border-bottom: 2px solid #adadad;
+            padding: 10px 10px;
+            flex: 1;
+        }
+        
+        
+       #username,
+       #password
+         {
             width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0, 0, 0, 0.4);
+            border: none;
+            outline: none;
+            color: #636e72;
+            font-size: 16px;
+            height: 25px;
+            background: none;
         }
+        
+        #login_submit{
+				background-color: #77af9c;
+		color: rgb(244, 245, 244);
+		height: 40px;
+            /* 버튼 디자인 */
+            border: none;
+            display: inline-block;
+            border-radius: 15px;
+            font-weight: 600;
+            margin-left: 50px;
+            width: 200px;
+		}
+		
+		#login_submit:hover{
+			  cursor: pointer;
+		}
+		a {
+		color: inherit;
+		text-decoration: none;
+	}
+	#kakao_login_btn,
+	#google_login_btn,
+	#naver_login_btn{
+		width: 350px;
+		border: 1px solid rgb(192, 192, 192);
+	}
+	
+	
 
-        .modal-content {
-
-
-            font-family: Verdana, Geneva, Tahoma, sans-serif;
-            background-color: #fefefe;
-            margin: 15% auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 80%;
-            height: 100px;
-            margin-left: 900px;
-            margin-top: 500px;
-            max-width: 500px;
-            text-align: center;
-            border-radius: 5px;
-
-        }
-
-        .modal-close{
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        .modal-body{
-            font-size: 15px;
-            font-weight: bold;
-            font-family: Verdana, Geneva, Tahoma, sans-serif
-        }
-
-
-*/
-
-
-
+	#kakao_login_btn,
+	#google_login_btn,
+	#naver_login_btn:hover{
+		 cursor: pointer;
+		}
+		
+	.danger{
+		font-size: 13px;
+		text-align: center;
+		color: rgb(255, 128, 64);
+	}
 	
