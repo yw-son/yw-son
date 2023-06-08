@@ -17,4 +17,9 @@ public class SessionUser implements Serializable {
 		this.sns = user.getSns();
 
 	}
+
+	
+
+
+	
 }

@@ -186,27 +186,40 @@ public class UserController {
 	@GetMapping("/mypage/me")
 	 public String myPage(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+       
         Users users = new Users();
         if (authentication != null && authentication.isAuthenticated()) {
             String username = authentication.getName();
-            String email = users.getEmail();
+            
             Object authority = authentication.getAuthorities();
        
             // 필요한 사용자 정보를 가져와서 모델에 추가합니다.
             model.addAttribute("username", username);
             model.addAttribute("authority", authority);
-            model.addAttribute("email", email);
+            
             // 추가적인 사용자 정보를 가져오고 싶다면, Principal 객체를 확인하여 모델에 추가합니다.
             Object principal = authentication.getPrincipal();
-      
- 
-                
+           
             
+        
+          
 
         }
 
         return "kty/mypage";
     }
+	
+	@GetMapping("/mypage/myinfo")
+	public String myinfo(Principal principal,Model model) {
+		String username = principal.getName();
+		 List<Users> users = userService.check(username);
+		 model.addAttribute("users",users);
+		 return "kty/myinfo";
+	}
+	@GetMapping("/test")
+	public String test() {
+		return "kty/test";
+	}
 	
 	
 	
