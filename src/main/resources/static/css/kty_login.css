@@ -1,0 +1,78 @@
+
+	  .container_my-3 {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            
+            height: 100vh;
+            /* 변경: 전체 뷰포트 높이로 설정 */
+        }
+		.login_title{
+            font-family: 'Rubik Puddles', cursive;
+
+            margin-left:30px;
+            margin-top: -70px;
+            font-size: 50px;
+		}
+		
+		.mb-login {
+            border-bottom: 2px solid #adadad;
+            padding: 10px 10px;
+            flex: 1;
+        }
+        
+        
+       #login_username,
+       #login_password
+         {
+            width: 100%;
+            border: none;
+            outline: none;
+            color: #636e72;
+            font-size: 16px;
+            height: 25px;
+            background: none;
+        }
+        
+        #login_submit{
+				background-color: #77af9c;
+		color: rgb(244, 245, 244);
+		height: 40px;
+            /* 버튼 디자인 */
+            border: none;
+            display: inline-block;
+            border-radius: 15px;
+            font-weight: 600;
+            margin-left: 50px;
+            width: 200px;
+		}
+		
+		#login_submit:hover{
+			  cursor: pointer;
+		}
+		#kty_a {
+		color: inherit;
+		text-decoration: none;
+	}
+	#kakao_login_btn,
+	#google_login_btn,
+	#naver_login_btn{
+		width: 350px;
+		border: 1px solid rgb(192, 192, 192);
+	}
+	
+	
+
+	#kakao_login_btn,
+	#google_login_btn,
+	#naver_login_btn:hover{
+		 cursor: pointer;
+		}
+		
+	.danger_kty{
+		font-size: 13px;
+		text-align: center;
+		color: rgb(255, 128, 64);
+	}
+		
