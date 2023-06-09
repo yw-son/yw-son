@@ -68,6 +68,7 @@
     회원등급 : <td th:if="${user.role}"><b>일반회원</b></td><br><br>
     계정 생성일 : <td th:text="${#temporals.format(user.create_userTime,'yyyy-MM-dd')}"></td><br><br>
   </tr>
+ 
 </tbody>
 	<script th:src="@{/js/main.js}"></script>
 <!-- IONICONS -->
