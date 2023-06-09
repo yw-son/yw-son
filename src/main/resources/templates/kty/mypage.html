@@ -68,7 +68,7 @@
     이메일 : <td th:text="${user.email}"></td><br><br>
     회원등급 : <td th:if="${user.role}"><b>일반 회원</b></td><br><br>
     계정 생성일 : <td th:text="${#temporals.format(user.create_userTime,'yyyy-MM-dd')}"></td><br><br>
-    <span th:if="${user.sns}"><b style="color: rgb(0, 64, 128);"> * 소셜 계정과 연동된 계정입니다.</b></span><br><br>
+    <span th:if="${user.sns}"><b style="color: rgb(0, 64, 128);">  소셜 계정과 연동된 계정입니다.</b></span><br><br>
   </tr>
  
 </tbody>
