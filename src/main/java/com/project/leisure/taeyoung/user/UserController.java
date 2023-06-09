@@ -192,7 +192,7 @@ public class UserController {
 
 	        if (principal instanceof OAuth2AuthenticationToken) {
 	            OAuth2AuthenticationToken oauthToken = (OAuth2AuthenticationToken) principal;
-	          // System.out.println(oauthToken);
+	           System.out.println(oauthToken);
 	            //String user_email = oauthToken.getPrincipal().getAttribute("email");
 	            //List<Users> users = userService.check(user_email);
 	          
