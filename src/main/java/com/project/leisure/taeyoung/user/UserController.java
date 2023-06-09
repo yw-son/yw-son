@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +30,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.thymeleaf.util.StringUtils;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nimbusds.oauth2.sdk.Role;
+
 import com.project.leisure.taeyoung.email.EmailService;
 import com.project.leisure.taeyoung.email.PrincipalDetails;
 import com.project.leisure.taeyoung.email.SessionUser;
@@ -168,59 +173,110 @@ public class UserController {
 		}
 	}
 	
-/* 마이페이지 
-	@GetMapping("/mypage/me")
-	public String mypage(Principal principal, Model model,OAuth2AuthenticationToken authentication) {
-		//일반 로그인 사용자 정보 
-		
-		String username = principal.getName();
-		 List<Users> users = userService.check(username);
-		 model.addAttribute("users",users);
-		 
-		
-	    return "kty/mypage";
-	}
-		*/
+
 	
 	// 마이페이지 
 	@GetMapping("/mypage/me")
-	 public String myPage(Model model) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-       
-        Users users = new Users();
-        if (authentication != null && authentication.isAuthenticated()) {
-            String username = authentication.getName();
-            
-            Object authority = authentication.getAuthorities();
-       
-            // 필요한 사용자 정보를 가져와서 모델에 추가합니다.
-            model.addAttribute("username", username);
-            model.addAttribute("authority", authority);
-            
-            // 추가적인 사용자 정보를 가져오고 싶다면, Principal 객체를 확인하여 모델에 추가합니다.
-            Object principal = authentication.getPrincipal();
-           
-            
-        
-          
+	public String myPage(Model model, Principal principal) throws JsonProcessingException {
+	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        }
+	    if (authentication != null && authentication.isAuthenticated()) {
+	        String username = authentication.getName();
+	        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+	        Object aa = authentication.getPrincipal();
 
-        return "kty/mypage";
-    }
-	
-	@GetMapping("/mypage/myinfo")
-	public String myinfo(Principal principal,Model model) {
-		String username = principal.getName();
-		 List<Users> users = userService.check(username);
-		 model.addAttribute("users",users);
-		 return "kty/myinfo";
+	        // 필요한 사용자 정보를 가져와서 모델에 추가합니다.
+	        model.addAttribute("username", username);
+	        model.addAttribute("authority", authorities);
+	        model.addAttribute("aa", aa);
+
+	        if (principal instanceof OAuth2AuthenticationToken) {
+	            OAuth2AuthenticationToken oauthToken = (OAuth2AuthenticationToken) principal;
+	          // System.out.println(oauthToken);
+	            //String user_email = oauthToken.getPrincipal().getAttribute("email");
+	            //List<Users> users = userService.check(user_email);
+	          
+	           String output = oauthToken.toString();
+
+	        // 'id' 필드의 값을 추출
+	        //String id = output.replaceAll(".*id=(\\d+).*", "$1");
+
+	        // 'nickname' 필드의 값을 추출
+	        //String nickname = output.replaceAll(".*nickname=([^,}]+).*", "$1");
+	        String name = output.replaceAll(".*name=([^,}]+).*", "$1");
+	        // 'email' 필드의 값을 추출
+	        String email = output.replaceAll(".*email=([^,}]+).*", "$1");
+	        
+	        // 구글의 이름 추출
+	        String givenName = null;
+	        Matcher matcher = Pattern.compile(".*given_name=([^,]+).*").matcher(output);
+	        if (matcher.matches()) {
+	            givenName = matcher.group(1);
+	        }
+	        
+	        // google 제공자 추출 //
+	        String sub = null;
+	        Matcher matcher2 = Pattern.compile(".*sub=([^,]+).*").matcher(output);
+	        if (matcher2.matches()) {
+	            sub = matcher2.group(1);
+	           
+	        }
+	        // 카카오 제공자 추출
+	        String  connectedAt = null;
+	        Matcher connectedAtMatcher = Pattern.compile(".*connected_at=([^,]+).*").matcher(output);
+	        if (connectedAtMatcher.matches()) {
+	             connectedAt = connectedAtMatcher.group(1);
+	          
+	        }
+	        
+	        //네이버 제공자 추출 
+	        String response = null;
+	        Matcher matcher3 = Pattern.compile(".*response=([^,]+).*").matcher(output);
+	        if (matcher3.matches()) {
+	            response = matcher3.group(1);
+	            // 여기서 sub 값을 사용할 수 있습니다.
+	          
+	        }
+	        /*
+	        System.out.println("response: "+response);
+	        System.out.println("connectedAt: "+connectedAt);
+	        System.out.println("sub: "+sub);
+	        System.out.println("sub: "+sub);
+	        System.out.println("givenName: " + givenName);
+	        model.addAttribute("givenName", givenName);
+	        String familyName = output.replaceAll(".*family_name=([^,]+).*", "$1");
+	        String role = output.replaceAll(".*Granted Authorities=\\[([^\\]]+).*", "$1");
+	        //System.out.println("id: " + id);
+	        System.out.println("role: " + role);
+	        System.out.println("name: " + name);
+	       
+	        //System.out.println("nickname: " + nickname);
+	        System.out.println("email: " + email);
+	        System.out.println("givenName: " + givenName);
+	        System.out.println("familyName: " + familyName);
+	        */
+	        String familyName = output.replaceAll(".*family_name=([^,]+).*", "$1");
+	        String role = output.replaceAll(".*Granted Authorities=\\[([^\\]]+).*", "$1");
+	        model.addAttribute("givenName", givenName);
+	        model.addAttribute("name", name);
+	        //model.addAttribute("nickname", nickname);
+	        model.addAttribute("givenName", givenName);
+	        model.addAttribute("email", email);
+	        model.addAttribute("role", role);
+	        model.addAttribute("sub",sub);
+	        model.addAttribute("connectedAt", connectedAt);
+	        model.addAttribute("response", response);
+	        }
+	        
+	        
+	        
+			 List<Users> users2 = userService.check(username);
+			 model.addAttribute("users2",users2);
+	    }
+
+	    return "kty/mypage";
 	}
-	@GetMapping("/test")
-	public String test() {
-		return "kty/test";
-	}
-	
+
 	
 	
 }

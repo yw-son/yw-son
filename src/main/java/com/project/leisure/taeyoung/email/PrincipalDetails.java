@@ -53,13 +53,13 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
 		return users.getEmail();
 	}
 
-	// 계정 만료가 아니니?
+	// 계정 만료?
 	@Override
 	public boolean isAccountNonExpired() {
 		return true;
 	}
 
-	// 계정 잠긴게 아니니?
+	// 계정 잠김?
 	@Override
 	public boolean isAccountNonLocked() {
 		return true;

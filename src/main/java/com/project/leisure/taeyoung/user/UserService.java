@@ -58,5 +58,7 @@ public class UserService {
   public List<Users> nick(String nickname) {
 	  return userRepository.findByNickname(nickname);
   }
+  
+ 
    
 }

@@ -36,7 +36,7 @@ public class OAuthAttributes {
 			return ofNaver(userNameAttributeName, attributes);
 		case "kakao":
 			return ofKakao(userNameAttributeName, attributes);
-		}
+		} 
 
 		return null;
 	}

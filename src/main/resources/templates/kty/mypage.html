@@ -1,20 +1,76 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <title>My Page</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title></title>
+<link rel="stylesheet" href="/css/style.css">
+
+<title>저기어때</title>
 </head>
-<body>
-    <h1>Welcome to My Page</h1>
-    
-    <div th:if="${username}">
-        <p>Username: <span th:text="${username}"></span></p>
-    </div>
-    
-    <div th:if="${authority}">
-        <p>authority: <span th:text="${authority}"></span></p>
-    </div>
+<body id="body-pd">
+<div class="l-navbar" id="navbar">
+    <nav class="nav">
+        <div>
+            <div class="nav__brand">
+                <ion-icon name="menu-outline" class="nav__toggle" id="nav-toggle"></ion-icon>
+                <a href="#" class="nav__logo">MyPage</a>
+            </div>
+            <div class="nav__list">
+                <a href="#" class="nav__link active">
+                    <ion-icon name="person-add-outline" class="nav__icon"></ion-icon>
+                    <span class="nav_name">회원정보 수정</span>
+                </a>
+                
+                  <a href="#" class="nav__link collapse">
+                    <ion-icon name="journal-outline" class="nav__icon"></ion-icon>
+                    <span class="nav_name">구매/예약내역</span>
+                </a>
+                
+               
 
+                <a href="#" class="nav__link collapse">
+                    <ion-icon name="bag-outline" class="nav__icon"></ion-icon>
+                    <span class="nav_name">장바구니</span>
+                </a>
 
+                <a href="#" class="nav__link">
+                    <ion-icon name="headset-outline" class="nav__icon"></ion-icon>
+                    <span class="nav_name">문의내역</span>
+                </a>
+                <a href="#" class="nav__link">
+                    <ion-icon name="chatbox-ellipses-outline" class="nav__icon"></ion-icon>
+                    <span class="nav_name">파트너 신청</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+</div>
+
+<h1>나의 정보</h1>
+   <!-- 소셜 로그인 사용자 정보 출력 -->
+<tbody>
+	<tr sec:authorize="hasRole('ROLE_SNS')">
+		사용자 명 : social_<td th:text="${name}"></td><span th:if="${givenName}" th:text="${givenName}"></span><br><br>	
+		이메일 : <td th:text="${email}"></td><br><br>
+		회원등급 : <td th:if="${role}"><b>소셜 회원</b></td><br><br>
+		제공자 : <span th:if="${sub}">Google(구글)</span>
+					 <span th:if="${connectedAt}">Kakao(카카오)</span>
+					 <span th:if="${response}">Naver(네이버)</span>
+		<br><br>
+	</tr>
+</tbody>
+ <!-- 일반 로그인 사용자 정보 출력 -->
+ <tbody>
+  <tr th:each="user : ${users2}">
+    사용자 명 : <td th:text="${user.username}"></td><br><br>
+    이메일 : <td th:text="${user.email}"></td><br><br>
+    회원등급 : <td th:if="${user.role}"><b>일반회원</b></td><br><br>
+    계정 생성일 : <td th:text="${#temporals.format(user.create_userTime,'yyyy-MM-dd')}"></td><br><br>
+  </tr>
+</tbody>
+	<script th:src="@{/js/main.js}"></script>
+<!-- IONICONS -->
+<script src="https://unpkg.com/ionicons@5.2.3/dist/ionicons.js"></script>
 </body>
 </html>

@@ -62,7 +62,7 @@ public class Users {
 	public Users update(String nickname, String email, String sns) {
 		this.nickname = nickname;
 		this.sns = sns;
-		this.email = email;
+		this.email =email;
 		return this;
 	}
 
