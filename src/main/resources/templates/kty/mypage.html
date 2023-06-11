@@ -109,9 +109,37 @@
  						  <td th:if="${connectedAt}">Kakao(카카오)</td>
  						   <td th:if="${response}">Naver(네이버)</td>
 					 </tr>    
+					 
+					 
                     </tbody>
+                   
+ 					 <tbody>
+                      <tr>
+						 <td th:if="${ns_pic}">
+    						유저명 : social_<span th:text="${name}"></span>
+   							 <span th:if="${givenName}" th:text="${givenName}"></span><br>
+   							 이메일 : <span th:text="${email}"></span>	 
+						 </td>
+					 </tr>      
                     
-                 
+						<span th:if="${ns_pic}" style="margin-left: 80px;"><b>* 일반계정과 연동된 계정입니다</b></span>
+                    </tbody>
+                        
+                        
+                         <tbody>
+                      <tr>
+						 <td th:if="${ns_message}">
+    						유저명 : social_<span th:text="${name}"></span>
+   							 <span th:if="${givenName}" th:text="${givenName}"></span><br>
+   							 이메일 : <span th:text="${email}"></span>	 
+						 </td>
+					 </tr>      
+                    
+						<span th:if="${ns_message}" style="margin-left: 80px;"><b>* 일반계정과 연동된 계정입니다</b></span>
+                    </tbody>    
+                            
+                                  
+                
                   </table>
                 
                  <!--   <a href="#" class="btn btn-primary">My Sales Performance</a>
@@ -128,19 +156,20 @@
 <style>
 /* body 스타일링 */
 body {
-  max-width: 500px;
-  margin: 0 auto;
-  padding: 20px;
-  font-family: Arial, sans-serif;
-  background-color: #f5f5f5;
+  display: flex;
+  justify-content: center;
+ align-items: center;
+  height: 100vh;
 }
 
 /* 패널 스타일링 */
 .panel.panel-info {
+  position: absolute;
   margin-top: 50px;
+  width: 400px;
   border-radius: 10px;
   height: 250px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px rgb(192, 192, 192);
 }
 
 .panel-heading {

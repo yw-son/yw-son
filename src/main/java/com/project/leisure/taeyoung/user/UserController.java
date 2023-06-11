@@ -179,7 +179,7 @@ public class UserController {
 	@GetMapping("/mypage/me")
 	public String myPage(Model model, Principal principal) throws JsonProcessingException {
 	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
+	    	
 	    if (authentication != null && authentication.isAuthenticated()) {
 	        String username = authentication.getName();
 	        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
@@ -191,13 +191,82 @@ public class UserController {
 	        model.addAttribute("aa", aa);
 
 	        if (principal instanceof OAuth2AuthenticationToken) {
+	        	
+	        	String a = principal.getName();
+		    	//System.out.println(a);
+		    	
+		    	/*
+		    	String ns_name = null;
+		        Matcher ns_matcher = Pattern.compile(".*name=([^,]+).*").matcher(a);
+		        if (ns_matcher.matches()) {
+		        	ns_name = ns_matcher.group(1);
+		        }
+		    	String ns_email = null;
+		    	Matcher ns_matcher2 = Pattern.compile(".*email=([^,}]+).*").matcher(a);
+		    	  if (ns_matcher2.matches()) {
+			        	ns_email = ns_matcher2.group(1);
+			        }
+
+		    	  String ns_pic = null;
+		    	  Matcher ns_matcher3 = Pattern.compile("picture=([^,}]+)").matcher(a);
+		    	  if (ns_matcher3.find()) {
+		    	      ns_pic = ns_matcher3.group(1);
+		    	  }
+		    	  
+		    	  //System.out.println(ns_pic);
+		    	  
+		    	  
+			    	 // System.out.println("ns_pic: " + ns_pic);
+		    	
+		    	//System.out.println("ns_name: " + ns_name);
+		    
+		    	//System.out.println("ns_email: " + ns_email);
+		    	model.addAttribute("ns_name", ns_name);
+		    	model.addAttribute("ns_email", ns_email);
+		    	model.addAttribute("ns_pic", ns_pic);
+		    	*/
 	            OAuth2AuthenticationToken oauthToken = (OAuth2AuthenticationToken) principal;
-	           System.out.println(oauthToken);
+	           //System.out.println(oauthToken);
 	            //String user_email = oauthToken.getPrincipal().getAttribute("email");
 	            //List<Users> users = userService.check(user_email);
 	          
 	           String output = oauthToken.toString();
 
+	           String output2= a.toString();
+	           
+	           String plus_account = output+output2;
+	           
+	           System.out.println(plus_account);
+	           
+	           String ns_pic = null;
+		    	  Matcher ns_matcher = Pattern.compile("picture=([^,}]+)").matcher(plus_account);
+		    	  if (ns_matcher.find()) {
+		    	      ns_pic = ns_matcher.group(1);
+		    	  }
+		    	  
+		    	  System.out.println("picture: :"+ns_pic);
+	           
+	           
+		    	  model.addAttribute("ns_pic", ns_pic);
+	           
+	           
+		    	  String ns_message = null;
+		    	  Matcher ns_matcher2 = Pattern.compile("message=([^,}]+)").matcher(plus_account);
+		    	  if (ns_matcher2.find()) {
+		    		  ns_message = ns_matcher2.group(1);
+		    	  }
+		    	  
+		    	  System.out.println("ns_message: :"+ns_message);
+	           
+	           
+		    	  model.addAttribute("ns_message", ns_message);
+	           
+		    	  
+		    	  
+		    
+	           
+	           
+	           
 	        // 'id' 필드의 값을 추출
 	        //String id = output.replaceAll(".*id=(\\d+).*", "$1");
 
