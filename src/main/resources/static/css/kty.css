@@ -89,7 +89,19 @@
 
 
 
-	.checkEmailNumber, .find_addr1{
+	.checkEmailNumber{
+		background-color: #77af9c;
+		color: rgb(244, 245, 244);
+		height: 40px;
+            /* 버튼 디자인 */
+            border: none;
+            display: inline-block;
+            border-radius: 15px;
+            font-weight: 600;
+            margin-left: 110px;
+	}
+	
+	.find_addr1{
 		background-color: #77af9c;
 		color: rgb(244, 245, 244);
 		height: 40px;
@@ -100,6 +112,13 @@
             font-weight: 600;
             margin-left: 100px;
 	}
+	
+	
+	.find_addr1:hover{
+
+		   cursor: pointer;
+	}
+	
 	.checkEmailNumber:hover{
 
 		   cursor: pointer;
@@ -114,7 +133,7 @@
             display: inline-block;
             border-radius: 15px;
             font-weight: 600;
-             margin-left: 100px;
+            margin-left: 110px;
 	}
 	.join_check:hover{
 
