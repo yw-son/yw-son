@@ -23,12 +23,14 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public Users create(String username, String email, String password) {
+    public Users create(String username, String email, String password,String addr1, String addr2, String addr3) {
         Users user = new Users();
         user.setUsername(username);
         user.setEmail(email);
         user.setPassword(passwordEncoder.encode(password));
-
+        user.setAddr1(addr1);
+        user.setAddr2(addr2);
+        user.setAddr3(addr3);
         this.userRepository.save(user);
         return user;
     }

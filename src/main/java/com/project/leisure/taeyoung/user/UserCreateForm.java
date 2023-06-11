@@ -25,4 +25,12 @@ public class UserCreateForm {
 
 	@NotEmpty(message = "이메일 인증번호는 필수항목입니다.")
 	private String inputCode; // 이메일 인증번호 필드 추가
+	
+	@NotEmpty(message = "우편번호는 필수 입력 값입니다.")
+    private String addr1;
+
+    private String addr2;
+
+    private String addr3;
+	
 }

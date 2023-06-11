@@ -46,13 +46,13 @@
             font-family: 'Rubik Puddles', cursive;
 
             margin-left:30px;
-            margin-top: -70px;
+            margin-top: 70px;
             font-size: 50px;
 		}
 		
 		.mb-join {
             border-bottom: 2px solid #adadad;
-            padding: 10px 10px;
+            padding: 5px 10px;
             flex: 1;
         }
         
@@ -64,22 +64,32 @@
             border: none;
             outline: none;
             color: #636e72;
-            font-size: 16px;
+            font-size: 13px;
             height: 25px;
             background: none;
         }
 
 
-		.join_email, #inputCode{
+		.join_email, #inputCode
+		{
 			border: none;
+		}
+
+		.addr1,
+        .addr3{
+			border: none;
+			width: 180px;
+		    /* text-decoration: underline; */
+		}
+		.addr2{
+			border: none;
+			width: 300px;
+		    /* text-decoration: underline; */
 		}
 
 
 
-
-
-
-	.checkEmailNumber{
+	.checkEmailNumber, .find_addr1{
 		background-color: #77af9c;
 		color: rgb(244, 245, 244);
 		height: 40px;
