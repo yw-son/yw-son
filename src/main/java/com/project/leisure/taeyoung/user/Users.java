@@ -52,6 +52,7 @@ public class Users {
 	
 	private String addr3; //상세 주소
 	
+	private int islock=0; //계정 잠금 여부(1: 계정 잠김, 0: 계정 안잠김)
 	
 	public Users update(String username) {
 		this.username = username;

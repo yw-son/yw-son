@@ -12,10 +12,12 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.header.writers.frameoptions.XFrameOptionsHeaderWriter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.project.leisure.taeyoung.email.CustomOAuth2UserService;
+
 import com.project.leisure.taeyoung.user.UserService;
 
 import lombok.RequiredArgsConstructor;
@@ -26,6 +28,9 @@ import lombok.RequiredArgsConstructor;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+	
+	  @Autowired
+	  private AuthenticationFailureHandler userLoginFailHandler;
 	
 	@Autowired
 	private  CustomOAuth2UserService customOAuth2UserService;
@@ -45,6 +50,7 @@ public class SecurityConfig {
    	 		.csrf().disable()
    	 		.formLogin()
    	 		.loginPage("/user/login")
+   	    	.failureHandler(userLoginFailHandler)
    	 		.defaultSuccessUrl("/")
    	 		.and()
    	 		.logout()

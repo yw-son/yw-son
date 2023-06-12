@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.security.authentication.LockedException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -25,13 +26,17 @@ public class UserSecurityService implements UserDetailsService {
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		Optional<Users> _siteUser = this.userRepository.findByusername(username);
 		if (_siteUser.isEmpty()) {
-			throw new UsernameNotFoundException("사용자를 찾을 수 없습니다.");
+			throw new UsernameNotFoundException("없는 계정이거나 ID/PW가 틀렸습니다.");
 		}
 
 		Users siteUser = _siteUser.get();
 		Integer admin = siteUser.getAdmin_code();
 		Integer partner = siteUser.getPartner_code();
-
+		
+		  if (siteUser.getIslock() == 1)  {
+		    throw new LockedException("계정이 잠겨 있습니다. 관리자에게 문의하세요.");
+		}
+		
 		List<GrantedAuthority> authorities = new ArrayList<>();
 		if (admin > 1000 && admin < partner) {
 			siteUser.setRole(UserRole.ADMIN); // Set the role value to ADMIN
