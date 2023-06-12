@@ -30,7 +30,7 @@ public class UserCreateForm {
     private String addr1;
 
     private String addr2;
-
+    @NotEmpty(message = "상세주소는 필수 입력 값입니다.")
     private String addr3;
 	
 }

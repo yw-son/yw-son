@@ -184,7 +184,7 @@ public class UserController {
 	        String username = authentication.getName();
 	        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
 	        Object aa = authentication.getPrincipal();
-
+	        System.out.println(username);
 	        // 필요한 사용자 정보를 가져와서 모델에 추가합니다.
 	        model.addAttribute("username", username);
 	        model.addAttribute("authority", authorities);
@@ -193,49 +193,16 @@ public class UserController {
 	        if (principal instanceof OAuth2AuthenticationToken) {
 	        	
 	        	String a = principal.getName();
-		    	//System.out.println(a);
-		    	
-		    	/*
-		    	String ns_name = null;
-		        Matcher ns_matcher = Pattern.compile(".*name=([^,]+).*").matcher(a);
-		        if (ns_matcher.matches()) {
-		        	ns_name = ns_matcher.group(1);
-		        }
-		    	String ns_email = null;
-		    	Matcher ns_matcher2 = Pattern.compile(".*email=([^,}]+).*").matcher(a);
-		    	  if (ns_matcher2.matches()) {
-			        	ns_email = ns_matcher2.group(1);
-			        }
-
-		    	  String ns_pic = null;
-		    	  Matcher ns_matcher3 = Pattern.compile("picture=([^,}]+)").matcher(a);
-		    	  if (ns_matcher3.find()) {
-		    	      ns_pic = ns_matcher3.group(1);
-		    	  }
-		    	  
-		    	  //System.out.println(ns_pic);
-		    	  
-		    	  
-			    	 // System.out.println("ns_pic: " + ns_pic);
-		    	
-		    	//System.out.println("ns_name: " + ns_name);
-		    
-		    	//System.out.println("ns_email: " + ns_email);
-		    	model.addAttribute("ns_name", ns_name);
-		    	model.addAttribute("ns_email", ns_email);
-		    	model.addAttribute("ns_pic", ns_pic);
-		    	*/
+	        	System.out.println("sdd"+a);
 	            OAuth2AuthenticationToken oauthToken = (OAuth2AuthenticationToken) principal;
 	           //System.out.println(oauthToken);
-	            //String user_email = oauthToken.getPrincipal().getAttribute("email");
-	            //List<Users> users = userService.check(user_email);
+	            
 	          
 	           String output = oauthToken.toString();
 
 	           String output2= a.toString();
 	           
 	           String plus_account = output+output2;
-	           
 	           System.out.println(plus_account);
 	           
 	           String ns_pic = null;
@@ -243,29 +210,26 @@ public class UserController {
 		    	  if (ns_matcher.find()) {
 		    	      ns_pic = ns_matcher.group(1);
 		    	  }
-		    	  
-		    	  System.out.println("picture: :"+ns_pic);
-	           
-	           
-		    	  model.addAttribute("ns_pic", ns_pic);
-	           
-	           
+       	           
 		    	  String ns_message = null;
 		    	  Matcher ns_matcher2 = Pattern.compile("message=([^,}]+)").matcher(plus_account);
 		    	  if (ns_matcher2.find()) {
 		    		  ns_message = ns_matcher2.group(1);
 		    	  }
+
+		    	  String is_email_valid = null;
+			        Matcher matcher6 = Pattern.compile(".*is_email_valid=([^,]+).*").matcher(plus_account);
+			        if (matcher6.matches()) {
+			        	is_email_valid = matcher6.group(1);
+			        }
 		    	  
-		    	  System.out.println("ns_message: :"+ns_message);
-	           
-	           
-		    	  model.addAttribute("ns_message", ns_message);
-	           
-		    	  
-		    	  
-		    
-	           
-	           
+			        String ns_Credential = null;
+			    	  Matcher ns_matcher6 = Pattern.compile("Credentials=([^,}]+)").matcher(plus_account);
+			    	  if (ns_matcher6.find()) {
+			    		  ns_Credential = ns_matcher6.group(1);
+			    	  }
+			    	  System.out.println("ns_Credential :"+ns_Credential);
+			    	  model.addAttribute("ns_Credential", ns_Credential);
 	           
 	        // 'id' 필드의 값을 추출
 	        //String id = output.replaceAll(".*id=(\\d+).*", "$1");
@@ -306,35 +270,21 @@ public class UserController {
 	            // 여기서 sub 값을 사용할 수 있습니다.
 	          
 	        }
-	        /*
-	        System.out.println("response: "+response);
-	        System.out.println("connectedAt: "+connectedAt);
-	        System.out.println("sub: "+sub);
-	        System.out.println("sub: "+sub);
-	        System.out.println("givenName: " + givenName);
-	        model.addAttribute("givenName", givenName);
-	        String familyName = output.replaceAll(".*family_name=([^,]+).*", "$1");
-	        String role = output.replaceAll(".*Granted Authorities=\\[([^\\]]+).*", "$1");
-	        //System.out.println("id: " + id);
-	        System.out.println("role: " + role);
-	        System.out.println("name: " + name);
-	       
-	        //System.out.println("nickname: " + nickname);
-	        System.out.println("email: " + email);
-	        System.out.println("givenName: " + givenName);
-	        System.out.println("familyName: " + familyName);
-	        */
+	        model.addAttribute("ns_pic", ns_pic);
+	        model.addAttribute("ns_message", ns_message);
+	        model.addAttribute("is_email_valid", is_email_valid);
+	    	model.addAttribute("ns_pic", ns_pic);
 	        String familyName = output.replaceAll(".*family_name=([^,]+).*", "$1");
 	        String role = output.replaceAll(".*Granted Authorities=\\[([^\\]]+).*", "$1");
 	        model.addAttribute("givenName", givenName);
 	        model.addAttribute("name", name);
-	        //model.addAttribute("nickname", nickname);
 	        model.addAttribute("givenName", givenName);
 	        model.addAttribute("email", email);
 	        model.addAttribute("role", role);
 	        model.addAttribute("sub",sub);
 	        model.addAttribute("connectedAt", connectedAt);
 	        model.addAttribute("response", response);
+	        
 	        }
 	        
 	        
