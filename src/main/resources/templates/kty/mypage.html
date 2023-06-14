@@ -3,10 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <title></title>
 <link rel="stylesheet" href="/css/style.css">
-
 <title>저기어때</title>
+
 </head>
 <body id="body-pd">
 <div class="l-navbar" id="navbar">
@@ -15,31 +16,31 @@
 			<div>
             <div class="nav__brand">
                 <ion-icon name="menu-outline" class="nav__toggle" id="nav-toggle"></ion-icon>
-                <a href="#" class="nav__logo">MyPage</a>
+                <a th:href="@{/user/mypage/me}" class="nav__logo">MyPage</a>
             </div>
             <div class="my-info">
-                <a href="#" class="nav__link active">
+                <a th:href="@{/user/mypage/me}" class="nav__link active">
                     <ion-icon name="person-add-outline" class="nav__icon"></ion-icon>
                     <span class="nav_name">회원정보 수정</span>
                 </a>
                 
-                  <a href="#" class="nav__link collapse">
+                  <a th:href="@{/user/mypage/my_reservations}" class="nav__link collapse">
                     <ion-icon name="journal-outline" class="nav__icon"></ion-icon>
-                    <span class="nav_name">구매/예약내역</span>
+                    <span class="nav_name">예약내역</span>
                 </a>
                 
                
 
-                <a href="#" class="nav__link collapse">
+                <a th:href="@{/user/mypage/my_wishlist}" class="nav__link collapse" id="mypage_toggleButton3">
                     <ion-icon name="bag-outline" class="nav__icon"></ion-icon>
                     <span class="nav_name">장바구니</span>
                 </a>
 
-                <a href="#" class="nav__link">
+                <a th:href="@{/user/mypage/my_inquiries}" class="nav__link" id="mypage_toggleButton4">
                     <ion-icon name="headset-outline" class="nav__icon"></ion-icon>
                     <span class="nav_name">문의내역</span>
                 </a>
-                <a href="#" class="nav__link">
+                <a th:href="@{/user/mypage/partner_registration}" class="nav__link" id="mypage_toggleButton5">
                     <ion-icon name="chatbox-ellipses-outline" class="nav__icon"></ion-icon>
                     <span class="nav_name">파트너 신청</span>
                 </a>
@@ -50,7 +51,7 @@
 
 
 
-  <div class="panel panel-info">
+  <div class="panel panel-info" id="infoPanel">
             <div class="panel-heading">
               <h3 class="panel-title">회원 정보</h3>
             </div>
@@ -81,11 +82,16 @@
                       </tr>
                       <tr>
                         <td>계정 생성일 : </td>
-                        <td th:text="${#temporals.format(user.create_userTime,'yyyy-MM-dd')}"></td>
-                           
+                        <td th:text="${#temporals.format(user.create_userTime,'yyyy-MM-dd')}"></td>    
                       </tr>
+						<tr>
+					 <td colspan="2">
+					 <a href="#" class="btn btn-info">수정하기</a>
+					</td>
+					</tr>
                     </tbody>
-                    
+                 
+ 						          
                     <!-- 소셜 회원 -->
                      <tbody sec:authorize="hasRole('ROLE_SNS')"  >
                       <tr>
@@ -112,7 +118,7 @@
 					 
 					 
                     </tbody>
-                  
+                  <!--
  					 <tbody>
                       <tr>
 						 <td th:if="${ns_pic}">
@@ -136,7 +142,7 @@
 					 </tr>      
                     
 						<span th:if="${ns_message}" style="margin-left: 80px;"><b>* 일반계정과 연동된 계정입니다</b></span>
-                    </tbody>   
+                    </tbody>    -->
                 <!--
                    <tbody>
                       <tr>
@@ -159,6 +165,7 @@
                 </div>
               </div>
             </div>
+	
 
 <script th:src="@{/js/main.js}"></script>
 <script src="https://unpkg.com/ionicons@5.2.3/dist/ionicons.js"></script>
@@ -181,7 +188,11 @@ body {
   border-radius: 10px;
   height: 250px;
   box-shadow: 0 2px 4px rgb(192, 192, 192);
+  display: block;
 }
+
+
+
 
 .panel-heading {
   background-color: #337ab7;
@@ -224,6 +235,8 @@ body {
   vertical-align: middle;
   margin-right: 5px;
 }
+
+
 </style>
 	
 </html>

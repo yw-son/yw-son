@@ -1,3 +1,18 @@
+$(document).ready(function() {
+  $('#mypage_toggleButton').click(function() {
+    $('.panel.panel-info').css('display', 'block');
+  });
+});
+
+$(document).ready(function() {
+  $('#mypage_toggleButton2').click(function() {
+    $('.panel.panel-info').css('display', 'none');
+  });
+});
+
+
+
+
 /* EXPANDER MENU */
 const showMenu = (toggleId, navbarId, bodyId) => {
     const toggle = document.getElementById(toggleId),
