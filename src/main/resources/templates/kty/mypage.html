@@ -3,8 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<title></title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<link rel="preconnect" href="https://fonts.gstatic.com" />
+	<link rel="stylesheet" href="/css/kty.css">
+	<script th:src="@{/js/kty_join.js}"></script>
+	<script th:src="@{/js/kty_login.js}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>  <!-- sweetalert2 CDN-->
+    <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script> <!-- 다음 주소 검색 api-->
 <link rel="stylesheet" href="/css/style.css">
 <title>저기어때</title>
 
@@ -173,7 +178,7 @@
 
 <style>
 /* body 스타일링 */
-body {
+#body-pd {
   display: flex;
   justify-content: center;
  align-items: center;
