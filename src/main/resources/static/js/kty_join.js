@@ -206,7 +206,7 @@ $(function() {
 	// 스톱워치
 	function startStopwatch(display) {
 
-		var stopwatch = 180; // 초기 스톱워치 값 (60초)
+		var stopwatch = 180; // 초기 스톱워치 값 (60초) 
 		interval = setInterval(function() {
 			var minutes = Math.floor(stopwatch / 60);
 			var seconds = stopwatch % 60;
