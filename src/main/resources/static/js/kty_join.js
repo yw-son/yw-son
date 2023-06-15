@@ -203,7 +203,7 @@ $(function() {
 	});
 
 
-	// 스톱워치
+	// 스톱워치 동작
 	function startStopwatch(display) {
 
 		var stopwatch = 180; // 초기 스톱워치 값 (60초) 
