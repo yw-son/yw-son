@@ -123,8 +123,8 @@ $(function() {
 						html: '<b>인증번호를 발송하였습니다 3분안에 입력해주세요</b>',
 						icon: 'success'
 					});
-					stopInterval();
-					$('#join_timer').hide();
+					stopInterval(); // 인증번호 발송 했는데 기존에 발송된 비밀번호가 있을 경우엔 기존의 타이머를 멈추고
+					$('#join_timer').hide(); // 기존 타이머를 숨김
 					$check.prop('disabled', false);
 					startStopwatch($('#join_timer'));
 					$checkEmailNumber.prop('disabled', true);
