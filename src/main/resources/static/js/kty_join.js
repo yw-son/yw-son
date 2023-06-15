@@ -129,7 +129,7 @@ $(function() {
 					startStopwatch($('#join_timer'));
 					$checkEmailNumber.prop('disabled', true);
 					$email.prop('readonly', true); // 인증번호를 발송하면 기존에 입력한 이메일 입력창은 readonly로 하여 조작 불가능
-					$('#join_timer').show();
+					$('#join_timer').show(); // 타이머 생성
 				},
 				error: function() {
 					Swal.fire({
@@ -156,18 +156,18 @@ $(function() {
 
 
 	$check.on("click", function() {
-		
+
 		if (emconfirmchk == false && data == $inputCode.val()) {
 			Swal.fire({
 				title: 'Success',
 				html: '<b>인증이 완료되었습니다.</b>',
 				icon: 'success'
 			});
-			$('#join_timer').hide();
-			$checkEmailNumber.prop('disabled', true);
-			$email.prop('readonly', true);
-			$signupButton.prop('disabled', false);
-			$check.prop('disabled', true);
+			$('#join_timer').hide(); // 인증이 완료되면 타이머 숨기기
+			$checkEmailNumber.prop('disabled', true);  // 인증이 완료되면 인증번호 발송 비활성화
+			$email.prop('readonly', true); // 이메일창 조작 불가능하게 readonly로 
+			$signupButton.prop('disabled', false); //인증이 완료되면 회원가입 버튼 누를 수 있게
+			$check.prop('disabled', true);  //인증이 완료되면 인증번호 확인 버튼 비활성화
 			clearInterval(interval); // 전역 변수인 interval 사용
 		} else if (emconfirmchk == true && data == $inputCode.val()) {
 			Swal.fire({
@@ -175,10 +175,10 @@ $(function() {
 				html: '<b>인증번호가 맞지 않습니다 다시 확인해주세요.</b>',
 				icon: 'error'
 			});
-			$email.prop('readonly', false);
-			$checkEmailNumber.prop('disabled', false);
+			$email.prop('readonly', false); // 인증번호가 맞지 않으면 이메일을 수정할 수 있게 readonly 풀기
+			$checkEmailNumber.prop('disabled', false); // 인증번호가 맞지 않으면 다시 인증번호를 재발송 할 수 있게 해줌
 			emconfirmchk = false;
-			$signupButton.prop('disabled', true);
+			$signupButton.prop('disabled', true); // 인증번호가 맞지 않으면 회원가입 버튼 클릭 불가능
 		} else if (emconfirmchk == false && data !== $inputCode.val()) {
 			Swal.fire({
 				title: 'Error!',
@@ -205,7 +205,7 @@ $(function() {
 
 	// 스톱워치
 	function startStopwatch(display) {
-		
+
 		var stopwatch = 180; // 초기 스톱워치 값 (60초)
 		interval = setInterval(function() {
 			var minutes = Math.floor(stopwatch / 60);
@@ -234,46 +234,18 @@ $(function() {
 			stopwatch--;
 		}, 1000);
 	}
-function stopInterval() {
-  clearInterval(interval);
-}
+	function stopInterval() {
+		clearInterval(interval);
+	}
 	var $signupButton = $('button[type="submit"]');
 	$signupButton.prop('disabled', true);
-	/*
-	$modal.on('click', function () {
-		// 모달 창 영역을 클릭한 경우는 제외하고 숨기기
-		  $modal.css('display', 'none');
-		});
-	  
-	$modal2.on('click', function () {
-		// 모달 창 영역을 클릭한 경우는 제외하고 숨기기
-		  $modal2.css('display', 'none');
-		});
-	  */
+
 
 	$(".join_title").on("click", function() {
-			// 타임리프 URL을 정확히 지정해야 합니다.
-			var url = "/";
-
-			// 페이지 이동
-			location.href = url;
-		});
+		var url = "/";
+		location.href = url;
+	});
 });
 
 
-/* 로그인 js 부분 
 
-$(document).ready(function() {
-	$("#kakao_login_btn").click(function() {
-		location.href = "/oauth2/authorization/kakao";
-	});
-
-	$("#google_login_btn").click(function() {
-		location.href = "/oauth2/authorization/google";
-	});
-
-	$("#naver_login_btn").click(function() {
-		location.href = "/oauth2/authorization/naver";
-	}); 
-});
-*/
