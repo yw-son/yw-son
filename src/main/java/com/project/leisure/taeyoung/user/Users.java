@@ -13,7 +13,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
+// 회원DB 엔티티
 @Getter
 @Setter
 @Entity
