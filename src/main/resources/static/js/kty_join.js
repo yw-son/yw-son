@@ -247,11 +247,17 @@ $(function() {
 		});
 	  */
 
+	$(".join_title").on("click", function() {
+			// 타임리프 URL을 정확히 지정해야 합니다.
+			var url = "/";
 
+			// 페이지 이동
+			location.href = url;
+		});
 });
 
 
-// 로그인 js 부분 
+/* 로그인 js 부분 
 
 $(document).ready(function() {
 	$("#kakao_login_btn").click(function() {
@@ -264,5 +270,7 @@ $(document).ready(function() {
 
 	$("#naver_login_btn").click(function() {
 		location.href = "/oauth2/authorization/naver";
-	});
+	}); 
 });
+*/
+
