@@ -38,7 +38,7 @@ public class SecurityConfig {
 	@Bean
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-		http.authorizeHttpRequests().requestMatchers(new AntPathRequestMatcher("/admin/*")).hasRole("ADMIN")
+		http.authorizeHttpRequests().requestMatchers(new AntPathRequestMatcher("/admin/*")).hasRole("ADMIN") //admin 경로는 admin 권한만 접근가능
 				.requestMatchers(new AntPathRequestMatcher("/user/mypage/*"))
 				.hasAnyRole("USER", "PARTNER", "SNS", "ADMIN").anyRequest().permitAll().and().csrf().disable()
 				.formLogin().loginPage("/user/login").failureHandler(userLoginFailHandler).defaultSuccessUrl("/").and()
