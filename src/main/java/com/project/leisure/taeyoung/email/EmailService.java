@@ -17,6 +17,8 @@ import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 
+//이메일 인증 메일 템플릿 설정
+
 @PropertySource("classpath:application.properties")
 @Slf4j
 @RequiredArgsConstructor
