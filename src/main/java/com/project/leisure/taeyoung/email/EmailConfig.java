@@ -1,5 +1,6 @@
 package com.project.leisure.taeyoung.email;
 
+
 import java.util.Properties;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -9,6 +10,9 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
+
+
+// 이메일 발송 설정파일
 @Configuration
 @PropertySource("classpath:application.properties")
 public class EmailConfig {
