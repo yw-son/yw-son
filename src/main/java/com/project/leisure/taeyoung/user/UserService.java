@@ -15,6 +15,8 @@ import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
 import lombok.RequiredArgsConstructor;
 
+//user service
+
 @RequiredArgsConstructor
 @Service
 public class UserService {
