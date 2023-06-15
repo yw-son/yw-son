@@ -128,7 +128,7 @@ $(function() {
 					$check.prop('disabled', false);
 					startStopwatch($('#join_timer'));
 					$checkEmailNumber.prop('disabled', true);
-					$email.prop('readonly', true);
+					$email.prop('readonly', true); // 인증번호를 발송하면 기존에 입력한 이메일 입력창은 readonly로 하여 조작 불가능
 					$('#join_timer').show();
 				},
 				error: function() {
