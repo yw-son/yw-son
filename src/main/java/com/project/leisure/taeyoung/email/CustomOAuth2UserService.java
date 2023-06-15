@@ -17,9 +17,10 @@ import com.project.leisure.taeyoung.user.Users;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
+// 소셜로그인 동작 서비스 처리
 @Service
 @RequiredArgsConstructor
-public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
+public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User > {
 	private final UserRepository userRepository;
 	private final HttpSession httpSession;
 
