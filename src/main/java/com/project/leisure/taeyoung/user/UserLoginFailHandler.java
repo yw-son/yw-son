@@ -15,6 +15,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+// login 실패 에러메세지 반환 
 @Component
 public class UserLoginFailHandler extends SimpleUrlAuthenticationFailureHandler {
 
