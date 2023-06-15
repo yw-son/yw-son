@@ -1,6 +1,5 @@
 package com.project.leisure.taeyoung.email;
 
-
 import java.util.Collections;
 
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -41,7 +40,6 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 		Users user = saveOrUpdate(attributes);
 		httpSession.setAttribute("user", new SessionUser(user)); // SessionMember (직렬화된 dto 클래스 사용)
 
-		
 		// TODO: JWT 생성
 
 		return new DefaultOAuth2User(Collections.singleton(new SimpleGrantedAuthority(user.getRoleKey())),

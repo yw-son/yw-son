@@ -1,6 +1,5 @@
 package com.project.leisure.taeyoung.user;
 
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -32,11 +31,11 @@ public class UserSecurityService implements UserDetailsService {
 		Users siteUser = _siteUser.get();
 		Integer admin = siteUser.getAdmin_code();
 		Integer partner = siteUser.getPartner_code();
-		
-		  if (siteUser.getIslock() == 1)  {
-		    throw new LockedException("계정이 잠겨 있습니다. 관리자에게 문의하세요.");
+
+		if (siteUser.getIslock() == 1) {
+			throw new LockedException("계정이 잠겨 있습니다. 관리자에게 문의하세요.");
 		}
-		
+
 		List<GrantedAuthority> authorities = new ArrayList<>();
 		if (admin > 1000 && admin < partner) {
 			siteUser.setRole(UserRole.ADMIN); // Set the role value to ADMIN

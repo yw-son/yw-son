@@ -1,4 +1,5 @@
 package com.project.leisure.taeyoung.email;
+
 import java.io.Serializable;
 
 import com.project.leisure.taeyoung.user.Users;
@@ -18,8 +19,4 @@ public class SessionUser implements Serializable {
 
 	}
 
-	
-
-
-	
 }

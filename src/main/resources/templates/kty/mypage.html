@@ -1,129 +1,131 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<link rel="preconnect" href="https://fonts.gstatic.com" />
 	<link rel="stylesheet" href="/css/kty.css">
 	<script th:src="@{/js/kty_join.js}"></script>
-	<script th:src="@{/js/kty_login.js}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>  <!-- sweetalert2 CDN-->
-    <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script> <!-- 다음 주소 검색 api-->
-<link rel="stylesheet" href="/css/style.css">
-<title>저기어때</title>
+	<script th:src="@{/js/kty_join.js}"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script> <!-- sweetalert2 CDN-->
+	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script> <!-- 다음 주소 검색 api-->
+	<link rel="stylesheet" href="/css/style.css">
+	<title>저기어때</title>
 
 </head>
+
 <body id="body-pd">
-<div class="l-navbar" id="navbar">
-    <nav class="nav">
-        <div>
+	<div class="l-navbar" id="navbar">
+		<nav class="nav">
 			<div>
-            <div class="nav__brand">
-                <ion-icon name="menu-outline" class="nav__toggle" id="nav-toggle"></ion-icon>
-                <a th:href="@{/user/mypage/me}" class="nav__logo">MyPage</a>
-            </div>
-            <div class="my-info">
-                <a th:href="@{/user/mypage/me}" class="nav__link active">
-                    <ion-icon name="person-add-outline" class="nav__icon"></ion-icon>
-                    <span class="nav_name">회원정보 수정</span>
-                </a>
-                
-                  <a th:href="@{/user/mypage/my_reservations}" class="nav__link collapse">
-                    <ion-icon name="journal-outline" class="nav__icon"></ion-icon>
-                    <span class="nav_name">예약내역</span>
-                </a>
-                
-               
+				<div>
+					<div class="nav__brand">
+						<ion-icon name="menu-outline" class="nav__toggle" id="nav-toggle"></ion-icon>
+						<a th:href="@{/user/mypage/me}" class="nav__logo">MyPage</a>
+					</div>
+					<div class="my-info">
+						<a th:href="@{/user/mypage/me}" class="nav__link active">
+							<ion-icon name="person-add-outline" class="nav__icon"></ion-icon>
+							<span class="nav_name">회원정보 수정</span>
+						</a>
 
-                <a th:href="@{/user/mypage/my_wishlist}" class="nav__link collapse" id="mypage_toggleButton3">
-                    <ion-icon name="bag-outline" class="nav__icon"></ion-icon>
-                    <span class="nav_name">장바구니</span>
-                </a>
-
-                <a th:href="@{/user/mypage/my_inquiries}" class="nav__link" id="mypage_toggleButton4">
-                    <ion-icon name="headset-outline" class="nav__icon"></ion-icon>
-                    <span class="nav_name">문의내역</span>
-                </a>
-                <a th:href="@{/user/mypage/partner_registration}" class="nav__link" id="mypage_toggleButton5">
-                    <ion-icon name="chatbox-ellipses-outline" class="nav__icon"></ion-icon>
-                    <span class="nav_name">파트너 신청</span>
-                </a>
-            </div>
-        </div>
-    </nav>
-</div>
+						<a th:href="@{/user/mypage/my_reservations}" class="nav__link collapse">
+							<ion-icon name="journal-outline" class="nav__icon"></ion-icon>
+							<span class="nav_name">예약내역</span>
+						</a>
 
 
 
-  <div class="panel panel-info" id="infoPanel">
-            <div class="panel-heading">
-              <h3 class="panel-title">회원 정보</h3>
-            </div>
-            <div class="panel-body">
-              <div class="row">
-                <div class="col-md-3 col-lg-3 " align="center"> </div> 
- 
-                <div class=" col-md-9 col-lg-9 "> 
-                  <table class="table table-user-information">
-                    <tbody th:each="user : ${users2}"  >
-                      <tr>
-                        <td>유저명 :</td>
-                        <td th:text="${user.username}"></td>
-                      </tr>        
-                      <tr>
-                        <td>이메일 :</td>
-                          <td th:text="${user.email}"></td>
-                      </tr>
-                   
-                         <tr>
-                             <tr>
-                      </tr>
-                        <tr>
-                        <td>회원등급 :</td>
-                        <td  sec:authorize="hasRole('ROLE_USER')">일반회원</td>
-                        <td  sec:authorize="hasRole('ROLE_PARTNER')">파트너회원</td>
-                        <td  sec:authorize="hasRole('ROLE_ADMIN')">관리자</td>
-                      </tr>
-                      <tr>
-                        <td>계정 생성일 : </td>
-                        <td th:text="${#temporals.format(user.create_userTime,'yyyy-MM-dd')}"></td>    
-                      </tr>
-						<tr>
-					 <td colspan="2">
-					 <a href="#" class="btn btn-info">수정하기</a>
-					</td>
-					</tr>
-                    </tbody>
-                 
- 						          
-                    <!-- 소셜 회원 -->
-                     <tbody sec:authorize="hasRole('ROLE_SNS')"  >
-                      <tr>
-						  <td>유저명 :</td>
- 						 <td>
-    						social_<span th:text="${name}"></span>
-   							 <span th:if="${givenName}" th:text="${givenName}"></span>
-  						</td>
-					 </tr>      
-                     <tr>
-						  <td>이메일 :</td>
- 						 <td th:text="${email}"></td>
-					 </tr>      
-                      <tr>
-						  <td>회원등급 :</td>
- 						 <td th:if="${role}">소셜회원</td>
-					 </tr>
-					 <tr>
-						  <td>제공자 :</td>
- 						 <td th:if="${sub}">Google(구글)</td>
- 						  <td th:if="${connectedAt}">Kakao(카카오)</td>
- 						   <td th:if="${response}">Naver(네이버)</td>
-					 </tr>    
-					 
-					 
-                    </tbody>
-                  <!--
+						<a th:href="@{/user/mypage/my_wishlist}" class="nav__link collapse" id="mypage_toggleButton3">
+							<ion-icon name="bag-outline" class="nav__icon"></ion-icon>
+							<span class="nav_name">장바구니</span>
+						</a>
+
+						<a th:href="@{/user/mypage/my_inquiries}" class="nav__link" id="mypage_toggleButton4">
+							<ion-icon name="headset-outline" class="nav__icon"></ion-icon>
+							<span class="nav_name">문의내역</span>
+						</a>
+						<a th:href="@{/user/mypage/partner_registration}" class="nav__link" id="mypage_toggleButton5">
+							<ion-icon name="chatbox-ellipses-outline" class="nav__icon"></ion-icon>
+							<span class="nav_name">파트너 신청</span>
+						</a>
+					</div>
+				</div>
+		</nav>
+	</div>
+
+
+
+	<div class="panel panel-info" id="infoPanel">
+		<div class="panel-heading">
+			<h3 class="panel-title">회원 정보</h3>
+		</div>
+		<div class="panel-body">
+			<div class="row">
+				<div class="col-md-3 col-lg-3 " align="center"> </div>
+
+				<div class=" col-md-9 col-lg-9 ">
+					<table class="table table-user-information">
+						<tbody th:each="user : ${users2}">
+							<tr>
+								<td>유저명 :</td>
+								<td th:text="${user.username}"></td>
+							</tr>
+							<tr>
+								<td>이메일 :</td>
+								<td th:text="${user.email}"></td>
+							</tr>
+
+							<tr>
+							<tr>
+							</tr>
+							<tr>
+								<td>회원등급 :</td>
+								<td sec:authorize="hasRole('ROLE_USER')">일반회원</td>
+								<td sec:authorize="hasRole('ROLE_PARTNER')">파트너회원</td>
+								<td sec:authorize="hasRole('ROLE_ADMIN')">관리자</td>
+							</tr>
+							<tr>
+								<td>계정 생성일 : </td>
+								<td th:text="${#temporals.format(user.create_userTime,'yyyy-MM-dd')}"></td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<a href="#" class="btn btn-info">수정하기</a>
+								</td>
+							</tr>
+						</tbody>
+
+
+						<!-- 소셜 회원 -->
+						<tbody sec:authorize="hasRole('ROLE_SNS')">
+							<tr>
+								<td>유저명 :</td>
+								<td>
+									social_<span th:text="${name}"></span>
+									<span th:if="${givenName}" th:text="${givenName}"></span>
+								</td>
+							</tr>
+							<tr>
+								<td>이메일 :</td>
+								<td th:text="${email}"></td>
+							</tr>
+							<tr>
+								<td>회원등급 :</td>
+								<td th:if="${role}">소셜회원</td>
+							</tr>
+							<tr>
+								<td>제공자 :</td>
+								<td th:if="${sub}">Google(구글)</td>
+								<td th:if="${connectedAt}">Kakao(카카오)</td>
+								<td th:if="${response}">Naver(네이버)</td>
+							</tr>
+
+
+						</tbody>
+						<!--
  					 <tbody>
                       <tr>
 						 <td th:if="${ns_pic}">
@@ -148,7 +150,7 @@
                     
 						<span th:if="${ns_message}" style="margin-left: 80px;"><b>* 일반계정과 연동된 계정입니다</b></span>
                     </tbody>    -->
-                <!--
+						<!--
                    <tbody>
                       <tr>
 						 <td th:if="${ns_Credential}">
@@ -166,82 +168,80 @@
                 
                    <a href="#" class="btn btn-primary">My Sales Performance</a>
                   <a href="#" class="btn btn-primary">Team Sales Performance</a> -->
-                  
-                </div>
-              </div>
-            </div>
-	
 
-<script th:src="@{/js/main.js}"></script>
-<script src="https://unpkg.com/ionicons@5.2.3/dist/ionicons.js"></script>
+				</div>
+			</div>
+		</div>
+
+
+		<script th:src="@{/js/main.js}"></script>
+		<script src="https://unpkg.com/ionicons@5.2.3/dist/ionicons.js"></script>
 </body>
 
 <style>
-/* body 스타일링 */
-#body-pd {
-  display: flex;
-  justify-content: center;
- align-items: center;
-  height: 100vh;
-}
+	/* body 스타일링 */
+	#body-pd {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		height: 100vh;
+	}
 
-/* 패널 스타일링 */
-.panel.panel-info {
-  position: absolute;
-  margin-top: 50px;
-  width: 400px;
-  border-radius: 10px;
-  height: 250px;
-  box-shadow: 0 2px 4px rgb(192, 192, 192);
-  display: block;
-}
-
-
+	/* 패널 스타일링 */
+	.panel.panel-info {
+		position: absolute;
+		margin-top: 50px;
+		width: 400px;
+		border-radius: 10px;
+		height: 250px;
+		box-shadow: 0 2px 4px rgb(192, 192, 192);
+		display: block;
+	}
 
 
-.panel-heading {
-  background-color: #337ab7;
-  color: white;
-  padding: 10px;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-}
-
-.panel-title {
-  margin: 0;
-  font-size: 20px;
-}
-
-.panel-body {
-  padding: 20px;
-}
-
-/* 테이블 스타일링 */
-.table-user-information {
-  width: 100%;
-    text-align: center;
-  vertical-align: middle;
-  padding-top: 20px;
-}
-
-.table-user-information td:first-child {
-  width: 30%;
-  font-weight: bold;
-}
-
-/* 버튼 스타일링 */
-.btn-primary {
-  margin-top: 10px;
-}
-
-/* 아이콘 스타일링 */
-.ion-icon {
-  font-size: 18px;
-  vertical-align: middle;
-  margin-right: 5px;
-}
 
 
+	.panel-heading {
+		background-color: #337ab7;
+		color: white;
+		padding: 10px;
+		border-top-left-radius: 10px;
+		border-top-right-radius: 10px;
+	}
+
+	.panel-title {
+		margin: 0;
+		font-size: 20px;
+	}
+
+	.panel-body {
+		padding: 20px;
+	}
+
+	/* 테이블 스타일링 */
+	.table-user-information {
+		width: 100%;
+		text-align: center;
+		vertical-align: middle;
+		padding-top: 20px;
+	}
+
+	.table-user-information td:first-child {
+		width: 30%;
+		font-weight: bold;
+	}
+
+	/* 버튼 스타일링 */
+	.btn-primary {
+		margin-top: 10px;
+	}
+
+	/* 아이콘 스타일링 */
+	.ion-icon {
+		font-size: 18px;
+		vertical-align: middle;
+		margin-right: 5px;
+	}
 </style>
-	
+
 </html>

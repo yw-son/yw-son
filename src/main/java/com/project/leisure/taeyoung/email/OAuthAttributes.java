@@ -1,4 +1,5 @@
 package com.project.leisure.taeyoung.email;
+
 import java.util.Map;
 
 import com.project.leisure.taeyoung.user.UserRole;
@@ -36,7 +37,7 @@ public class OAuthAttributes {
 			return ofNaver(userNameAttributeName, attributes);
 		case "kakao":
 			return ofKakao(userNameAttributeName, attributes);
-		} 
+		}
 
 		return null;
 	}
