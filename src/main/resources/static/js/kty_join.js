@@ -1,4 +1,3 @@
-
 // 회원가입 js 부분 
 function execPostCode() {
 	new daum.Postcode({
@@ -124,7 +123,8 @@ $(function() {
 						html: '<b>인증번호를 발송하였습니다 3분안에 입력해주세요</b>',
 						icon: 'success'
 					});
-
+					stopInterval();
+					$('#join_timer').hide();
 					$check.prop('disabled', false);
 					startStopwatch($('#join_timer'));
 					$checkEmailNumber.prop('disabled', true);
@@ -156,6 +156,7 @@ $(function() {
 
 
 	$check.on("click", function() {
+		
 		if (emconfirmchk == false && data == $inputCode.val()) {
 			Swal.fire({
 				title: 'Success',
@@ -204,6 +205,7 @@ $(function() {
 
 	// 스톱워치
 	function startStopwatch(display) {
+		
 		var stopwatch = 180; // 초기 스톱워치 값 (60초)
 		interval = setInterval(function() {
 			var minutes = Math.floor(stopwatch / 60);
@@ -232,7 +234,9 @@ $(function() {
 			stopwatch--;
 		}, 1000);
 	}
-
+function stopInterval() {
+  clearInterval(interval);
+}
 	var $signupButton = $('button[type="submit"]');
 	$signupButton.prop('disabled', true);
 	/*
@@ -273,4 +277,3 @@ $(document).ready(function() {
 	}); 
 });
 */
-
