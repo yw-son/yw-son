@@ -43,6 +43,8 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
+// user 관련 컨트롤러
+
 @RequiredArgsConstructor
 @Controller
 @RequestMapping("/user")
