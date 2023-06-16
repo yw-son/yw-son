@@ -1,0 +1,13 @@
+package sec01.ex02;
+
+import java.util.Date;
+
+public class Member {
+	private String id;
+	private String pwd;
+	private String name;
+	private String email;
+	private Date joinDate;
+	private Address addr;
+	
+}

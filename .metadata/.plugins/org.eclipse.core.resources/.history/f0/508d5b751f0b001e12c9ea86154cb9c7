@@ -1,0 +1,52 @@
+package sec01.ex01;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.sql.DataSource;
+
+public class MemberDAO {
+	// 필드
+	private Connection conn = null;
+	private PreparedStatement stmt = null;
+	private ResultSet rs = null; // 조회 후 결과를 담을 객체
+	private DataSource ds = null; // 책에선 dataFactory라는 변수명
+
+	// 생성자
+	public MemberDAO() {
+		try {
+			Context context = new InitialContext();
+			ds = (DataSource) context.lookup("java:/comp/env/jdbc/JNDI_MYSQL"); // context.xml에 resourse에 설정해둔 name과 매칭된
+																				// 객체를 생성하고 반환한다.
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	// 회원 등록 (C)
+	public void addMember() {
+
+	}
+
+	// 전체 회원 조회 (R)
+	public List<MemberBean> listMembers() {
+			
+			List<MemberBean> list = new ArrayList<>();
+			
+			try{
+			// DB 커넥션 연결
+			conn = ds.getConnection();
+			
+			
+			String sql = "select * from t_member order by joinDate desc";
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+		}
+}

@@ -1,0 +1,38 @@
+<%@page import="java.util.List"%>
+<%@page import="sec02.ex01.MemberDAO"%>
+<%@page import="sec02.ex01.MemberVO"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>회원 정보 출력</title>
+	<style type="text/css">
+	h1 {
+		text-align: center; 
+	}
+	</style>
+</head>
+<body>
+	<h1>회원 정보 출력</h1>
+	<%
+		String _name = request.getParameter("name");
+		MemberVO memberVO = new MemberVO(); // 임포트가 안되면 ctrl + shift 해보기
+		memberVO.setName(_name);
+		
+		MemberDAO dao = new MemberDAO();
+		List<MemberVO> memberList = dao.listMembers(memberVO);
+	%>
+	
+	<table border="1" width="800" align="ceter">
+		<tr align="center" bgcolor="#ffff66">
+		<td>아이디</td>
+		<td>비밀번호</td>
+		<td>이름</td>
+		<td>이메일</td>
+		<td>가입일자</td>
+		</tr>
+	</table>
+</body>
+</html>

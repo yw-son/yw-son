@@ -1,0 +1,16 @@
+package sec01.ex01;
+
+import java.util.Date;
+
+public class MemberBean {
+	// JAVA Bean class - 속성 private / set, get 메서드 이용 / 인자 없는 기본 생성자 필요
+	private String id;
+	private String pwd;
+	private String name;
+	private String email;
+	private Date joinDate;
+	
+	public MemberBean() {
+		super();
+	}
+}

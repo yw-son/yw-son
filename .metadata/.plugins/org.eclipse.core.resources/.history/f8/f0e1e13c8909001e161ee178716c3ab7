@@ -1,0 +1,18 @@
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
+    <%!
+    	String name= "이순신";
+    	public String getName() { return name; }
+    %>
+    
+    <% String age=request.getParameter("age"); %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>스크립트릿(수행문) 연습</title>
+</head>
+<body>
+
+</body>
+</html>

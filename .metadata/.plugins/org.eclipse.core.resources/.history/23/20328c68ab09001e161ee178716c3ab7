@@ -1,0 +1,25 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>회원 정보 출력</title>
+	<style type="text/css">
+	h1 {
+		text-align: center; 
+	}
+	</style>
+</head>
+<body>
+	<h1>회원 정보 출력</h1>
+	<%
+		String _name = request.getParameter("name");
+		MemberVO memberVO = new MemberVO();
+		MemberVO.setName(_name);
+		
+		MemberDAo dao = new MemberDAO();
+		List memberList = dao.listMembers(memberVO);
+	%>
+</body>
+</html>

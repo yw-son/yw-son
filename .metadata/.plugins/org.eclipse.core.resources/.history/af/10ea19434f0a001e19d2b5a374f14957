@@ -1,0 +1,36 @@
+package exam;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+public class Main {
+    public static void main(String[] args) {
+        // 데이터베이스 연결 설정
+        String url = "jdbc:mysql://localhost:3306/CUST_Member"; // 데이터베이스 URL
+        String username = "your_username"; // 데이터베이스 사용자명
+        String password = "your_password"; // 데이터베이스 비밀번호
+
+        try (Connection connection = DriverManager.getConnection(url, username, password)) {
+            // CustomerDAO 인스턴스 생성
+            CustomerDAO customerDAO = new CustomerDAO(connection);
+
+            // 고객 정보 생성
+            CustomerVO newCustomer = new CustomerVO();
+            newCustomer.setName("John Doe");
+            newCustomer.setAddr("123 Main St");
+            newCustomer.setPhone("1234567890");
+            newCustomer.setEmail("johndoe@example.com");
+
+            // 고객 등록
+            int generatedId = customerDAO.createCustomer(newCustomer);
+            if (generatedId > 0) {
+                System.out.println("고객 등록 성공! 생성된 ID: " + generatedId);
+            } else {
+                System.out.println("고객 등록 실패!");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+}

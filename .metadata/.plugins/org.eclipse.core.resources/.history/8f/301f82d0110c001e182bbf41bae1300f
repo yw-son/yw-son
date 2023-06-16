@@ -1,0 +1,8 @@
+package file;
+
+public class FileData {
+	private int id;
+	private String fileName;
+	private String filePath;
+	private long fileSize;
+}

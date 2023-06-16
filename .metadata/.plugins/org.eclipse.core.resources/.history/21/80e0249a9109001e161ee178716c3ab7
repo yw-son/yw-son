@@ -1,0 +1,18 @@
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>이미지 리스트 출력</title>
+</head>
+<body>
+	<ul class="List_type">
+	<li>
+		<spqn style="margin-left: 50px">이미지</spqn>
+		<span>이미지 이름</span>
+		<span>선택하기</span>
+		</li>
+	</ul>
+</body>
+</html>

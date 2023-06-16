@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;file.FildDAO&apos; to &apos;FileDAO&apos;&#x0D;&#x0A;- Original project: &apos;File Upload&apos;&#x0D;&#x0A;- Original element: &apos;file.FildDAO&apos;&#x0D;&#x0A;- Renamed element: &apos;file.FileDAO&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;FildDAO&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src\/main\/java&lt;file{FildDAO.java[FildDAO" matchStrategy="1" name="FileDAO" qualified="false" references="true" similarDeclarations="false" stamp="1685619183543" textual="false" version="1.0"/>
+</session>

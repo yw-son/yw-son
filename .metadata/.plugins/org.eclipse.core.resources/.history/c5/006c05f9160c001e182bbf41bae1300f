@@ -1,0 +1,27 @@
+package file.servlet;
+
+import java.io.IOException;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.oreilly.servlet.MultipartRequest;
+
+
+@WebServlet("/upload")
+public class uploadServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException {
+		
+		// Multipart 요청을 처리하기 위해 MultipartRequest 객체 생성
+		// 파일 업로드와 관련된 정보를 얻을 수 있는 객체
+		MultipartRequest multipartRequest = 
+				new MultipartRequest(request, getServletInfo(), 0, null)
+	}
+
+}
