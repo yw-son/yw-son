@@ -60,7 +60,7 @@ $(function() {
 
 			$.ajax({
 				type: 'POST',
-				url: '/user/check', // 중복 아이디 검증을 위한 엔드포인트
+				url: '/user/check_username', // 중복 아이디 검증을 위한 엔드포인트
 				data: { "username": username },
 				dataType: 'json',
 				success: function(data) {
@@ -101,11 +101,10 @@ $(function() {
 	var $email_error = $('#email-error');
 	var $inputCode = $('#inputCode');
 	var $inputCode_error = $('#inputCode_error');
-	var $check = $('#check');
+	var $check = $('#check_code');
 	var interval; // 전역 변수로 선언
 	var data; // 인증번호 데이터 전역 변수로 선언
-	//var $modal = $('#modal');
-	//var $modal2 = $('#modal2');
+	
 	$checkEmailNumber.on('click', function() {
 		var email = $email.val()
 		emconfirmchk = false;

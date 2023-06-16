@@ -94,7 +94,7 @@ public class UserController {
 
 	/* 회원가입 유효성 검증 post */
 
-	@PostMapping("/check")
+	@PostMapping("/check_username")
 	public ResponseEntity<Integer> checkUsername(@RequestParam("username") String username) {
 		List<Users> users = userService.check(username);
 		int result = (users != null && !users.isEmpty()) ? 1 : 0;
