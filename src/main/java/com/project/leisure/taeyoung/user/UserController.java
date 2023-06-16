@@ -186,7 +186,7 @@ public class UserController {
 			String username = authentication.getName();
 			Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
 			Object aa = authentication.getPrincipal();
-			System.out.println(username);
+			System.out.println("일반로그인: "+username);
 			// 필요한 사용자 정보를 가져와서 모델에 추가합니다.
 			model.addAttribute("username", username);
 			model.addAttribute("authority", authorities);
@@ -195,7 +195,7 @@ public class UserController {
 			if (principal instanceof OAuth2AuthenticationToken) {
 
 				String a = principal.getName();
-				System.out.println("sdd" + a);
+				//System.out.println("sdd" + a);
 				OAuth2AuthenticationToken oauthToken = (OAuth2AuthenticationToken) principal;
 				// System.out.println(oauthToken);
 
@@ -204,8 +204,24 @@ public class UserController {
 				String output2 = a.toString();
 
 				String plus_account = output + output2;
-				System.out.println(plus_account);
-
+				System.out.println("total : "+plus_account);
+				
+				/*
+				if(!plus_account.isEmpty()) {
+					String plus_account2 = output + output2;
+					System.out.println("total : "+plus_account2);
+					
+					String ns_pic_total2 = null;
+					Matcher ns_matcher_total = Pattern.compile("picture=([^,}]+)").matcher(plus_account2);
+					if (ns_matcher_total.find()) {
+						ns_pic_total2 = ns_matcher_total.group(1);
+					}
+					System.out.println("ns_matcher_total : "+ns_matcher_total);
+					model.addAttribute("ns_matcher_total",ns_matcher_total);
+				}*/
+				
+				
+				
 				String ns_pic = null;
 				Matcher ns_matcher = Pattern.compile("picture=([^,}]+)").matcher(plus_account);
 				if (ns_matcher.find()) {
