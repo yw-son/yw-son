@@ -26,7 +26,7 @@
 	display: none;
 	color: red;
 	margin-left: 450px;
-	margin-top: 685px;
+	margin-top: 630px;
 
 }
 
@@ -49,8 +49,8 @@
 	font-size: 50px;
 }
 
-.join_title:hover{
-    cursor: pointer;
+.join_title:hover {
+	cursor: pointer;
 }
 
 
@@ -280,4 +280,136 @@ a {
 	font-size: 13px;
 	text-align: center;
 	color: rgb(255, 128, 64);
+}
+
+
+/* 마이페이지 css */
+#body-pd {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+}
+
+/* 패널 스타일링 */
+.panel.panel-info {
+	position: absolute;
+	margin-top: 50px;
+	width: 400px;
+	border-radius: 10px;
+	height: 250px;
+	box-shadow: 0 2px 4px rgb(192, 192, 192);
+	display: block;
+}
+
+
+
+
+.panel-heading {
+	background-color: #337ab7;
+	color: white;
+	padding: 10px;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+}
+
+.panel-title {
+	margin: 0;
+	font-size: 20px;
+}
+
+.panel-body {
+	padding: 20px;
+}
+
+/* 테이블 스타일링 */
+.table-user-information {
+	width: 100%;
+	text-align: center;
+	vertical-align: middle;
+	padding-top: 20px;
+
+}
+
+.table-user-information td:first-child {
+	width: 30%;
+	font-weight: bold;
+}
+
+/* 버튼 스타일링 */
+.btn-primary {
+	margin-top: 10px;
+}
+
+/* 아이콘 스타일링 */
+.ion-icon {
+	font-size: 18px;
+	vertical-align: middle;
+	margin-right: 5px;
+}
+
+/* 마이페이지  css */
+
+
+#my_infomation_modify {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-bottom: 300px;
+	height: 100vh;
+	margin: 0;
+}
+
+.userinfo_table {
+	position: relative;
+	font-size: 18px;
+}
+
+.userinfo_td_gap {
+	white-space: nowrap;
+	position: relative;
+	padding-bottom: 40px;
+	/* 아래쪽 간격 크기 조절 */
+	padding-left: 100px;
+	/* 좌측 간격 크기 조절 */
+
+}
+
+
+
+.btns-wrap__edit-btn {
+	position: relative;
+	border: 1px solid grey;
+	border-radius: 8px;
+	background-color: white;
+	color: black;
+	width: 200px;
+	height: 50px;
+}
+
+.mypage_sidebar {
+	list-style-type: none;
+	padding-bottom: 40px;
+}
+
+#mypage_sidebar_nav {
+	white-space: nowrap;
+	position: relative;
+	margin-top: -300px;
+	/* 원하는 여백 크기로 조정 */
+	margin-right: 200px;
+	font-size: 20px;
+	color: rgb(69, 69, 69);
+}
+
+#profile_lion {
+	height: 150px;
+	margin-left: 100px;
+	margin-bottom: 10px;
+}
+
+li.mypage_sidebar a.active {
+    color: rgb(255, 64, 64);
+    font-weight: bold;
 }

@@ -9,13 +9,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.nimbusds.oauth2.sdk.Role;
+import com.project.leisure.DataNotFoundException;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
 import lombok.RequiredArgsConstructor;
 
-//user service
+//user serv
 
 @RequiredArgsConstructor
 @Service
@@ -60,4 +61,6 @@ public class UserService {
 		return userRepository.findByNickname(nickname);
 	}
 
+	
+	
 }

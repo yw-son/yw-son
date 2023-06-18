@@ -191,7 +191,7 @@ public class UserController {
 			model.addAttribute("username", username);
 			model.addAttribute("authority", authorities);
 			model.addAttribute("aa", aa);
-
+			
 			if (principal instanceof OAuth2AuthenticationToken) {
 
 				String a = principal.getName();
@@ -206,7 +206,7 @@ public class UserController {
 				String plus_account = output + output2;
 				System.out.println("total : "+plus_account);
 				
-				/*
+				
 				if(!plus_account.isEmpty()) {
 					String plus_account2 = output + output2;
 					System.out.println("total : "+plus_account2);
@@ -218,7 +218,7 @@ public class UserController {
 					}
 					System.out.println("ns_matcher_total : "+ns_matcher_total);
 					model.addAttribute("ns_matcher_total",ns_matcher_total);
-				}*/
+				}
 				
 				
 				
@@ -311,9 +311,10 @@ public class UserController {
 		return "kty/mypage";
 	}
 
-	@GetMapping("/mypage/my_reservations")
-	public String myresvation() {
-		return "kty/my_reservations";
-	}
+@GetMapping("/mypage/test")
+public String test() {
+	return "kty/test";
+}
+
 
 }
