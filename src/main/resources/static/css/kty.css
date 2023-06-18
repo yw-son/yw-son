@@ -175,7 +175,6 @@ button:after {
 	right: 0;
 	height: 2px;
 	width: 0;
-	background: #1AAB8A;
 	transition: 400ms ease all;
 }
 
