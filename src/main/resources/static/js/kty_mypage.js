@@ -9,4 +9,11 @@ $(function() {
 			}
 		});
 	});
+
+	$(document).ready(function() {
+		$("#modify_email_input_button").on("click", function() {
+			alert('hello');
+		});
+	});
+
 });
