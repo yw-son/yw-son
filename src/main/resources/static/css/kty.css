@@ -416,3 +416,12 @@ li.mypage_sidebar a.active {
 #modify_email_input{
 	display: none;
 }
+
+.modify_email_input {
+	height: 30px;
+	width: 200px;
+	border: none;
+}
+
+
+
