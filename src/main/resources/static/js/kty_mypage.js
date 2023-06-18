@@ -10,10 +10,14 @@ $(function() {
 		});
 	});
 
-	$(document).ready(function() {
-		$("#modify_email_input_button").on("click", function() {
-			alert('hello');
-		});
+	var $modify_email = $('.modify_email_input');
+	var $modify_email_check_button = $('#modify_email_input_button');
+	
+	$modify_email_check_button.on('click',function(){
+		
+		var check_modify_email = $modify_email.val();
+		alert(check_modify_email);
+		
 	});
 
 });
