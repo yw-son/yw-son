@@ -413,3 +413,7 @@ li.mypage_sidebar a.active {
     color: rgb(255, 64, 64);
     font-weight: bold;
 }
+
+#modify_email_input{
+	display: none;
+}

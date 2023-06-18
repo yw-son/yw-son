@@ -17,12 +17,12 @@
 
 <body id="userinfo_modify">
 	<div id="my_infomation_modify">
-		
+
 		<table class="userinfo_table">
 			<td><img src="/img/profile_img/pro_img1.png" id="profile_lion" alt="프로필"></td>
 			<tbody th:each="user : ${users2}">
-			
-				
+
+
 				<tr>
 					<td class="userinfo_td_gap"><strong>유저명</strong></td>
 					<td class="userinfo_td_gap" th:text=" ${user.username}"></td>
@@ -34,6 +34,11 @@
 				<tr class="mypage_tr_gap">
 					<td colspan="3" class="userinfo_td_gap">
 						<button class="btns-wrap__edit-btn" id="mypage_email_modify" type="button">수정</button>
+					</td>
+				</tr>
+				<tr id="modify_email_input">
+					<td colspan="4" class="userinfo_td_gap">
+						이메일 <input type="text">
 					</td>
 				</tr>
 				<tr class="mypage_tr_gap">
@@ -55,15 +60,15 @@
 					<td class="userinfo_td_gap"><strong>계정 생성일</strong></td>
 					<td class="userinfo_td_gap" th:text="${#temporals.format(user.create_userTime,'yyyy-MM-dd')}"></td>
 				</tr>
-				
+
 				<!-- 사이드 바 -->
 				<nav id="mypage_sidebar_nav">
-				<ul>
-					<li class="mypage_sidebar"><a  th:href="@{/user/mypage/me}" class="active">나의 정보</a></li>
-					<li class="mypage_sidebar"><a  th:href="@{/user/mypage/test}" >예약 내역</a></li>
-					<li class="mypage_sidebar"><a  th:href="@{/user/mypage}">장바구니</a></li>
-					<li class="mypage_sidebar"><a  th:href="@{/user/mypage}">파트너 신청</a></li>
-				</ul>
+					<ul>
+						<li class="mypage_sidebar"><a th:href="@{/user/mypage/me}" class="active">나의 정보</a></li>
+						<li class="mypage_sidebar"><a th:href="@{/user/mypage/test}">예약 내역</a></li>
+						<li class="mypage_sidebar"><a th:href="@{/user/mypage}">장바구니</a></li>
+						<li class="mypage_sidebar"><a th:href="@{/user/mypage}">파트너 신청</a></li>
+					</ul>
 				</nav>
 
 			</tbody>
@@ -71,6 +76,6 @@
 
 </body>
 <script>
-  
+
 </script>
 </div>
