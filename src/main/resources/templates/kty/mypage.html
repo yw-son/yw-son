@@ -12,6 +12,7 @@
 	<script th:src="@{/js/kty_join.js}"></script>
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script> <!-- sweetalert2 CDN-->
 	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script> <!-- 다음 주소 검색 api-->
+	<script th:src="@{/js/kty_mypage.js}"></script>
 </head>
 
 <body id="userinfo_modify">
@@ -32,7 +33,7 @@
 				</tr>
 				<tr class="mypage_tr_gap">
 					<td colspan="3" class="userinfo_td_gap">
-						<button class="btns-wrap__edit-btn" type="button">수정</button>
+						<button class="btns-wrap__edit-btn" id="mypage_email_modify" type="button">수정</button>
 					</td>
 				</tr>
 				<tr class="mypage_tr_gap">
