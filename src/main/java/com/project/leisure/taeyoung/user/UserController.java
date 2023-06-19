@@ -5,6 +5,8 @@ import java.security.Principal;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import java.util.regex.Matcher;
@@ -177,7 +179,7 @@ public class UserController {
 		}
 	}
 
-	// 마이페이지
+	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/mypage/me")
 	public String myPage(Model model, Principal principal) throws JsonProcessingException {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -316,5 +318,12 @@ public String test() {
 	return "kty/test";
 }
 
+/* 이메일 수정을 위한 인증번호 발송 */
+@PostMapping("/modify_email_code")
+@ResponseBody
+public String mailmodifycode(@RequestParam String email) throws Exception {
+	String code = emailService.sendmodifyemailCodeMessage(email);
+	return code;
+}
 
 }

@@ -355,8 +355,7 @@ a {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	margin-bottom: 300px;
-	height: 100vh;
+	top:160px;
 	margin: 0;
 }
 
@@ -368,7 +367,7 @@ a {
 .userinfo_td_gap {
 	white-space: nowrap;
 	position: relative;
-	padding-bottom: 40px;
+	padding-bottom: 25px;
 	/* 아래쪽 간격 크기 조절 */
 	padding-left: 100px;
 	/* 좌측 간격 크기 조절 */
@@ -386,6 +385,7 @@ a {
 	width: 200px;
 	height: 50px;
 }
+
 .btns-wrap__edit-btn:hover {
 	cursor: pointer;
 }
@@ -412,21 +412,23 @@ a {
 }
 
 li.mypage_sidebar a.active {
-    color: rgb(255, 64, 64);
-    font-weight: bold;
+	color: rgb(255, 64, 64);
+	font-weight: bold;
 }
 
-#modify_email_input{
+#modify_email_input {
 	display: none;
+
 }
 
 .modify_email_input {
 	height: 30px;
 	width: 200px;
 	border: none;
+
 }
 
-#modify_email_input_button{
+#modify_email_input_button {
 	position: relative;
 	border: 1px solid grey;
 	border-radius: 8px;
@@ -435,10 +437,50 @@ li.mypage_sidebar a.active {
 	width: 100px;
 	height: 30px;
 	background-color: rgb(208, 255, 208);
-	color:rgb(64, 128, 128);
+	color: rgb(64, 128, 128);
 	font-weight: bold;
 }
 
-#modify_email_input_button:hover{
+#modify_email_input_button:hover {
 	cursor: pointer;
-	}
+}
+
+
+#modify_check {
+	position: relative;
+	border: 1px solid grey;
+	border-radius: 8px;
+	background-color: white;
+	color: black;
+	width: 100px;
+	height: 30px;
+	background-color: rgb(208, 255, 208);
+	color: rgb(64, 128, 128);
+	font-weight: bold;
+}
+
+#modify_Code {
+	height: 30px;
+	width: 200px;
+	border: none;
+
+}
+
+#modifyEmail{
+	position: relative;
+	border: 1px solid grey;
+	border-radius: 8px;
+	background-color: rgb(255, 159, 159);
+	color: rgb(255, 255, 255);
+	width: 200px;
+	height: 50px;
+	font-weight: bold;
+}
+#modifyEmail:hover{
+	cursor: pointer;
+}
+#noused_account{
+	color: rgb(113, 126, 132);
+}
+
+

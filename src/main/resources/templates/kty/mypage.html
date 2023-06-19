@@ -38,9 +38,13 @@
 				</tr>
 				<tr id="modify_email_input">
 					<td colspan="4" class="userinfo_td_gap">
-						<input type="email"  class="modify_email_input" placeholder="이메일을 입력해주세요">
-						<input type="button" value="인증번호 발송" id="modify_email_input_button">
-					
+						<input type="email" class="modify_email_input" placeholder="이메일을 입력해주세요">
+						<input type="button" value="인증번호 발송" id="modify_email_input_button"><br>
+						<input type="text" class="form-control" name="modify_Code" id="modify_Code" maxlength="6"
+							placeholder="인증번호를 입력해주세요">
+						<input class="modify_check" name="modify_check" id="modify_check" type="button"
+							value="인증번호 확인"><br><br>
+						<input class="modifyEmail" name="modifyEmail" id="modifyEmail" type="button" value="변경할래요">
 					</td>
 				</tr>
 				<tr class="mypage_tr_gap">
@@ -62,7 +66,19 @@
 					<td class="userinfo_td_gap"><strong>계정 생성일</strong></td>
 					<td class="userinfo_td_gap" th:text="${#temporals.format(user.create_userTime,'yyyy-MM-dd')}"></td>
 				</tr>
-
+				<tr>
+					<td colspan="5" class="userinfo_td_gap">
+						<div class="bot_btn">
+							<br><br>
+							<h5 id="noused_account">저기어때를 이용하고 싶지 않으신가요? <a class="nav-link"
+									sec:authorize="isAuthenticated()" th:href="@{/user/logout}"
+									style="color: rgb(0, 0, 0); text-decoration: underline;">로그아웃</a>
+								<a class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/user/user_del}"
+									style="color: rgb(0, 0, 0); text-decoration: underline;">회원탈퇴</a>
+							</h5>
+						</div>
+					</td>
+				</tr>
 				<!-- 사이드 바 -->
 				<nav id="mypage_sidebar_nav">
 					<ul>
