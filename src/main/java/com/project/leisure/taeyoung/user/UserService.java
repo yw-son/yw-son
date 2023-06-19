@@ -61,6 +61,8 @@ public class UserService {
 		return userRepository.findByNickname(nickname);
 	}
 
-	
+	public Optional<Users> changepwd(String password){
+		return userRepository.findByPassword(password);
+	}
 	
 }
