@@ -455,6 +455,13 @@ li.mypage_sidebar a.active {
 
 }
 
+.modify_password3{
+	height: 30px;
+	width: 200px;
+	border: none;
+
+}
+
 #modifypassword{
 	position: relative;
 	border: 1px solid grey;
