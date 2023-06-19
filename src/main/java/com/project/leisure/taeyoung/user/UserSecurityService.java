@@ -39,10 +39,10 @@ public class UserSecurityService implements UserDetailsService {
 		}
 
 		List<GrantedAuthority> authorities = new ArrayList<>();
-		if (admin > 1000 && admin < partner) {
+		if (admin > 1000 ) {
 			siteUser.setRole(UserRole.ADMIN); // Set the role value to ADMIN
 			authorities.add(new SimpleGrantedAuthority(UserRole.ADMIN.getValue()));
-		} else if (partner > 2000 && partner < admin) {
+		} else if (partner > 3000 ) {
 			siteUser.setRole(UserRole.PARTNER); // Set the role value to PARTNER
 			authorities.add(new SimpleGrantedAuthority(UserRole.PARTNER.getValue()));
 		} else {
