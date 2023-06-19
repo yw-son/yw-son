@@ -40,8 +40,8 @@ $(function() {
 
   $mypage_addr_modify.on('click', function() {
 
-    console.log('sdsd');
-    alert('sdsd');
+    
+    alert('아직 미구현~');
   });
 	
 });
