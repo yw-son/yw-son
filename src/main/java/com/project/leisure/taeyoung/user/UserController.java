@@ -312,18 +312,16 @@ public class UserController {
 
 		return "kty/mypage";
 	}
-
+/*
 @GetMapping("/mypage/test")
 public String test() {
 	return "kty/test";
 }
-
-/* 이메일 수정을 위한 인증번호 발송 */
-@PostMapping("/modify_email_code")
-@ResponseBody
-public String mailmodifycode(@RequestParam String email) throws Exception {
-	String code = emailService.sendmodifyemailCodeMessage(email);
-	return code;
+*/
+/* 비밀번호 변경 
+@GetMapping("/updatePwd")
+public String upDatepassword() {
+	
 }
-
+*/
 }
