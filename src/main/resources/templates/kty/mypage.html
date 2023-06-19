@@ -31,20 +31,23 @@
 					<td class="userinfo_td_gap"><strong>이메일</strong></td>
 					<td class="userinfo_td_gap" th:text=" ${user.email}"></td>
 				</tr>
+				<tr>
+					<td class="userinfo_td_gap"><strong>비밀번호</strong></td>
+					<td class="userinfo_td_gap">**************</td>
+				</tr>
 				<tr class="mypage_tr_gap">
 					<td colspan="3" class="userinfo_td_gap">
-						<button class="btns-wrap__edit-btn" id="mypage_email_modify" type="button">수정</button>
+						<button class="btns-wrap__edit-btn" id="mypage_password_modify" type="button">변경할래요</button>
 					</td>
 				</tr>
-				<tr id="modify_email_input">
+
+				<tr id="modify_password_input">
 					<td colspan="4" class="userinfo_td_gap">
-						<input type="email" class="modify_email_input" placeholder="이메일을 입력해주세요">
-						<input type="button" value="인증번호 발송" id="modify_email_input_button"><br>
-						<input type="text" class="form-control" name="modify_Code" id="modify_Code" maxlength="6"
-							placeholder="인증번호를 입력해주세요">
-						<input class="modify_check" name="modify_check" id="modify_check" type="button"
-							value="인증번호 확인"><br><br>
-						<input class="modifyEmail" name="modifyEmail" id="modifyEmail" type="button" value="변경할래요">
+						<input type="password" class="modify_password" placeholder="기존 비밀번호를 입력하세요"><br>
+						<input type="password" class="modify_password2" id="modify_password2_input"
+							placeholder="변경할 비밀번호를 입력하세요">
+						<br><br>
+						<input class="modifyEmail" name="modifypassword" id="modifypassword" type="button" value="변경할래요">
 					</td>
 				</tr>
 				<tr class="mypage_tr_gap">
@@ -53,7 +56,7 @@
 				</tr>
 				<tr>
 					<td colspan="3" class="userinfo_td_gap">
-						<button class="btns-wrap__edit-btn" type="button">수정</button>
+						<button class="btns-wrap__edit-btn" type="button">변경할래요</button>
 					</td>
 				</tr>
 				<tr>

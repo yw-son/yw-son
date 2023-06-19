@@ -355,7 +355,7 @@ a {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	top:160px;
+	height: 100vh;
 	margin: 0;
 }
 
@@ -416,19 +416,19 @@ li.mypage_sidebar a.active {
 	font-weight: bold;
 }
 
-#modify_email_input {
+#modify_password_input {
 	display: none;
 
 }
 
-.modify_email_input {
+.modify_password{
 	height: 30px;
 	width: 200px;
 	border: none;
 
 }
 
-#modify_email_input_button {
+#modify_password_input_button {
 	position: relative;
 	border: 1px solid grey;
 	border-radius: 8px;
@@ -441,32 +441,21 @@ li.mypage_sidebar a.active {
 	font-weight: bold;
 }
 
-#modify_email_input_button:hover {
+#modify__input_button:hover {
 	cursor: pointer;
 }
 
 
-#modify_check {
-	position: relative;
-	border: 1px solid grey;
-	border-radius: 8px;
-	background-color: white;
-	color: black;
-	width: 100px;
-	height: 30px;
-	background-color: rgb(208, 255, 208);
-	color: rgb(64, 128, 128);
-	font-weight: bold;
-}
 
-#modify_Code {
+
+.modify_password2{
 	height: 30px;
 	width: 200px;
 	border: none;
 
 }
 
-#modifyEmail{
+#modifypassword{
 	position: relative;
 	border: 1px solid grey;
 	border-radius: 8px;
@@ -476,7 +465,7 @@ li.mypage_sidebar a.active {
 	height: 50px;
 	font-weight: bold;
 }
-#modifyEmail:hover{
+#modifypassword:hover{
 	cursor: pointer;
 }
 #noused_account{
