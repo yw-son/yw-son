@@ -318,10 +318,12 @@ public String test() {
 	return "kty/test";
 }
 */
-/* 비밀번호 변경 
-@GetMapping("/updatePwd")
-public String upDatepassword() {
+	
+
+/* 회원탈퇴 
+@GetMapping("/user_del")
+public String userDel(HttpSession httpSession, Model model) {
 	
 }
-*/
+*/	
 }

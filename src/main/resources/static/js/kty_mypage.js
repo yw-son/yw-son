@@ -1,4 +1,5 @@
 $(function() {
+	/* 비밀번호 변경 활성화 */
 	$(document).ready(function() {
 		$("#mypage_password_modify").on("click", function() {
 			var modifyEmailInput = $("#modify_password_input");
@@ -10,15 +11,7 @@ $(function() {
 		});
 	});
 
-	var $modify_email = $('.modify_email_input');
-	var $modify_email_check_button = $('#modify_email_input_button');
-
-	$modify_email_check_button.on('click', function() {
-
-		var check_modify_email = $modify_email.val();
-		alert(check_modify_email);
-
-	});
+/* 페이지 새로 고침 시 프로필 사진 변경 */
 	$(document).ready(function() {
 		var profileImages = [
 			"pro_img1.jpg",
@@ -34,4 +27,21 @@ $(function() {
 	
 		$("#profile_lion").attr("src", "/img/profile_img/" + profileImages[randomIndex]);
 	});
+	
+/* 주소 부분 */
+  var $mypage_addr_modify = $('#mypage_addr_modify');
+
+
+  if ($mypage_addr_modify.length === 0) {
+    console.log("버튼이 존재하지 않거나 선택이 잘못되었습니다.");
+    return;
+  }
+
+
+  $mypage_addr_modify.on('click', function() {
+
+    console.log('sdsd');
+    alert('sdsd');
+  });
+	
 });

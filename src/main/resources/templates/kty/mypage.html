@@ -43,10 +43,13 @@
 
 				<tr id="modify_password_input">
 					<td colspan="4" class="userinfo_td_gap">
-						<input type="password" class="modify_password" placeholder="기존 비밀번호를 입력하세요"><br>
-						<input type="password" class="modify_password2" id="modify_password2_input"
+						<strong>비밀번호 </strong>
+						<div></div> <input type="password" class="modify_password" placeholder="기존 비밀번호를 입력하세요"><br>
+						<strong>새 비밀번호 </strong>
+						<div></div><input type="password" class="modify_password2" id="modify_password2_input"
 							placeholder="새 비밀번호를 입력하세요"><br>
-						<input type="password" class="modify_password3" id="modify_password3_input"
+						<strong>새 비밀번호 확인 </strong>
+						<div></div><input type="password" class="modify_password3" id="modify_password3_input"
 							placeholder="새 비밀번호를 다시 입력하세요">
 						<br><br>
 						<input class="modifyEmail" name="modifypassword" id="modifypassword" type="button"
@@ -54,12 +57,12 @@
 					</td>
 				</tr>
 				<tr class="mypage_tr_gap">
-					<td class="userinfo_td_gap"><strong>상세 주소</strong></td>
-					<td class="userinfo_td_gap" th:text="${user.addr3}"></td>
+					<td class="userinfo_td_gap"><strong>주소</strong></td>
+					<td class="userinfo_td_gap" th:text="'('+${user.addr1}+')  '+${user.addr3}"></td>
 				</tr>
 				<tr>
 					<td colspan="3" class="userinfo_td_gap">
-						<button class="btns-wrap__edit-btn" type="button">변경할래요</button>
+						<button class="btns-wrap__edit-btn" id="mypage_addr_modify" type="button">변경할래요</button>
 					</td>
 				</tr>
 				<tr>
@@ -85,18 +88,28 @@
 						</div>
 					</td>
 				</tr>
-				<!-- 사이드 바 -->
-				<nav id="mypage_sidebar_nav">
-					<ul>
-						<li class="mypage_sidebar"><a th:href="@{/user/mypage/me}" class="active">나의 정보</a></li>
-						<li class="mypage_sidebar"><a th:href="@{/user/mypage/test}">예약 내역</a></li>
-						<li class="mypage_sidebar"><a th:href="@{/user/mypage}">장바구니</a></li>
-						<li class="mypage_sidebar"><a th:href="@{/user/mypage}">파트너 신청</a></li>
-					</ul>
-				</nav>
 
 			</tbody>
+
+
 		</table>
+
+
+
+
+
+
+
+
+		<!-- 사이드 바 -->
+		<nav id="mypage_sidebar_nav">
+			<ul>
+				<li class="mypage_sidebar"><a th:href="@{/user/mypage/me}" class="active">나의 정보</a></li>
+				<li class="mypage_sidebar"><a th:href="@{/user/mypage/test}">예약 내역</a></li>
+				<li class="mypage_sidebar"><a th:href="@{/user/mypage}">장바구니</a></li>
+				<li class="mypage_sidebar"><a th:href="@{/user/mypage}">파트너 신청</a></li>
+			</ul>
+		</nav>
 
 </body>
 <script>

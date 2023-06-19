@@ -55,10 +55,13 @@ spring:
                          userInfoUri: https://openapi.naver.com/v1/nid/me
                          userNameAttribute: response
 app:
-   auth:
+  auth:
     tokenSecret: TOKEN_SECRET
     tokenExpiry: 1800000
     refreshTokenExpiry: 604800000
-oauth2:
+  oauth2:
     authorizedRedirectUris:
       - http://localhost:8080/oauth/redirect
+
+
+             
