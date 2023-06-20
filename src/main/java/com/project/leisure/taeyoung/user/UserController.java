@@ -337,12 +337,13 @@ public class UserController {
 	}
 
 	/*
-	 * 회원가입 유효성 검증 post
+	 * 기존 비밀번호와 일치하는지 확인하는 컨트롤러(작성중)
 	 * 
-	 * @PostMapping("/check_username") public ResponseEntity<Integer>
-	 * checkUsername(@RequestParam("username") String username) { List<Users> users
-	 * = userService.check(username); int result = (users != null &&
-	 * !users.isEmpty()) ? 1 : 0; return ResponseEntity.ok(result); }
+	 * @PostMapping("/check_password") public ResponseEntity<Integer>
+	 * checkPwd(@RequestParam("modify_password") String password) { List<Users>
+	 * users = userService.
+	 * 
+	 * }
 	 */
 
 }
