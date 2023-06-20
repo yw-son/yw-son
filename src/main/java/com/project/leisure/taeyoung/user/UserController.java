@@ -121,11 +121,13 @@ public class UserController {
 		return code;
 	}
 
+	/* 비밀번호 찾기 페이지 */
 	@GetMapping("/find_pw")
 	public String findPW() {
 		return "/kty/find_pw";
 	}
 
+	/* 임시 비밀번호 발송 PostMapping */
 	@PostMapping("/temp_pwd")
 	@ResponseBody
 	public String sendTempPwd(@RequestParam String email, @RequestParam String username) throws Exception {
@@ -148,11 +150,13 @@ public class UserController {
 
 	}
 
+	/* 아이디 찾기 페이지 */
 	@GetMapping("/find_id")
 	public String findID() {
 		return "/kty/find_id";
 	}
 
+	/* 아이디 찾기 -> Postmapping */
 	@PostMapping("/find_id")
 	@ResponseBody
 	public String findid(@RequestParam String email) {
@@ -182,6 +186,7 @@ public class UserController {
 		}
 	}
 
+	/* 마이페이지 -> 회원정보 표기 */
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/mypage/me")
 	public String myPage(Model model, Principal principal) throws JsonProcessingException {
@@ -312,36 +317,30 @@ public class UserController {
 
 		return "kty/mypage";
 	}
-	
-	@PostMapping("/updateaddr")
-	public String changeAddr(@RequestParam("modify_addr1") String addr1, @RequestParam("modify_addr2") String addr2, @RequestParam("modify_addr3") String addr3, Principal principal) {
-	    List<Users> userList = (List<Users>) userService.check(principal.getName());
-	    if (!userList.isEmpty()) {
-	        Users users = userList.get(0); // 첫 번째 사용자 객체를 가져옴
-	        users.setAddr1(addr1);
-	        users.setAddr2(addr2);
-	        users.setAddr3(addr3);
-	        userService.save(users);
-	        
-	    }
-	    return "updateaddr";
-	}
-	
-	
-	
-	
-	/* 회원가입 유효성 검증 post 
 
-	@PostMapping("/check_username")
-	public ResponseEntity<Integer> checkUsername(@RequestParam("username") String username) {
-		List<Users> users = userService.check(username);
-		int result = (users != null && !users.isEmpty()) ? 1 : 0;
-		return ResponseEntity.ok(result);
+	/* 주소변경 PostMapping */
+	@PostMapping("/updateaddr")
+	public String changeAddr(@RequestParam("modify_addr1") String addr1, @RequestParam("modify_addr2") String addr2,
+			@RequestParam("modify_addr3") String addr3, Principal principal) {
+		List<Users> userList = (List<Users>) userService.check(principal.getName());
+		if (!userList.isEmpty()) {
+			Users users = userList.get(0); // 첫 번째 사용자 객체를 가져옴
+			users.setAddr1(addr1);
+			users.setAddr2(addr2);
+			users.setAddr3(addr3);
+			userService.save(users);
+
+		}
+		return "updateaddr";
 	}
-*/
-	
-	
-	
-	
-	
+
+	/*
+	 * 회원가입 유효성 검증 post
+	 * 
+	 * @PostMapping("/check_username") public ResponseEntity<Integer>
+	 * checkUsername(@RequestParam("username") String username) { List<Users> users
+	 * = userService.check(username); int result = (users != null &&
+	 * !users.isEmpty()) ? 1 : 0; return ResponseEntity.ok(result); }
+	 */
+
 }
