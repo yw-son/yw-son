@@ -65,15 +65,24 @@ $(function() {
 					modify_addr3: a3
 				},
 				success: function(response) {
-					alert('good!');
+					Swal.fire({
+						title: 'Error!',
+						html: '<b>인증번호 발송에 실패하였습니다 다시 시도해 주세요</b>',
+						icon: 'error'
+					});
 					setTimeout(function() {
 						location.reload(); // 1초 후에 페이지를 자동으로 새로고침
-					}, 1000); // 1초 (1000 밀리초) 후에 실행
+					}, 500); // 1초 (1000 밀리초) 후에 실행
 				},
 				error: function(xhr, status, error) {
+					Swal.fire({
+						icon: 'success',
+						title: '변경되었습니다.',
+						showConfirmButton: false
+					});
 					setTimeout(function() {
 						location.reload(); // 3초 후에 페이지를 자동으로 새로고침
-					}, 1); // 3초 (3000 밀리초) 후에 실행
+					}, 1500); // 3초 (3000 밀리초) 후에 실행
 				}
 			});
 		}
