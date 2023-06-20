@@ -137,6 +137,7 @@ function execPostCode2() {
 }
 
 
+
 $(document).ready(function() {
   var $inputOldPwd = $('#modify_password');
   var $oldPwdError = $('#confirm_oldPwd');
@@ -148,27 +149,36 @@ $(document).ready(function() {
   $inputOldPwd.on('input focusout', function() {
     var oldPwd = $inputOldPwd.val();
 
-    $.ajax({
-      type: 'POST',
-      url: '/user/check_oldpwd',
-      data: { modify_password: oldPwd },
-      dataType: 'json',
-      success: function(data) {
-        if (data === 1) {
-          $oldPwdError.text('비밀번호가 일치합니다').show();
-          enableNewPwdInputs();
-        } else {
-          $oldPwdError.text('비밀번호가 일치하지 않습니다').show();
-          disableNewPwdInputs();
+    if (oldPwd === '') {
+      disableNewPwdInputs();
+    } else {
+      $.ajax({
+        type: 'POST',
+        url: '/user/check_oldpwd',
+        data: { modify_password: oldPwd },
+        dataType: 'json',
+        success: function(data) {
+          if (data === 1) {
+            $oldPwdError.text('비밀번호가 일치합니다').show();
+            enableNewPwdInputs();
+          } else {
+            $oldPwdError.text('비밀번호가 일치하지 않습니다').show();
+            disableNewPwdInputs();
+          }
+        },
+        error: function(xhr, status, error) {
+          console.log(error);
         }
-      },
-      error: function(xhr, status, error) {
-        console.log(error);
-      }
-    });
+      });
+    }
   });
 
   function enableNewPwdInputs() {
+    if ($inputOldPwd.val() === '') {
+      disableNewPwdInputs();
+      return;
+    }
+
     $inputNewPwd1.prop('disabled', false);
     $inputNewPwd2.prop('disabled', false);
 
