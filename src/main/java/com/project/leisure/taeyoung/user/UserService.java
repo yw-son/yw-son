@@ -22,47 +22,66 @@ import lombok.RequiredArgsConstructor;
 @Service
 public class UserService {
 
-	private final UserRepository userRepository;
-	private final PasswordEncoder passwordEncoder;
+   private final UserRepository userRepository;
+   private final PasswordEncoder passwordEncoder;
 
-	public Users create(String username, String email, String password, String addr1, String addr2, String addr3) {
-		Users user = new Users();
-		user.setUsername(username);
-		user.setEmail(email);
-		user.setPassword(passwordEncoder.encode(password));
-		user.setAddr1(addr1);
-		user.setAddr2(addr2);
-		user.setAddr3(addr3);
-		this.userRepository.save(user);
-		return user;
-	}
+   public Users create(String username, String email, String password, String addr1, String addr2, String addr3) {
+      Users user = new Users();
+      user.setUsername(username);
+      user.setEmail(email);
+      user.setPassword(passwordEncoder.encode(password));
+      user.setAddr1(addr1);
+      user.setAddr2(addr2);
+      user.setAddr3(addr3);
+      this.userRepository.save(user);
+      return user;
+   }
 
-	public List<Users> check(String username) {
-		return userRepository.findByUsername(username);
-	}
+   public List<Users> check(String username) {
+      return userRepository.findByUsername(username);
+   }
 
-	public Optional<Users> check2(String email) {
-		return userRepository.findByEmail(email);
-	}
+   public Optional<Users> check2(String email) {
+      return userRepository.findByEmail(email);
+   }
 
-	public List<Users> find(String username, String email) {
+   public List<Users> find(String username, String email) {
 
-		return userRepository.findByUsernameAndEmail(username, email).map(Collections::singletonList)
-				.orElse(Collections.emptyList());
-	}
+      return userRepository.findByUsernameAndEmail(username, email).map(Collections::singletonList)
+            .orElse(Collections.emptyList());
+   }
 
 //임시비밀번호로 패스워드 변경
-	public void save(Users user) {
-		this.userRepository.save(user);
-		System.out.println("Saving user: " + user.getUsername() + ", Password: " + user.getPassword());
-	}
+   public void save(Users user) {
+      this.userRepository.save(user);
+      System.out.println("Saving user: " + user.getUsername() + ", Password: " + user.getPassword());
+   }
 
-	public List<Users> nick(String nickname) {
-		return userRepository.findByNickname(nickname);
-	}
+   public List<Users> nick(String nickname) {
+      return userRepository.findByNickname(nickname);
+   }
 
-	public Optional<Users> changepwd(String password){
-		return userRepository.findByPassword(password);
-	}
-	
+   
+   
+   public Users updateAddr(String addr1, String addr2, String addr3) {
+      Users users = new Users();
+      users.setAddr1(addr1);
+      users.setAddr2(addr2);
+      users.setAddr3(addr3);
+      this.userRepository.save(users);
+      return users;
+   } 
+   
+   public boolean checkPassword(String username, String password) {
+      PasswordEncoder encoder = new BCryptPasswordEncoder();
+      Users users = (Users) userRepository.findByUsername(username);
+      String old_pwd = users.getPassword();
+      boolean matches = encoder.matches(password,old_pwd);
+      
+      return matches;
+      
+      
+   }
+   
+   
 }

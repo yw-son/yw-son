@@ -316,7 +316,7 @@ public class UserController {
 @GetMapping("/mypage/test")
 public String test() {
 	return "kty/test";
-}
+}6
 */
 	
 
