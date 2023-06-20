@@ -337,7 +337,7 @@ public class UserController {
 	}
 
 	/*
-	 * 기존 비밀번호와 일치하는지 확인하는 컨트롤러(작성중)
+	 * 기존 비밀번호와 일치하는지 확인하는 컨트롤러_비밀번호검증(작성중)
 	 * 
 	 * @PostMapping("/check_password") public ResponseEntity<Integer>
 	 * checkPwd(@RequestParam("modify_password") String password) { List<Users>
