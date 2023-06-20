@@ -76,16 +76,17 @@ public class UserService {
 	
 
 
-   public boolean checkPassword(String username, String password) {
-      PasswordEncoder encoder = new BCryptPasswordEncoder();
-      Users users = (Users) userRepository.findByUsername(username);
-      String old_pwd = users.getPassword();
-      boolean matches = encoder.matches(password,old_pwd);
-      
-      return matches;
-      
-      
-   }
+	public boolean checkPassword(String username, String password) {
+		PasswordEncoder encoder = new BCryptPasswordEncoder();
+		Optional<Users> users = userRepository.findByusername(username);
+		//	Users users = (Users) userRepository.findByUsername(username);
+		String old_pwd = users.map(Users::getPassword).orElse(null);
+		boolean matches = encoder.matches(password,old_pwd);
+		
+		return matches;
+		
+		
+	}
    
    
 }
