@@ -523,7 +523,8 @@ li.mypage_sidebar a.active {
 
 #modify_addr_button {
 	cursor: pointer;
-	border: 1px solid rgb(128, 128, 128);
+	background-color: aliceblue;
+	color: #1e6b7b;
 
 }
 
