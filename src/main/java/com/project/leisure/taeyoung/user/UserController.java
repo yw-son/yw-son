@@ -106,6 +106,7 @@ public class UserController {
 		return ResponseEntity.ok(result);
 	}
 
+	/* 회원가입 */
 	@GetMapping("/sign")
 	public String logi2n() {
 		return "signup";
@@ -114,6 +115,7 @@ public class UserController {
 	private final EmailService emailService;
 	private final PasswordEncoder passwordEncoder;
 
+	/* 회원가입 인증번호 발송을 위한 컨트롤러 */
 	@PostMapping("/emailcode")
 	@ResponseBody
 	public String mailConfirm(@RequestParam String email) throws Exception {
