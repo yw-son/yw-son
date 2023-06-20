@@ -337,13 +337,20 @@ public class UserController {
 	}
 
 	/*
-	 * 기존 비밀번호와 일치하는지 확인하는 컨트롤러_비밀번호검증(작성중)
-	 * 
-	 * @PostMapping("/check_password") public ResponseEntity<Integer>
-	 * checkPwd(@RequestParam("modify_password") String password) { List<Users>
-	 * users = userService.
-	 * 
-	 * }
-	 */
+	 기존 비밀번호와 일치하는지 확인하는 컨트롤러_비밀번호검(작성중) */
+	  
+
+	@PostMapping("/check_oldpwd")
+	public ResponseEntity<Integer> checkPwd(@RequestParam("modify_password") String password, Principal principal) {
+	    String current_username = principal.getName();
+	    boolean isMatch = userService.checkPassword(current_username, password);
+
+	    if (isMatch) {
+	        return ResponseEntity.ok(1); // 이전 패스워드와 일치하는 경우
+	    } else {
+	        return ResponseEntity.ok(0); // 이전 패스워드와 일치하지 않는 경우
+	    }
+	}
+	 
 
 }

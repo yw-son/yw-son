@@ -44,7 +44,30 @@ $(function() {
 
 		$("#profile_lion").attr("src", "/img/profile_img/" + profileImages[randomIndex]);
 	});
+	
+var $inputOldPwd = $('#modify_password');
+var $oldPwdError = $('#confirm_oldPwd');
 
+$inputOldPwd.on('input focusout', function() {
+    var oldPwd = $inputOldPwd.val();
+
+    $.ajax({
+        type: 'POST',
+        url: '/user/check_oldpwd',
+        data: { modify_password: oldPwd },
+        dataType: 'json',
+        success: function(data) {
+            if (data === 1) {
+                $oldPwdError.text('비밀번호가 일치합니다').show();
+            } else {
+                $oldPwdError.text('비밀번호가 일치하지 않습니다').show();
+            }
+        },
+        error: function(xhr, status, error) {
+            console.log(error); // 오류가 발생하면 콘솔에 오류 메시지를 출력합니다.
+        }
+    });
+});
 
 	var $button_addr_modify = $('#modifyaddr');
 	var $input_modifyaddr1 = $('#modify_addr1');
