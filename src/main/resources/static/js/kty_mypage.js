@@ -140,6 +140,7 @@ function execPostCode2() {
 $(document).ready(function() {
   var $inputOldPwd = $('#modify_password');
   var $oldPwdError = $('#confirm_oldPwd');
+  var $NewPwdError = $('#confirm_newPwd');
   var $inputNewPwd1 = $('#modify_password2_input');
   var $inputNewPwd2 = $('#modify_password3_input');
   var $modifyEmailBtn = $('.modifyEmail');
@@ -173,8 +174,10 @@ $(document).ready(function() {
 
     if ($inputNewPwd1.val() !== '' && $inputNewPwd2.val() !== '' && $inputNewPwd1.val() === $inputNewPwd2.val()) {
       $modifyEmailBtn.prop('disabled', false);
+      $NewPwdError.text('').hide();
     } else {
       $modifyEmailBtn.prop('disabled', true);
+      $NewPwdError.text('새 비밀번호와 입력값이 일치하지 않습니다').show();
     }
   }
 
@@ -184,6 +187,7 @@ $(document).ready(function() {
     $inputNewPwd1.prop('disabled', true);
     $inputNewPwd2.prop('disabled', true);
     $modifyEmailBtn.prop('disabled', true);
+    $NewPwdError.text('').hide();
   }
 
   $inputNewPwd1.on('input', enableNewPwdInputs);
