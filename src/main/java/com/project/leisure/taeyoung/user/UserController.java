@@ -351,6 +351,19 @@ public class UserController {
 	        return ResponseEntity.ok(0); // 이전 패스워드와 일치하지 않는 경우
 	    }
 	}
+	
+	@PostMapping("/update_pwd")
+	public String updatePwd(@RequestParam("modify_password2") String password, Principal principal) {
+		List<Users> userList = (List<Users>) userService.check(principal.getName());
+		Users users = userList.get(0);
+		users.setPassword(passwordEncoder.encode(password));
+		userService.save(users);
+		 SecurityContextHolder.clearContext();
+		    return "redirect:/user/logout";
+		
+		  
+	}
+	
 	 
 
 }
