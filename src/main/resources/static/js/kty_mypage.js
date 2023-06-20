@@ -75,14 +75,9 @@ $(function() {
 					}, 500); // 1초 (1000 밀리초) 후에 실행
 				},
 				error: function(xhr, status, error) {
-					Swal.fire({
-						icon: 'success',
-						title: '변경되었습니다.',
-						showConfirmButton: false
-					});
 					setTimeout(function() {
 						location.reload(); // 3초 후에 페이지를 자동으로 새로고침
-					}, 1500); // 3초 (3000 밀리초) 후에 실행
+					}, 500); // 3초 (3000 밀리초) 후에 실행
 				}
 			});
 		}
