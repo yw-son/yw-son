@@ -11,7 +11,24 @@ $(function() {
 		});
 	});
 
-/* 페이지 새로 고침 시 프로필 사진 변경 */
+	/* 주소 변경 활성화 */
+	/* 비밀번호 변경 활성화 */
+	$(document).ready(function() {
+		$("#mypage_addr_modify").on("click", function() {
+			var modifyEmailInput = $("#modify_address_input");
+			if (modifyEmailInput.css("display") === "none") {
+				modifyEmailInput.css("display", "block");
+			} else {
+				modifyEmailInput.css("display", "none");
+			}
+		});
+	});
+
+
+
+
+
+	/* 페이지 새로 고침 시 프로필 사진 변경 */
 	$(document).ready(function() {
 		var profileImages = [
 			"pro_img1.jpg",
@@ -24,24 +41,88 @@ $(function() {
 
 		var randomIndex = Math.floor(Math.random() * profileImages.length);
 
-	
+
 		$("#profile_lion").attr("src", "/img/profile_img/" + profileImages[randomIndex]);
 	});
-	
-/* 주소 부분 */
-  var $mypage_addr_modify = $('#mypage_addr_modify');
 
 
-  if ($mypage_addr_modify.length === 0) {
-    console.log("버튼이 존재하지 않거나 선택이 잘못되었습니다.");
-    return;
-  }
+	var $button_addr_modify = $('#modifyaddr');
+	var $input_modifyaddr1 = $('#modify_addr1');
+	var $input_modifyaddr2 = $('#modify_addr2');
+	var $input_modifyaddr3 = $('#modify_addr3');
 
+	$button_addr_modify.on('click', function() {
+		var a1 = $input_modifyaddr1.val();
+		var a2 = $input_modifyaddr2.val();
+		var a3 = $input_modifyaddr3.val();
+		if (a1.trim() !== '' && a3.trim() !== '') {
+			$.ajax({
+				url: "/user/updateaddr",
+				type: "POST",
+				data: {
+					modify_addr1: a1,
+					modify_addr2: a2,
+					modify_addr3: a3
+				},
+				success: function(response) {
+					alert('good!');
+					setTimeout(function() {
+						location.reload(); // 1초 후에 페이지를 자동으로 새로고침
+					}, 1000); // 1초 (1000 밀리초) 후에 실행
+				},
+				error: function(xhr, status, error) {
+					setTimeout(function() {
+						location.reload(); // 3초 후에 페이지를 자동으로 새로고침
+					}, 1); // 3초 (3000 밀리초) 후에 실행
+				}
+			});
+		}
+	});
 
-  $mypage_addr_modify.on('click', function() {
-
-    
-    alert('아직 미구현~');
-  });
-	
 });
+
+
+
+
+function execPostCode2() {
+	new daum.Postcode({
+		oncomplete: function(data) {
+			// 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+			// 도로명 주소의 노출 규칙에 따라 주소를 조합한다.
+			// 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+			var fullRoadAddr = data.roadAddress; // 도로명 주소 변수
+			var extraRoadAddr = ''; // 도로명 조합형 주소 변수
+
+			// 법정동명이 있을 경우 추가한다. (법정리는 제외)
+			// 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+			if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
+				extraRoadAddr += data.bname;
+			}
+			// 건물명이 있고, 공동주택일 경우 추가한다.
+			if (data.buildingName !== '' && data.apartment === 'Y') {
+				extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+			}
+			// 도로명, 지번 조합형 주소가 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+			if (extraRoadAddr !== '') {
+				extraRoadAddr = ' (' + extraRoadAddr + ')';
+			}
+			// 도로명, 지번 주소의 유무에 따라 해당 조합형 주소를 추가한다.
+			if (fullRoadAddr !== '') {
+				fullRoadAddr += extraRoadAddr;
+			}
+
+			// 우편번호와 주소 정보를 해당 필드에 넣는다.
+			//console.log(data.zonecode);
+			//console.log(fullRoadAddr);
+
+
+			$("[id=modify_addr1]").val(data.zonecode);
+			$("[id=modify_addr2]").val(fullRoadAddr);
+
+			/* document.getElementById('signUpUserPostNo').value = data.zonecode; //5자리 새우편번호 사용
+			document.getElementById('signUpUserCompanyAddress').value = fullRoadAddr;
+			document.getElementById('signUpUserCompanyAddressDetail').value = data.jibunAddress; */
+		}
+	}).open();
+}

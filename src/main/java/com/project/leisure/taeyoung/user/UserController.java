@@ -312,37 +312,36 @@ public class UserController {
 
 		return "kty/mypage";
 	}
-	/*
-	 * @GetMapping("/mypage/test") public String test() { return "kty/test"; }
-	 */
-	/*
-	 * 
-	 * @PostMapping("/mypage/password") public String passwordEdit(Model model,
-	 * PasswordForm form, BindingResult result, @AuthenticationPrincipal Users
-	 * currentUsers) { if (result.hasErrors()) { return "kty/mypage/me"; }
-	 * BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-	 * 
-	 * if(!encoder.matches(form.getPassword(), currentUsers.getPassword())) {
-	 * model.addAttribute("error","현재 패스워드 불일치합니다."); return "kty/mypage/me"; }
-	 * 
-	 * if(form.getNewPassword().equals(form.getPassword())) {
-	 * model.addAttribute("error", "동일한 패스워드"); return "kty/mypage/me"; }
-	 * 
-	 * if(!form.getNewPassword().equals(form.getRetype())) {
-	 * model.addAttribute("error","새 패스워드 불일치"); return "kty/mypage/me"; }
-	 * 
-	 * String encodedNewPwd = encoder.encode(form.getNewPassword());
-	 * currentUsers.setPassword(encodedNewPwd); return "kty/mypage/me";
-	 * 
-	 * }
-	 */
+	
+	@PostMapping("/updateaddr")
+	public String changeAddr(@RequestParam("modify_addr1") String addr1, @RequestParam("modify_addr2") String addr2, @RequestParam("modify_addr3") String addr3, Principal principal) {
+	    List<Users> userList = (List<Users>) userService.check(principal.getName());
+	    if (!userList.isEmpty()) {
+	        Users users = userList.get(0); // 첫 번째 사용자 객체를 가져옴
+	        users.setAddr1(addr1);
+	        users.setAddr2(addr2);
+	        users.setAddr3(addr3);
+	        userService.save(users);
+	        
+	    }
+	    return "updateaddr";
+	}
+	
+	
+	
+	
+	/* 회원가입 유효성 검증 post 
 
-	/*
-	 * 회원탈퇴
-	 * 
-	 * @GetMapping("/user_del") public String userDel(HttpSession httpSession, Model
-	 * model) {
-	 * 
-	 * }
-	 */
+	@PostMapping("/check_username")
+	public ResponseEntity<Integer> checkUsername(@RequestParam("username") String username) {
+		List<Users> users = userService.check(username);
+		int result = (users != null && !users.isEmpty()) ? 1 : 0;
+		return ResponseEntity.ok(result);
+	}
+*/
+	
+	
+	
+	
+	
 }

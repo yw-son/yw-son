@@ -43,14 +43,14 @@
 						<button class="btns-wrap__edit-btn" id="mypage_password_modify" type="button">변경할래요</button>
 					</td>
 				</tr>
-
+				<!-- 비밀번호 수정 폼 -->
 				<tr id="modify_password_input">
 					<td colspan="4" class="userinfo_td_gap">
 						<strong>비밀번호 </strong>
-						<div></div> <input type="password" class="modify_password" placeholder="기존 비밀번호를 입력하세요"><br>
+						<div></div> <input type="password" class="modify_password" placeholder="기존 비밀번호를 입력하세요"><br><br>
 						<strong>새 비밀번호 </strong>
 						<div></div><input type="password" class="modify_password2" id="modify_password2_input"
-							placeholder="새 비밀번호를 입력하세요"><br>
+							placeholder="새 비밀번호를 입력하세요"><br><br>
 						<strong>새 비밀번호 확인 </strong>
 						<div></div><input type="password" class="modify_password3" id="modify_password3_input"
 							placeholder="새 비밀번호를 다시 입력하세요">
@@ -64,9 +64,30 @@
 					<td class="userinfo_td_gap"><strong>주소</strong></td>
 					<td class="userinfo_td_gap" th:text="'('+${user.addr1}+')  '+${user.addr3}"></td>
 				</tr>
+
 				<tr>
 					<td colspan="3" class="userinfo_td_gap">
 						<button class="btns-wrap__edit-btn" id="mypage_addr_modify" type="button">변경할래요</button>
+					</td>
+				</tr>
+				<!-- 주소 수정 폼 -->
+				<tr id="modify_address_input">
+					<td colspan="4" class="userinfo_td_gap">
+						<!--<form class="form-signin" method="POST">-->
+						<label for="modify_addr1" class="form-label"><strong>우편번호</strong></label><br>
+						<input type="text" class="modify_addr1" name="modify_addr1" id="modify_addr1"
+							placeholder="우편번호를 입력하세요">
+						<input class="modify_addr_button" name="modify_addr_button" id="modify_addr_button"
+							type="button" onclick="execPostCode2();" value="우편번호 찾기"><br><br>
+						<strong>지번주소 </strong><br>
+						<input class="modify_addr2" name="modify_addr2" id="modify_addr2" placeholder="도로명 주소를 입력해주세요"
+							readonly="readonly"><br><br>
+						<strong>상세주소 </strong><br>
+						<input type="text" name="modify_addr3" class="modify_addr3" id="modify_addr3"
+							placeholder="상세주소를 입력하세요">
+						<br><br>
+						<input class="modifyaddr" name="modifyaddr" id="modifyaddr" type="button" value="변경할래요">
+						</form>
 					</td>
 				</tr>
 				<tr>

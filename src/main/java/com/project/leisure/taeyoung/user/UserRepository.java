@@ -11,8 +11,6 @@ import org.springframework.security.core.GrantedAuthority;
 
 import com.nimbusds.oauth2.sdk.Role;
 
-
-
 //회원DB 접근 레퍼지토리
 public interface UserRepository extends JpaRepository<Users, Long> {
 	Optional<Users> findByusername(String username);
@@ -25,8 +23,9 @@ public interface UserRepository extends JpaRepository<Users, Long> {
 	Optional<Users> findByUsernameAndEmail(@Param("username") String username, @Param("email") String email);
 
 	List<Users> findByNickname(String nickname);
-	
-	
-	
+
+
+	Optional<Users> findById(Long id);
+
 
 }

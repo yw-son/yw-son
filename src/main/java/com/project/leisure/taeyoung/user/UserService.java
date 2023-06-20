@@ -62,4 +62,14 @@ public class UserService {
 	}
 
 	
+	/*
+	public Users updateAddr(String addr1, String addr2, String addr3) {
+		Users users = new Users();
+		users.setAddr1(addr1);
+		users.setAddr2(addr2);
+		users.setAddr3(addr3);
+		this.userRepository.save(users);
+		return users;
+	}
+	*/
 }
