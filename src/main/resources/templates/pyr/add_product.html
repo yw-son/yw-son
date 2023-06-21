@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="UTF-8">
+<title>addProduct</title>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+	
+</script>
+
+</head>
+
+
+<div>
+
+	<h2>업소 등록</h2>
+
+	<form th:action="@{/product/addproduct}" method="post"
+		enctype="multipart/form-data">
+
+		<!-- <br> <label>업소 이름<input type="text" autofocus
+			placeholder="정확한 업소명을 입력해주세요" minlength="1" maxlength="20" required />
+		</label> <br /> <label> 업종 <select name="product_sectors" required>
+				<option value="motel">모텔</option>
+				<option value="hotel">호텔/리조트</option>
+				<option value="camping">글램핑/캠핑</option>
+		</select>
+		</label> <label> 대표사진<br> <input type="file" name="main_photo">
+		</label> <br>
+		<hr> -->
+
+		<label>방 등록 <input type="text" placeholder="등록할 방 이름"
+			minlength="1" maxlength="20" required name="product_type" />
+		</label> <br> <label>방 갯수<input type="number" min="1" max="50"
+			step="1" name="product_count" value="1">
+		</label> <br> <label>금액 <input type="text" name="product_amount">
+		</label><br> <label>최대 수용인원<input type="number" min="1" max="20"
+			step="1" name="product_pernum" value="1">
+		</label> <br> </label>
+		<!-- 체크인 시간/ 체크아웃 시간 -->
+		<label>체크인 <input type="time" value="15:00:00"
+			name="product_checkin">
+		</label> <label>체크아웃 <input type="time" value="11:00:00"
+			name="product_checkout">
+		</label> <br> <label> 객실 사진 <input type="file"
+			multiple="multiple" name="product_photo">
+		</label> <br>
+		<div>
+			<button type="submit">등록하기</button>
+			<button type="reset">초기화</button>
+		</div>
+	</form>
+
+	<div>
+		<button>등록 완료</button>
+	</div>
+
+
+
+</div>

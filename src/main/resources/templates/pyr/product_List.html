@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="UTF-8">
+<title>addProduct</title>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<style>
+a {
+	text-decoration: none;
+	color: black;
+}
+
+
+.box {
+    width: 350px;
+    height: 450px;
+    margin: 20px;
+    border-color: black;
+    border-style: inset;
+    box-sizing: border-box;
+}
+
+
+</style>
+
+
+</head>
+
+
+
+<div>
+	<h2>등록한 상품을 보여주기</h2>
+	<div th:each="product : ${productList}" class="box">
+		<a th:href="@{/productDetails(productId=${product.product_id})}">
+		
+			<div th:if="${not #lists.isEmpty(product.productImgs)}">
+				<img th:src="${product.productImgs[0].img_url}" alt="Product Image"
+					width="200" height="200">
+			</div>
+			<p>
+				객실 수 : <span th:text="${product.product_count}"></span>
+			</p>
+			<p>
+				객실 형태 : <span th:text="${product.product_type}"></span>
+			</p>
+			<p>
+				최대 인원수 : <span th:text="${product.product_pernum}"></span>
+			</p>
+			<p>
+				금액 : <span th:text="${product.product_amount}"></span>
+			</p>
+			<p>
+				체크인 : <span th:text="${product.checkin}"></span> 체크아웃 : <span
+					th:text="${product.checkout}"></span>
+			</p>
+			<button>객실 선택</button>
+		</a>
+	</div>
+</div>
