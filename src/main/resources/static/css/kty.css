@@ -355,7 +355,7 @@ a {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	left: 1000px;
+	left: 800px;
 	top: 180px;
 	margin: 0;
 }
@@ -573,14 +573,13 @@ li.mypage_sidebar a.active {
 
 
 #mypage_partner_reg {
-	position: relative;
+		position: absolute;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	left: 1000px;
+	left: 800px;
 	top: 180px;
 	margin: 0;
-	width: 750px;
 }
 
 #mypage_partner_reg_table {
@@ -589,6 +588,7 @@ li.mypage_sidebar a.active {
 	justify-content: center;
 	border-collapse: collapse;
 	bottom: -100px;
+	width: 80vh;
 
 }
 
@@ -596,7 +596,7 @@ li.mypage_sidebar a.active {
 	border-right: 1px solid white;
 	border-left: 1px solid white;
 	background-color: rgb(235, 237, 237);
-	width: 200vh;
+	width: 100vh;
 	height: 5vh;
 
 }
@@ -604,7 +604,7 @@ li.mypage_sidebar a.active {
 
 .partner_table-th2 {
 	border-right: 1px solid white;
-	width: 200vh;
+	width: 100vh;
 
 }
 
@@ -612,21 +612,11 @@ li.mypage_sidebar a.active {
 	border-right: 1px solid white;
 	border-left: 1px solid white;
 	background-color: rgb(235, 237, 237);
-	width: 160vh;
+	width: 100vh;
 
 	text-align: center;
 }
 
-#my_infomation_modify2 {
-	position: relative;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	left: 1000px;
-	top: 180px;
-	margin: 0;
-
-}
 
 #company_name,
 #company_address {
