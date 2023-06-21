@@ -645,9 +645,3 @@ li.mypage_sidebar a.active {
 #mypage_partner_reg_table {
 	border-collapse: collapse;
 }
-
-td,
-th {
-	border: 1px solid black;
-	padding: 8px;
-}
