@@ -19,12 +19,14 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,6 +46,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import net.bytebuddy.asm.Advice.Return;
 
 // user 관련 컨트롤러
 
@@ -103,6 +106,7 @@ public class UserController {
 		return ResponseEntity.ok(result);
 	}
 
+	/* 회원가입 */
 	@GetMapping("/sign")
 	public String logi2n() {
 		return "signup";
@@ -111,6 +115,7 @@ public class UserController {
 	private final EmailService emailService;
 	private final PasswordEncoder passwordEncoder;
 
+	/* 회원가입 인증번호 발송을 위한 컨트롤러 */
 	@PostMapping("/emailcode")
 	@ResponseBody
 	public String mailConfirm(@RequestParam String email) throws Exception {
@@ -118,11 +123,13 @@ public class UserController {
 		return code;
 	}
 
+	/* 비밀번호 찾기 페이지 */
 	@GetMapping("/find_pw")
 	public String findPW() {
 		return "/kty/find_pw";
 	}
 
+	/* 임시 비밀번호 발송 PostMapping */
 	@PostMapping("/temp_pwd")
 	@ResponseBody
 	public String sendTempPwd(@RequestParam String email, @RequestParam String username) throws Exception {
@@ -145,11 +152,13 @@ public class UserController {
 
 	}
 
+	/* 아이디 찾기 페이지 */
 	@GetMapping("/find_id")
 	public String findID() {
 		return "/kty/find_id";
 	}
 
+	/* 아이디 찾기 -> Postmapping */
 	@PostMapping("/find_id")
 	@ResponseBody
 	public String findid(@RequestParam String email) {
@@ -179,6 +188,7 @@ public class UserController {
 		}
 	}
 
+	/* 마이페이지 -> 회원정보 표기 */
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/mypage/me")
 	public String myPage(Model model, Principal principal) throws JsonProcessingException {
@@ -188,16 +198,16 @@ public class UserController {
 			String username = authentication.getName();
 			Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
 			Object aa = authentication.getPrincipal();
-			System.out.println("일반로그인: "+username);
+			System.out.println("일반로그인: " + username);
 			// 필요한 사용자 정보를 가져와서 모델에 추가합니다.
 			model.addAttribute("username", username);
 			model.addAttribute("authority", authorities);
 			model.addAttribute("aa", aa);
-			
+
 			if (principal instanceof OAuth2AuthenticationToken) {
 
 				String a = principal.getName();
-				//System.out.println("sdd" + a);
+				// System.out.println("sdd" + a);
 				OAuth2AuthenticationToken oauthToken = (OAuth2AuthenticationToken) principal;
 				// System.out.println(oauthToken);
 
@@ -206,24 +216,21 @@ public class UserController {
 				String output2 = a.toString();
 
 				String plus_account = output + output2;
-				System.out.println("total : "+plus_account);
-				
-				
-				if(!plus_account.isEmpty()) {
+				System.out.println("total : " + plus_account);
+
+				if (!plus_account.isEmpty()) {
 					String plus_account2 = output + output2;
-					System.out.println("total : "+plus_account2);
-					
+					System.out.println("total : " + plus_account2);
+
 					String ns_pic_total2 = null;
 					Matcher ns_matcher_total = Pattern.compile("picture=([^,}]+)").matcher(plus_account2);
 					if (ns_matcher_total.find()) {
 						ns_pic_total2 = ns_matcher_total.group(1);
 					}
-					System.out.println("ns_matcher_total : "+ns_matcher_total);
-					model.addAttribute("ns_matcher_total",ns_matcher_total);
+					System.out.println("ns_matcher_total : " + ns_matcher_total);
+					model.addAttribute("ns_matcher_total", ns_matcher_total);
 				}
-				
-				
-				
+
 				String ns_pic = null;
 				Matcher ns_matcher = Pattern.compile("picture=([^,}]+)").matcher(plus_account);
 				if (ns_matcher.find()) {
@@ -312,18 +319,65 @@ public class UserController {
 
 		return "kty/mypage";
 	}
-/*
-@GetMapping("/mypage/test")
-public String test() {
-	return "kty/test";
-}
-*/
-	
 
-/* 회원탈퇴 
-@GetMapping("/user_del")
-public String userDel(HttpSession httpSession, Model model) {
+	/* 주소변경 PostMapping */
+	@PostMapping("/updateaddr")
+	public String changeAddr(@RequestParam("modify_addr1") String addr1, @RequestParam("modify_addr2") String addr2,
+			@RequestParam("modify_addr3") String addr3, Principal principal) {
+		List<Users> userList = (List<Users>) userService.check(principal.getName());
+		if (!userList.isEmpty()) {
+			Users users = userList.get(0); // 첫 번째 사용자 객체를 가져옴
+			users.setAddr1(addr1);
+			users.setAddr2(addr2);
+			users.setAddr3(addr3);
+			userService.save(users);
+
+		}
+		return "updateaddr";
+	}
+
+	/*
+	 기존 비밀번호와 일치하는지 확인하는 컨트롤러_비밀번호검(작성중) */
+	  
+
+	@PostMapping("/check_oldpwd")
+	public ResponseEntity<Integer> checkPwd(@RequestParam("modify_password") String password, Principal principal) {
+	    String current_username = principal.getName();
+	    boolean isMatch = userService.checkPassword(current_username, password);
+
+	    if (isMatch) {
+	        return ResponseEntity.ok(1); // 이전 패스워드와 일치하는 경우
+	    } else {
+	        return ResponseEntity.ok(0); // 이전 패스워드와 일치하지 않는 경우
+	    }
+	}
 	
-}
-*/	
+	@PostMapping("/update_pwd")
+	public String updatePwd(@RequestParam("modify_password2") String password, Principal principal) {
+		List<Users> userList = (List<Users>) userService.check(principal.getName());
+		Users users = userList.get(0);
+		users.setPassword(passwordEncoder.encode(password));
+		userService.save(users);
+		 SecurityContextHolder.clearContext();
+		    return "redirect:/user/logout";
+		
+		  
+	}
+	
+	/* 회원탈퇴 */
+	@GetMapping("/del")
+	public String userDelete(Principal principal) {
+		String current_user =principal.getName();
+		userService.deleteUser(current_user);
+		 SecurityContextHolder.clearContext();
+		    return "redirect:/user/logout";
+		
+	}
+	 
+	/* 파트너 신청 페이지 */
+	@GetMapping("/mypage/partner_reg")
+	public String partner_registration() {
+		return "kty/partner_regi";
+	}
+
 }

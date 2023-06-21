@@ -355,8 +355,8 @@ a {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	left:700px;
-	top:180px;
+	left: 1000px;
+	top: 180px;
 	margin: 0;
 }
 
@@ -402,7 +402,7 @@ a {
 	position: absolute;
 	top: 50px;
 	/* 원하는 여백 크기로 조정 */
-	left: -200px;
+	left: -300px;
 	font-size: 20px;
 	color: rgb(69, 69, 69);
 }
@@ -423,7 +423,12 @@ li.mypage_sidebar a.active {
 
 }
 
-.modify_password{
+#modify_address_input {
+	display: none;
+
+}
+
+.modify_password {
 	height: 30px;
 	width: 185px;
 	border: none;
@@ -450,21 +455,21 @@ li.mypage_sidebar a.active {
 
 
 
-.modify_password2{
+.modify_password2 {
 	height: 30px;
 	width: 185px;
 	border: none;
 
 }
 
-.modify_password3{
+.modify_password3 {
 	height: 30px;
 	width: 185px;
 	border: none;
 
 }
 
-#modifypassword{
+#modifypassword {
 	position: relative;
 	border: 1px solid grey;
 	border-radius: 8px;
@@ -474,11 +479,188 @@ li.mypage_sidebar a.active {
 	height: 50px;
 	font-weight: bold;
 }
-#modifypassword:hover{
+
+#modifypassword:hover {
 	cursor: pointer;
 }
-#noused_account{
+
+#noused_account {
 	color: rgb(113, 126, 132);
 }
 
 
+.modify_addr1 {
+	height: 30px;
+	width: 185px;
+	border: none;
+
+}
+
+.modify_addr2 {
+	height: 30px;
+	width: 300px;
+	border: none;
+
+}
+
+.modify_addr3 {
+	height: 30px;
+	width: 185px;
+	border: none;
+
+}
+
+#modifyaddr {
+	position: relative;
+	border: 1px solid grey;
+	border-radius: 8px;
+	background-color: rgb(255, 159, 159);
+	color: rgb(255, 255, 255);
+	width: 200px;
+	height: 50px;
+	font-weight: bold;
+}
+
+#modify_addr_button {
+	cursor: pointer;
+	border: 1px solid grey;
+	border-radius: 8px;
+	background-color: white;
+	color: black;
+	width: 100px;
+	height: 30px;
+
+}
+
+
+#modifyaddr {
+	cursor: pointer;
+}
+
+#user_del_input {
+	display: none;
+}
+
+#userdel_confirm_button {
+	border: 1px solid grey;
+	border-radius: 8px;
+	background-color: white;
+	color: black;
+	width: 100px;
+	height: 30px;
+
+
+}
+
+#userdel_confirm_button:hover {
+	cursor: pointer;
+}
+
+#user_del_button:hover {
+	cursor: pointer;
+}
+
+
+#userdel_check_password {
+	height: 50px;
+	width: 185px;
+	border: none;
+
+}
+
+/* 파트너 신청 페이지 css */
+
+
+
+#mypage_partner_reg {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	left: 1000px;
+	top: 180px;
+	margin: 0;
+	width: 1000px;
+}
+
+#mypage_partner_reg_table {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	border-collapse: collapse;
+	bottom: -100px;
+	
+}
+
+.partner_table-th1 {
+	border-right: 1px solid white;
+	border-left: 1px solid white;
+	background-color: rgb(235, 237, 237);
+	width: 150vh;
+	height: 5vh;
+
+}
+
+
+.partner_table-th2 {
+	border-right: 1px solid white;
+	width: 200vh;
+
+}
+
+.partner_table-th3 {
+	border-right: 1px solid white;
+	border-left: 1px solid white;
+	background-color: rgb(235, 237, 237);
+	width: 150vh;
+
+	text-align: center;
+}
+
+#my_infomation_modify2 {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	left: 1000px;
+	top: 180px;
+	margin: 0;
+	
+}
+
+#company_name,
+#company_address {
+	width: 95%;
+	height: 45px;
+	border: 1px solid rgb(207, 207, 207);
+}
+
+#partner_name,
+#partner_tel,
+#partner_region,
+#partner_sectors {
+	width: 85%;
+	height: 45px;
+	border: 1px solid rgb(207, 207, 207);
+	
+}
+
+#mypage_partner_reg_table {
+	border-collapse: collapse;
+	
+}
+
+
+#reg_partner_final{
+	border: 1px solid grey;
+	border-radius: 8px;
+	background-color: white;
+	color: black;
+	width: 160px;
+	height:50px;
+
+}
+
+#reg_partner_final:hover{
+	cursor: pointer;
+}
