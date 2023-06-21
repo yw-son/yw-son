@@ -388,8 +388,8 @@ public class UserController {
 	    String username = principal.getName();
 	    List<Users> userList = (List<Users>) userService.check(principal.getName());
 		Users users = userList.get(0);
-		users.setPartner_reg(1);
-	    this.userService.save(users);
+		//users.setPartner_reg(1);
+	    //this.userService.save(users);
 	    regService.create(username,company_name, company_address, partner_name, partner_tel, partner_sectors, partner_region);
 	    return ResponseEntity.ok("partner_reg");
 	}
