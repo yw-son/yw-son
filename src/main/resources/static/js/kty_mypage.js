@@ -305,7 +305,19 @@ $userdel_confirm_button.on('click', function() {
 });
 });
 
-
-
+$(document).ready(function() {
+  $("#reg_partner_final").on("click", function() {
+    var $1 = $("#company_name").val();
+    var $2 = $("#partner_region").val();
+    
+    if ($1.trim() == "") {
+      alert('회사 이름을 입력하세요.');
+    } else if ($2 == null || $2.trim() == "") {
+      alert('지역을 선택하세요.');
+    } else {
+      alert('회사 이름과 지역이 입력되었습니다.');
+    }
+  });
+});
 
 
