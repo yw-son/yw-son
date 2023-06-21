@@ -94,7 +94,7 @@ public class UserService {
 		 if (users.isPresent()) {
 	         userRepository.delete(users.get());
 	      } else {
-	         throw new DataNotFoundException("User not found");
+	         throw new DataNotFoundException("유저가 없습니다.");
 	      }
 	}
    
