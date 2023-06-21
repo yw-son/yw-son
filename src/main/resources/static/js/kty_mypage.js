@@ -44,30 +44,12 @@ $(function() {
 
 		$("#profile_lion").attr("src", "/img/profile_img/" + profileImages[randomIndex]);
 	});
-	
-var $inputOldPwd = $('#modify_password');
-var $oldPwdError = $('#confirm_oldPwd');
 
-$inputOldPwd.on('input focusout', function() {
-    var oldPwd = $inputOldPwd.val();
 
-    $.ajax({
-        type: 'POST',
-        url: '/user/check_oldpwd',
-        data: { modify_password: oldPwd },
-        dataType: 'json',
-        success: function(data) {
-            if (data === 1) {
-                $oldPwdError.text('비밀번호가 일치합니다').show();
-            } else {
-                $oldPwdError.text('비밀번호가 일치하지 않습니다').show();
-            }
-        },
-        error: function(xhr, status, error) {
-            console.log(error); // 오류가 발생하면 콘솔에 오류 메시지를 출력합니다.
-        }
-    });
-});
+
+
+
+
 
 	var $button_addr_modify = $('#modifyaddr');
 	var $input_modifyaddr1 = $('#modify_addr1');
@@ -153,3 +135,206 @@ function execPostCode2() {
 		}
 	}).open();
 }
+
+
+
+$(document).ready(function() {
+	var $inputOldPwd = $('#modify_password');
+	var $oldPwdError = $('#confirm_oldPwd');
+	var $NewPwdError = $('#confirm_newPwd');
+	var $inputNewPwd1 = $('#modify_password2_input');
+	var $inputNewPwd2 = $('#modify_password3_input');
+	var $modifyEmailBtn = $('.modifyEmail');
+
+	$inputOldPwd.on('input focusout', function() {
+		var oldPwd = $inputOldPwd.val();
+
+		if (oldPwd === '') {
+			disableNewPwdInputs();
+		} else {
+			$.ajax({
+				type: 'POST',
+				url: '/user/check_oldpwd',
+				data: { modify_password: oldPwd },
+				dataType: 'json',
+				success: function(data) {
+					if (data === 1) {
+						$oldPwdError.text('비밀번호가 일치합니다').show();
+						enableNewPwdInputs();
+					} else {
+						$oldPwdError.text('비밀번호가 일치하지 않습니다').show();
+						disableNewPwdInputs();
+					}
+				},
+				error: function(xhr, status, error) {
+					console.log(error);
+				}
+			});
+		}
+	});
+
+	function enableNewPwdInputs() {
+		if ($inputOldPwd.val() === '') {
+			disableNewPwdInputs();
+			return;
+		}
+
+		$inputNewPwd1.prop('disabled', false);
+		$inputNewPwd2.prop('disabled', false);
+
+		if ($inputNewPwd1.val() !== '' && $inputNewPwd2.val() !== '' && $inputNewPwd1.val() === $inputNewPwd2.val()) {
+			$modifyEmailBtn.prop('disabled', false);
+			$NewPwdError.text('').hide();
+		} else {
+			$modifyEmailBtn.prop('disabled', true);
+			$NewPwdError.text('새 비밀번호와 입력값이 일치하지 않습니다').show();
+		}
+	}
+
+	function disableNewPwdInputs() {
+		$inputNewPwd1.val('');
+		$inputNewPwd2.val('');
+		$inputNewPwd1.prop('disabled', true);
+		$inputNewPwd2.prop('disabled', true);
+		$modifyEmailBtn.prop('disabled', true);
+		$NewPwdError.text('').hide();
+	}
+
+	$inputNewPwd1.on('input', enableNewPwdInputs);
+	$inputNewPwd2.on('input', enableNewPwdInputs);
+
+	$modifyEmailBtn.click(function() {
+		var newPassword = $inputNewPwd1.val();
+
+		$.ajax({
+			type: 'POST',
+			url: '/user/update_pwd',
+			data: { modify_password2: newPassword },
+			success: function(response) {
+				Swal.fire({
+					title: 'Success',
+					html: '<b>비밀번호 변경하였습니다. 다시 로그인하세요</b>',
+					icon: 'success'
+				});
+
+				setTimeout(function() {
+					window.location.href = '/user/logout';
+				}, 2000);
+			},
+			error: function(xhr, status, error) {
+				console.error(error);
+			}
+		});
+	});
+});
+
+// 회원탈퇴 검증 창 보이기
+$(document).ready(function() {
+	$("#user_del_button").click(function() {
+		$("#user_del_input").toggle();
+	});
+});
+
+$(document).ready(function() {
+	var $userdel_Pwd_input = $('#userdel_check_password');
+	var $check_del = $('#final_password_check');
+	var $userdel_confirm_button = $('#userdel_confirm_button');
+
+	$userdel_confirm_button.prop('disabled', true);
+
+	$userdel_Pwd_input.on('input focusout', function() {
+		var userdelPWD = $userdel_Pwd_input.val();
+
+		$.ajax({
+			type: 'POST',
+			url: '/user/check_oldpwd',
+			data: { modify_password: userdelPWD },
+			dataType: 'json',
+			success: function(data) {
+				if (userdelPWD === '' || data !== 1) {
+					$userdel_confirm_button.prop('disabled', true);
+				} else {
+					$userdel_confirm_button.prop('disabled', false);
+				}
+
+				if (data === 1) {
+					$check_del.text('비밀번호가 일치합니다').show();
+				} else {
+					$check_del.text('비밀번호가 일치하지 않습니다').show();
+				}
+			},
+			error: function(xhr, status, error) {
+				console.log(error);
+			}
+		});
+	});
+
+
+	$userdel_confirm_button.on('click', function() {
+		Swal.fire({
+			position: 'center',
+			title: '탈퇴하시겠습니까?',
+			text: "확인을 누르시면 다시 로그인이 불가능합니다.",
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Yes'
+		}).then((result) => {
+			if (result.isConfirmed) {
+				setTimeout(function() {
+					window.location.href = '/user/del';
+				}, 2000); // 2초 후에 페이지 이동 실행
+
+				Swal.fire({
+					position: 'center',
+					title: '삭제되었습니다.',
+					text: '메인 페이지로 이동합니다 해당 계정은 이제 접속 불가능합니다.',
+					timer: 2000,
+					timerProgressBar: true,
+					showConfirmButton: false,
+					icon: 'success',
+					didOpen: () => {
+						Swal.showLoading();
+					}
+				}).then(() => {
+					// 페이지 이동 완료 후 실행할 코드 추가
+				});
+			}
+		});
+	});
+});
+$(document).ready(function() {
+    $("#reg_partner_final").on("click", function() {
+        var a1 = $('#company_name').val();
+        var a2 = $('#company_address').val();
+        var a3 = $('#partner_name').val();
+        var a4 = $('#partner_tel').val();
+        var a5 = $('#partner_sectors').val();
+        var a6 = $('#partner_region').val();
+        
+        if (a1 === '' || a2 === '' || a3 === '' || a4 === '' || a5 === '') {
+            $("#reg_partner_final").prop("disabled", true);
+            return;
+        }
+        
+        $.ajax({
+            url: "/user/reg_p",
+            type: "POST",
+            data: {
+                company_name: a1,
+                company_address: a2,
+                partner_name: a3,
+                partner_tel: a4,
+                partner_sectors: a5,
+                partner_region: a6
+            },
+            success: function(response) {
+               
+            },
+            error: function(xhr, status, error) {
+                alert('파트너 신청 완료되었습니다.')
+            }
+        });
+    });
+});

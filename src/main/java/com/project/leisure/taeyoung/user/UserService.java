@@ -88,6 +88,17 @@ public class UserService {
 		
 	}
    
+	/* 회원탈퇴 */
+	public  void deleteUser(String username) {
+		Optional<Users> users = userRepository.findByusername(username);
+		 if (users.isPresent()) {
+	         userRepository.delete(users.get());
+	      } else {
+	         throw new DataNotFoundException("유저가 없습니다.");
+	      }
+	}
+	
+
    
 }
 

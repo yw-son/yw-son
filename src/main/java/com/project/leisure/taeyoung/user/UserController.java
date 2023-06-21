@@ -56,7 +56,8 @@ import net.bytebuddy.asm.Advice.Return;
 public class UserController {
 
 	private final UserService userService;
-
+	private final RegService regService;
+	
 	@GetMapping("/signup")
 	public String signup(UserCreateForm userCreateForm) {
 		return "kty/signup_form";
@@ -351,6 +352,46 @@ public class UserController {
 	        return ResponseEntity.ok(0); // 이전 패스워드와 일치하지 않는 경우
 	    }
 	}
+	
+	@PostMapping("/update_pwd")
+	public String updatePwd(@RequestParam("modify_password2") String password, Principal principal) {
+		List<Users> userList = (List<Users>) userService.check(principal.getName());
+		Users users = userList.get(0);
+		users.setPassword(passwordEncoder.encode(password));
+		userService.save(users);
+		 SecurityContextHolder.clearContext();
+		    return "redirect:/user/logout";
+		
+		  
+	}
+	
+	/* 회원탈퇴 */
+	@GetMapping("/del")
+	public String userDelete(Principal principal) {
+		String current_user =principal.getName();
+		userService.deleteUser(current_user);
+		 SecurityContextHolder.clearContext();
+		    return "redirect:/user/logout";
+		
+	}
 	 
+	/* 파트너 신청 페이지 */
+	@GetMapping("/mypage/partner_reg")
+	public String partner_registration() {
+		return "kty/partner_regi";
+	}
+	
+	@PostMapping("/reg_p")
+	public ResponseEntity<String> partner_reg(@RequestParam("company_name") String company_name, @RequestParam("company_address") String company_address,
+	        @RequestParam("partner_name") String partner_name, @RequestParam("partner_tel") String partner_tel, 
+	        @RequestParam("partner_sectors") String partner_sectors, @RequestParam("partner_region") String partner_region, Principal principal) {
+	    String username = principal.getName();
+	    List<Users> userList = (List<Users>) userService.check(principal.getName());
+		Users users = userList.get(0);
+		//users.setPartner_reg(1);
+	    //this.userService.save(users);
+	    regService.create(username,company_name, company_address, partner_name, partner_tel, partner_sectors, partner_region);
+	    return ResponseEntity.ok("partner_reg");
+	}
 
 }
