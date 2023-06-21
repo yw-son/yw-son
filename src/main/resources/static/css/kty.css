@@ -523,8 +523,12 @@ li.mypage_sidebar a.active {
 
 #modify_addr_button {
 	cursor: pointer;
-	background-color: aliceblue;
-	color: #1e6b7b;
+	border: 1px solid grey;
+	border-radius: 8px;
+	background-color: white;
+	color: black;
+	width: 100px;
+	height: 30px;
 
 }
 
@@ -546,6 +550,10 @@ li.mypage_sidebar a.active {
 	height: 30px;
 	
 
+}
+
+#userdel_confirm_button:hover{
+	cursor: pointer;
 }
 
 #user_del_button:hover {
