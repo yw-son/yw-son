@@ -589,6 +589,7 @@ li.mypage_sidebar a.active {
 	justify-content: center;
 	border-collapse: collapse;
 	bottom: -100px;
+	
 }
 
 .partner_table-th1 {
@@ -624,6 +625,7 @@ li.mypage_sidebar a.active {
 	left: 1000px;
 	top: 180px;
 	margin: 0;
+	
 }
 
 #company_name,
@@ -640,8 +642,25 @@ li.mypage_sidebar a.active {
 	width: 85%;
 	height: 45px;
 	border: 1px solid rgb(207, 207, 207);
+	
 }
 
 #mypage_partner_reg_table {
 	border-collapse: collapse;
+	
+}
+
+
+#reg_partner_final{
+	border: 1px solid grey;
+	border-radius: 8px;
+	background-color: white;
+	color: black;
+	width: 160px;
+	height:50px;
+
+}
+
+#reg_partner_final:hover{
+	cursor: pointer;
 }
