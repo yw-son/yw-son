@@ -374,5 +374,10 @@ public class UserController {
 		
 	}
 	 
+	/* 파트너 신청 페이지 */
+	@GetMapping("/mypage/partner_reg")
+	public String partner_registration() {
+		return "kty/partner_regi";
+	}
 
 }
