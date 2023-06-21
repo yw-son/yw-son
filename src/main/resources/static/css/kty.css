@@ -640,3 +640,11 @@ li.mypage_sidebar a.active {
 	height: 45px;
 	border: 1px solid rgb(207, 207, 207);
 }
+#mypage_partner_reg_table {
+		border-collapse: collapse;
+	}
+		td,
+	th {
+		border: 1px solid black;
+		padding: 8px;
+	}
