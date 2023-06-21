@@ -78,5 +78,16 @@ public class Users {
 	public String getRoleKey() {
 		return this.role.getValue();
 	}
+///////////////////////////////////////////////////////효경이 수정
+	
+//	public void setRole(UserRole role) {
+//	    this.role = role;
+//	    // role 값에 따라 admin_code 변경
+//	    if (role == UserRole.ADMIN) {
+//	        this.admin_code = 1;
+//	    } else {
+//	        this.admin_code = 0;
+//	    }
+//	}
 
 }

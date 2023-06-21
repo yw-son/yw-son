@@ -25,6 +25,6 @@ public interface UserRepository extends JpaRepository<Users, Long> {
 	List<Users> findByNickname(String nickname);
 	
 	Optional<Users> findById(Long id);
-
-
+	
+	
 }

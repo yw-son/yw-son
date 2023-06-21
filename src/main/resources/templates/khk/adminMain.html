@@ -1,28 +1,67 @@
-<!-- <html lang="en" xmlns:th="http://www.thymeleaf.org"> -->
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="utf-8">
 <title>관리자 메인 페이지</title>
+<style>
+body {
+	font-family: Arial, sans-serif;
+	background-color: #f8f8f8;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	align-items: center;
+	height: 100vh;
+	
+}
+
+.navbar {
+	background-color: #333;
+	width:150px;
+	height: 100vh;
+	color: #fff;
+	padding: 10px 0;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+}
+
+.navbar a {
+	margin: 0;
+	padding: 20px;
+	text-decoration: none;
+	color: #fff;
+	transition: background-color 0.3s;
+	background-color: #333;
+	display: inline-block;
+	white-space: nowrap;
+	font-size: 20px;
+	
+}
+
+.navbar a:hover {
+	background-color: #ffc107;
+}
+
+.navbar a.active {
+	font-weight: bold;
+}
+
+.navbar span {
+	color: #fff;
+	margin: 0 5px;
+}
+</style>
 </head>
 <body>
-<div>
-<h1>관리자 페이지</h1>
-        <a href="/khk/adminMain">관리자 홈</a>
-        |
-        <a href="/khk/userListPage">회원 관리</a>
-        |
-        <a href="#">업체 관리</a>
-        |
-        <a href="#">권한 관리</a>
-        |
-        <a href="#">고객 지원</a>
-        |
-        <a href="#">신고 관리</a>
-        |
-        <a href="#">통계 / 분석</a>
-        |
-        <a href="/member/logout">로그아웃</a>
-    </div>
+	<div class="navbar">
+		<a href="/khk/adminMain" class="active">관리자 홈</a>
+		<a href="/khk/userListPage">회원 관리</a>
+		<a href="#">업체 관리</a>
+		<a href="#">권한 관리</a>
+		<a href="#">고객 지원</a>
+		<a href="#">신고 관리</a>
+		<a href="#">통계 / 분석</a>
+	</div>
 </body>
 </html>
