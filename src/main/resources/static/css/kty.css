@@ -597,6 +597,7 @@ li.mypage_sidebar a.active {
 	background-color: rgb(235, 237, 237);
 	width: 150vh;
 	height: 5vh;
+
 }
 
 
@@ -626,7 +627,7 @@ li.mypage_sidebar a.active {
 }
 
 #company_name,
-#company_address{
+#company_address {
 	width: 95%;
 	height: 45px;
 	border: 1px solid rgb(207, 207, 207);
@@ -635,16 +636,18 @@ li.mypage_sidebar a.active {
 #partner_name,
 #partner_tel,
 #partner_region,
-#partner_sectors{
+#partner_sectors {
 	width: 85%;
 	height: 45px;
 	border: 1px solid rgb(207, 207, 207);
 }
+
 #mypage_partner_reg_table {
-		border-collapse: collapse;
-	}
-		td,
-	th {
-		border: 1px solid black;
-		padding: 8px;
-	}
+	border-collapse: collapse;
+}
+
+td,
+th {
+	border: 1px solid black;
+	padding: 8px;
+}
