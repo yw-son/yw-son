@@ -56,7 +56,8 @@ import net.bytebuddy.asm.Advice.Return;
 public class UserController {
 
 	private final UserService userService;
-
+	private final RegService regService;
+	
 	@GetMapping("/signup")
 	public String signup(UserCreateForm userCreateForm) {
 		return "kty/signup_form";
@@ -378,6 +379,19 @@ public class UserController {
 	@GetMapping("/mypage/partner_reg")
 	public String partner_registration() {
 		return "kty/partner_regi";
+	}
+	
+	@PostMapping("/reg_p")
+	public ResponseEntity<String> partner_reg(@RequestParam("company_name") String company_name, @RequestParam("company_address") String company_address,
+	        @RequestParam("partner_name") String partner_name, @RequestParam("partner_tel") String partner_tel, 
+	        @RequestParam("partner_sectors") String partner_sectors, @RequestParam("partner_region") String partner_region, Principal principal) {
+	    String username = principal.getName();
+	    List<Users> userList = (List<Users>) userService.check(principal.getName());
+		Users users = userList.get(0);
+		users.setPartner_reg(1);
+	    this.userService.save(users);
+	    regService.create(username,company_name, company_address, partner_name, partner_tel, partner_sectors, partner_region);
+	    return ResponseEntity.ok("partner_reg");
 	}
 
 }

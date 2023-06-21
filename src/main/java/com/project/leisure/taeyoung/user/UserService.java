@@ -97,6 +97,8 @@ public class UserService {
 	         throw new DataNotFoundException("유저가 없습니다.");
 	      }
 	}
+	
+
    
 }
 

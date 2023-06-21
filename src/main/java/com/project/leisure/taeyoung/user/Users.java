@@ -51,6 +51,8 @@ public class Users {
 	private String addr3; // 상세 주소
 
 	private int islock = 0; // 계정 잠금 여부(1: 계정 잠김, 0: 계정 안잠김)
+	
+	private int partner_reg; // 파트너 신청 여부 (1이면 파트너 신청한 사용자, 0이면 신청 안한 사용자)
 
 	public Users update(String username) {
 		this.username = username;
