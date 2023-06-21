@@ -47,7 +47,8 @@
 				<tr id="modify_password_input">
 					<td colspan="4" class="userinfo_td_gap">
 						<strong>비밀번호 </strong>
-						<div></div> <input name="modify_password" type="password" id="modify_password" class="modify_password" placeholder="기존 비밀번호를 입력하세요">
+						<div></div> <input name="modify_password" type="password" id="modify_password"
+							class="modify_password" placeholder="기존 비밀번호를 입력하세요">
 						<div style="font-size: 12px; margin:5px 0;" id="confirm_oldPwd"></div><br>
 						<strong>새 비밀번호 </strong>
 						<div></div><input type="password" class="modify_password2" id="modify_password2_input"
@@ -55,7 +56,7 @@
 						<strong>새 비밀번호 확인 </strong>
 						<div></div><input type="password" class="modify_password3" id="modify_password3_input"
 							placeholder="새 비밀번호를 다시 입력하세요">
-							<div style="font-size: 12px; margin:5px 0;" id="confirm_newPwd"></div>
+						<div style="font-size: 12px; margin:5px 0;" id="confirm_newPwd"></div>
 						<br><br>
 						<input class="modifyEmail" name="modifypassword" id="modifypassword" type="button"
 							value="변경할래요">
@@ -108,9 +109,17 @@
 							<h5 id="noused_account">저기어때를 이용하고 싶지 않으신가요? <a class="nav-link"
 									sec:authorize="isAuthenticated()" th:href="@{/user/logout}"
 									style="color: rgb(0, 0, 0); text-decoration: underline;">로그아웃</a>
-								<a class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/user/user_del}"
-									style="color: rgb(0, 0, 0); text-decoration: underline;">회원탈퇴</a>
+								<span class="nav-link" id="user_del_button" sec:authorize="isAuthenticated()"
+									style="color: rgb(0, 0, 0); text-decoration: underline;">회원탈퇴</span>
 							</h5>
+							<div id="user_del_input">
+								<b style="font-size: 15px;">비밀번호 입력</b><br>
+									<input type="password" id="userdel_check_password" placeholder="기존 비밀번호를 입력하세요" required>
+									<input type="button" id="userdel_confirm_button" value="탈퇴하기">
+								</form>
+								<br>
+								<span style="font-size: 13px; font-weight: bold;" id="final_password_check"></span>
+							</div>
 						</div>
 					</td>
 				</tr>
@@ -120,7 +129,7 @@
 
 		</table>
 
-<!-- sns 유저 정보 표시 테이블(미구현)
+		<!-- sns 유저 정보 표시 테이블(미구현)
 <table class="userinfo_table">
 <tbody>
 </tbody>

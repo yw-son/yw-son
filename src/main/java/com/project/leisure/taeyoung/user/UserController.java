@@ -364,6 +364,15 @@ public class UserController {
 		  
 	}
 	
+	/* 회원탈퇴 */
+	@GetMapping("/del")
+	public String userDelete(Principal principal) {
+		String current_user =principal.getName();
+		userService.deleteUser(current_user);
+		 SecurityContextHolder.clearContext();
+		    return "redirect:/user/logout";
+		
+	}
 	 
 
 }

@@ -532,3 +532,30 @@ li.mypage_sidebar a.active {
 #modifyaddr {
 	cursor: pointer;
 }
+
+#user_del_input {
+	display: none;
+}
+
+#userdel_confirm_button {
+	border: 1px solid grey;
+	border-radius: 8px;
+	background-color: white;
+	color: black;
+	width: 100px;
+	height: 30px;
+	
+
+}
+
+#user_del_button:hover {
+	cursor: pointer;
+}
+
+
+#userdel_check_password {
+	height: 50px;
+	width: 185px;
+	border: none;
+
+}
