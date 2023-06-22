@@ -142,7 +142,7 @@
 				<li class="mypage_sidebar"><a th:href="@{/user/mypage/me}" class="active">나의 정보</a></li>
 				<li class="mypage_sidebar"><a th:href="@{/user/mypage/test}">예약 내역</a></li>
 				<li class="mypage_sidebar"><a th:href="@{/user/mypage}">장바구니</a></li>
-				<li class="mypage_sidebar"><a th:href="@{/user/mypage/partner_reg}">파트너 신청</a></li>
+				<li class="mypage_sidebar" sec:authorize="hasRole('ROLE_USER')"><a th:href="@{/user/mypage/partner_reg}">파트너 신청</a></li>
 			</ul>
 		</nav>
 </div>
