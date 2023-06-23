@@ -63,7 +63,7 @@ input[type="submit"]:hover {
 						<th>아이디</th>
 						<th>이메일</th>
 						<th>회원등급</th>
-						<th>계정 상태</th>
+<!-- 						<th>계정 상태</th> -->
 						<th>계정 생성일</th>
 					</tr>
 				</thead>
@@ -73,23 +73,26 @@ input[type="submit"]:hover {
 						<td th:text="${user.username}"></td>
 						<td th:text="${user.email}"></td>
 						<td>
-							<form th:action="@{/users/{userId}/role(user.id)}" method="post">
+							<!-- <form th:action="@{/users/{userId}/role(user.id)}" method="post">
+ -->
+							<form th:action="@{'/users/' + ${user.id} + '/role'}"
+								method="post">
 								<select name="role" onchange="this.form.submit()">
 									<option value="USER" th:selected="${user.role == 'USER'}">일반회원</option>
 									<option value="PARTNER" th:selected="${user.role == 'PARTNER'}">파트너</option>
 									<option value="ADMIN" th:selected="${user.role == 'ADMIN'}">관리자</option>
-								</select>
-								<input type="hidden" name="userId" th:value="${user.id}" />
+								</select> <input type="hidden" name="userId" th:value="${user.id}" />
 							</form>
 						</td>
-						<td>
-							<form th:action="@{/toggle-account}" method="post">
-								<input type="hidden" name="userId" th:value="${user.id}" /> <input
-									type="hidden" name="currentStatus"
-									th:value="${user.role.value}" /> <input type="submit"
-									th:value="${user.role.value == 'ACTIVE' ? '정지' : '활동 중'}" />
-							</form>
-						</td>
+<!-- 						<td> -->
+<!-- 							<form th:action="@{'/toggle-account'}" method="post"> -->
+<!-- 								<input type="hidden" name="username" th:value="${user.username}" /> -->
+<!-- 								<input type="hidden" name="currentStatus" th:value="${user.isLock}" /> -->
+<!-- 								<input type="hidden" name="newStatus" th:value="${user.isLock == 0 ? 1 : 0}" /> -->
+<!-- 								<input type="submit" th:value="${user.isLock == 0 ? '활동 중' : '정지'}" /> -->
+<!-- 							</form> -->
+
+<!-- 						</td> -->
 						<td
 							th:text="${#temporals.format(user.create_userTime,'yyyy-MM-dd')}"></td>
 					</tr>

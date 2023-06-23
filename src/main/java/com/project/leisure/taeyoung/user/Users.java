@@ -1,6 +1,12 @@
 package com.project.leisure.taeyoung.user;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
+import java.util.HashSet;
+
+import org.hibernate.mapping.Set;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -80,6 +86,21 @@ public class Users {
 	public String getRoleKey() {
 		return this.role.getValue();
 	}
+
+
+	public Object getAuthority() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	 public Collection<GrantedAuthority> getAuthorities() {
+	        java.util.Set<GrantedAuthority> authorities = new HashSet<>();
+	        // 권한 정보를 설정하는 로직을 구현
+	        authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+	        return authorities;
+	    }
+	
+	
 ///////////////////////////////////////////////////////효경이 수정
 	
 //	public void setRole(UserRole role) {
@@ -92,4 +113,11 @@ public class Users {
 //	    }
 //	}
 
+	
+	
+	
+	
+		
+	
+	
 }

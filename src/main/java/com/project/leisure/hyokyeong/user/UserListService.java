@@ -1,5 +1,6 @@
 package com.project.leisure.hyokyeong.user;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -28,6 +29,8 @@ public class UserListService {
         }
     }
 
+    
+    
     private void updateAdminCode(Users user) {
         if (user.getRole() == UserRole.ADMIN) {
             user.setAdmin_code(1111);
@@ -37,4 +40,32 @@ public class UserListService {
             user.setAdmin_code(0);
         }
     }
+
+    public void lockUserAccount(String username) {
+        Optional<Users> userOptional = getUserByUsername(username);
+        if (userOptional.isPresent()) {
+            Users user = userOptional.get();
+            user.setIslock(1);
+            saveUser(user);
+        } else {
+            // 사용자가 존재하지 않을 경우 예외 처리
+            throw new IllegalArgumentException("User not found: " + username);
+        }
+    }
+
+	public Optional<Users> getUserByUsername(String username) {
+		List<Users> userList = userRepository.findByUsername(username);
+		
+	    if (!userList.isEmpty()) {
+	        return Optional.of(userList.get(0));
+	    } else {
+	        return Optional.empty();
+	    }
+	}
+
+	public void saveUser(Users user) {
+		// TODO Auto-generated method stub
+		 userRepository.save(user);
+	}
+
 }
