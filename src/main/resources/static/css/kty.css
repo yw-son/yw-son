@@ -573,7 +573,7 @@ li.mypage_sidebar a.active {
 
 
 #mypage_partner_reg {
-		position: absolute;
+	position: absolute;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -658,4 +658,21 @@ li.mypage_sidebar a.active {
 
 #reg_partner_final:hover {
 	cursor: pointer;
+}
+
+#partner_input-file {
+	width: 90%;
+
+	height: 45px;
+	border: 1px solid rgb(207, 207, 207);
+
+}
+
+#ch_file {
+	width: 96%;
+	display: inline-block;
+	margin-left: 10px;
+	/* 오른쪽으로 10px 이동 */
+	height: 45px;
+	border: 1px solid rgb(207, 207, 207);
 }

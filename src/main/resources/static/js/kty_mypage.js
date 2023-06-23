@@ -305,36 +305,59 @@ $(document).ready(function() {
 	});
 });
 $(document).ready(function() {
-    $("#reg_partner_final").on("click", function() {
-        var a1 = $('#company_name').val();
-        var a2 = $('#company_address').val();
-        var a3 = $('#partner_name').val();
-        var a4 = $('#partner_tel').val();
-        var a5 = $('#partner_sectors').val();
-        var a6 = $('#partner_region').val();
-        
-        if (a1 === '' || a2 === '' || a3 === '' || a4 === '' || a5 === '') {
-            $("#reg_partner_final").prop("disabled", true);
-            return;
-        }
-        
-        $.ajax({
-            url: "/user/reg_p",
-            type: "POST",
-            data: {
-                company_name: a1,
-                company_address: a2,
-                partner_name: a3,
-                partner_tel: a4,
-                partner_sectors: a5,
-                partner_region: a6
-            },
-            success: function(response) {
-               
-            },
-            error: function(xhr, status, error) {
-                alert('파트너 신청 완료되었습니다.')
-            }
-        });
-    });
+	$("#reg_partner_final").on("click", function() {
+		var a1 = $('#company_name').val();
+		var a2 = $('#company_address').val();
+		var a3 = $('#partner_name').val();
+		var a4 = $('#partner_tel').val();
+		var a5 = $('#partner_sectors').val();
+		var a6 = $('#partner_region').val();
+		var file = $('#partner_input-file')[0].files[0];
+
+		if (a1 === '' || a2 === '' || a3 === '' || a4 === '' || a5 === '' || file === undefined) {
+			$("#reg_partner_final").prop("disabled", true);
+			return;
+		}
+
+		var formData = new FormData();
+		formData.append("company_name", a1);
+		formData.append("company_address", a2);
+		formData.append("partner_name", a3);
+		formData.append("partner_tel", a4);
+		formData.append("partner_sectors", a5);
+		formData.append("partner_region", a6);
+		formData.append("file", file);
+
+		$.ajax({
+			url: "/user/reg_p",
+			type: "POST",
+			data: formData,
+			contentType: false,
+			processData: false,
+			success: function(response) {
+				alert('파트너 신청 완료되었습니다.');
+			},
+			error: function(xhr, status, error) {
+				alert('파트너 신청 완료되었습니다.');
+			}
+		});
+	});
+});
+/* 인감증명서 파일 첨부 */
+
+$(document).ready(function() {
+	$('#partner_input-file').on('change', function() {
+		var file = this.files[0];
+		if (file) {
+			var validExtensions = ["png", "pdf", "jpg"];
+			var fileExtension = file.name.split('.').pop().toLowerCase();
+			if ($.inArray(fileExtension, validExtensions) === -1) {
+				alert("올바른 파일 확장자를 선택하세요.");
+				$(this).val(null); // 선택한 파일 초기화
+				$('#ch_file').text('파일 선택을 선택하세요( 이미지 또는 pdf 파일 첨부)');
+			} else {
+				$('#ch_file').text(file.name).css('color', 'black');
+			}
+		}
+	});
 });

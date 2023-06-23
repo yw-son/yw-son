@@ -1,6 +1,7 @@
 package com.project.leisure.taeyoung.user;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -9,10 +10,15 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 // 회원DB 엔티티
 @Getter
 @Setter
@@ -24,7 +30,6 @@ public class Users {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id; // 회원 번호(PK)
 
-	@Column(unique = true)
 	private String username; // 회원 ID
 
 	private String password; // 회원 PWD
@@ -51,8 +56,14 @@ public class Users {
 	private String addr3; // 상세 주소
 
 	private int islock = 0; // 계정 잠금 여부(1: 계정 잠김, 0: 계정 안잠김)
-	
-	private int partner_reg; // 파트너 신청 여부 (1이면 파트너 신청한 사용자, 0이면 신청 안한 사용자)
+
+	// private int partner_reg; // 파트너 신청 여부 (1이면 파트너 신청한 사용자, 0이면 신청 안한 사용자)
+
+	/*
+	 * @ManyToOne
+	 * 
+	 * @JoinColumn(name="REG_ID") private RegPartner regPartner;
+	 */
 
 	public Users update(String username) {
 		this.username = username;
