@@ -318,7 +318,7 @@ $(document).ready(function() {
 			$("#reg_partner_final").prop("disabled", true);
 			return;
 		}
-
+ 
 		var formData = new FormData();
 		formData.append("company_name", a1);
 		formData.append("company_address", a2);
