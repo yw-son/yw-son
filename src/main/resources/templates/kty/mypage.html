@@ -24,7 +24,6 @@
 					<td class="userinfo_td_gap"><strong
 							style="font-family: Verdana, Geneva, Tahoma, sans-serif                           ;">내 정보
 							수정</strong></td>
-				</tr>
 				<tr>
 					<td class="userinfo_td_gap"><strong>유저명</strong></td>
 					<td class="userinfo_td_gap" th:text=" ${user.username}"></td>
@@ -66,6 +65,7 @@
 					<td class="userinfo_td_gap" th:text="'('+${user.addr1}+')  '+${user.addr3}"></td>
 				</tr>
 
+
 				<tr>
 					<td colspan="3" class="userinfo_td_gap">
 						<button class="btns-wrap__edit-btn" id="mypage_addr_modify" type="button">변경할래요</button>
@@ -97,6 +97,12 @@
 					<td class="userinfo_td_gap" sec:authorize="hasRole('ROLE_PARTNER')">파트너회원</td>
 					<td class="userinfo_td_gap" sec:authorize="hasRole('ROLE_ADMIN')">관리자</td>
 				</tr>
+				</tr>
+				<td class="userinfo_td_gap" th:if="${user.sns}"><strong>소셜 연동 여부</strong></td>
+				<td class="userinfo_td_gap" th:if="${user.sns}" style="font-size: 15px; color: rgb(95, 95, 95);"
+					th:text="${user.sns} + ' 연동된 계정입니다.'"></td>
+				</tr>
+
 				<tr>
 					<td class="userinfo_td_gap"><strong>계정 생성일</strong></td>
 					<td class="userinfo_td_gap" th:text="${#temporals.format(user.create_userTime,'yyyy-MM-dd')}"></td>
@@ -162,7 +168,23 @@
 							<h5 id="noused_account">저기어때를 이용하고 싶지 않으신가요? <a class="nav-link"
 									sec:authorize="isAuthenticated()" th:href="@{/user/logout}"
 									style="color: rgb(0, 0, 0); text-decoration: underline;">로그아웃</a>
+
 		</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 		<!-- sns 유저 정보 표시 테이블(미구현)
 <table class="userinfo_table">

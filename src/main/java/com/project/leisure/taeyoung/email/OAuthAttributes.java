@@ -1,6 +1,5 @@
 package com.project.leisure.taeyoung.email;
 
-
 // OAuth 로그인 사용자 반환정보 처리
 import java.util.Map;
 
@@ -70,7 +69,7 @@ public class OAuthAttributes {
 	}
 
 	public Users toEntity() {
-		return Users.builder().nickname(nickname).email(email).sns(sns).role(UserRole.SNS_USER).build();
+		return Users.builder().nickname(nickname).sns(sns).role(UserRole.SNS_USER).build();
 	}
 
 }

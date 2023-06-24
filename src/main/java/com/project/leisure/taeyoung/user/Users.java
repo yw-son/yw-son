@@ -73,9 +73,9 @@ public class Users {
 
 	// 소셜 로그인 시 등록되는 정보
 	@Builder
-	public Users(String nickname, String email, UserRole role, String sns) {
+	public Users(String nickname, UserRole role, String sns) {
 		this.nickname = nickname;
-		this.email = email;
+		//this.email = email;
 		this.sns = sns;
 		this.role = role;
 	}
