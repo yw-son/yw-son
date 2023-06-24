@@ -45,8 +45,11 @@ public class RegService {
 				e.printStackTrace();
 			}
 		}
-
 		regRepository.save(reg);
 		return reg;
+
 	}
+	
+
+	
 }

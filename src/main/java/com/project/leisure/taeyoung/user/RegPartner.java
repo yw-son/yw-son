@@ -45,4 +45,6 @@ public class RegPartner {
 	private String filename; // 서버에 저장된 파일 명
 	
 	private String filePath; // 파일 저장 경로
+	
+	
 }

@@ -297,9 +297,7 @@ $(document).ready(function() {
 					didOpen: () => {
 						Swal.showLoading();
 					}
-				}).then(() => {
-					// 페이지 이동 완료 후 실행할 코드 추가
-				});
+				})
 			}
 		});
 	});
@@ -314,11 +312,14 @@ $(document).ready(function() {
 		var a6 = $('#partner_region').val();
 		var file = $('#partner_input-file')[0].files[0];
 
+		
 		if (a1 === '' || a2 === '' || a3 === '' || a4 === '' || a5 === '' || file === undefined) {
-			$("#reg_partner_final").prop("disabled", true);
+			$("#reg_partner_final").val("필수값 미입력").css({"color": "red", "font-weight": "bold"});
 			return;
+		} else {
+			$("#reg_partner_final").val("파트너 신청하기").css("color", ""); 
 		}
- 
+
 		var formData = new FormData();
 		formData.append("company_name", a1);
 		formData.append("company_address", a2);
@@ -335,10 +336,15 @@ $(document).ready(function() {
 			contentType: false,
 			processData: false,
 			success: function(response) {
-				alert('파트너 신청 완료되었습니다.');
 			},
 			error: function(xhr, status, error) {
-				alert('파트너 신청 완료되었습니다.');
+				Swal.fire({
+					position:'centet',
+					title: 'Success',
+					html: '<b>파트너 신청 완료되었습니다.</b>',
+					html: '<b>검토 후 개별연락으로 결과 전달드립니다.</b>',
+					icon: 'success'
+				});
 			}
 		});
 	});
