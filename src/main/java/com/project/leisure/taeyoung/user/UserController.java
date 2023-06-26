@@ -136,22 +136,20 @@ public class UserController {
 	@ResponseBody
 	public String sendTempPwd(@RequestParam String email, @RequestParam String username) throws Exception {
 
-		List<Users> users = userService.find(username, email);
+	    List<Users> users = userService.find(username, email);
 
-		if (users != null && !users.isEmpty()) {
-			String code = emailService.sendSimpleMessage(email);
+	    if (users != null && users.size() == 1 && users.get(0).getUsername().equals(username) && users.get(0).getEmail().equals(email)) {
+	        String code = emailService.sendTempMessage(email);
 
-			// 임시 비밀번호로 패스워드 변경
-			Users user = users.get(0);
-			user.setPassword(passwordEncoder.encode(code));
-			userService.save(user);
+	        // 임시 비밀번호로 패스워드 변경
+	        Users user = users.get(0);
+	        user.setPassword(passwordEncoder.encode(code));
+	        userService.save(user);
 
-			return code;
-		} else {
-			String result = null;
-			return result;
-		}
-
+	        return code;
+	    } else {
+	        throw new Exception("회원이 아니거나 아이디와 이메일이 맞지 않습니다."); // 오류를 나타내는 예외를 던집니다.
+	    }
 	}
 
 	/* 아이디 찾기 페이지 */
