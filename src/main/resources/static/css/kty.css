@@ -694,7 +694,7 @@ li.mypage_sidebar a.active {
 	flex-direction: column;
 	height: 30vh;
 	/* 변경: 전체 뷰포트 높이로 설정 */
-	margin-top: 350px;
+	margin-top: 230px;
 	/* 예시로 20px의 여백을 추가 */
 }
 
@@ -721,19 +721,46 @@ li.mypage_sidebar a.active {
 .title_find_pw {
 	margin-left: 30px;
 	margin-top: -70px;
-	font-size: 35px;
+	font-size: 25px;
+	text-align: center;
 }
 
-#send_temppwd{
+#send_temppwd {
 	border: 1px solid grey;
 	border-radius: 8px;
 	background-color: white;
 	color: black;
-	width: 200px;
-	height: 40px;
-	margin-top:15px;
+	width: 150px;
+	height: 500px;
+	margin-top: 15px;
 }
-#send_temppwd:hover{
+
+#send_temppwd:hover {
 	cursor: pointer;
 }
 
+/* 아이디 찾기 css */
+
+#find_id_email {
+	border: 1px solid grey;
+	border-radius: 8px;
+	background-color: white;
+	color: black;
+	width: 300px;
+	height: 50px;
+
+}
+
+#check_email {
+	border: 1px solid grey;
+	border-radius: 8px;
+	background-color: white;
+	color: black;
+	width: 150px;
+	height: 40px;
+	margin-top: 15px;
+}
+
+#check_email:hover {
+	cursor: pointer;
+}

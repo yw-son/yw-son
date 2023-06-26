@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-<html  layout:decorate="~{jjj/header}">
+<html layout:decorate="~{jjj/header}">
 
 <head>
 </head>
-<div  layout:fragment="content"class="container_my-find" >
-	<div class="my-3 border-bottom" >
+<div layout:fragment="content" class="container_my-find">
+	<div class="my-3 border-bottom">
 		<div>
-			<h4 class="title_find_pw">비밀번호 찾기</h4>
+			<h4 class="title_find_pw">비밀번호 재설정</h4>
+			<p style="color:rgb(128, 128, 128);">회원가입 시 등록한 사용자ID와 이메일 주소를 입력해 주세요.</p>
 		</div>
+
 	</div>
 	<div class="mb-findpwd">
 		<label for="find_username" class="form-label">사용자ID</label>
@@ -17,7 +19,5 @@
 		<label for="find_email" class="form-label">이메일</label>
 		<input type="find_email" maxlength="35" class="form-control" id="find_email">
 	</div>
-	<input class="btn_btn-outline-primary" id="send_temppwd" type="button" value="임시비밀번호 발송">
 	<br />
-	<br />
-	<a href="/user/login" class="btn btn-facebook btn-user btn-block">로그인 페이지로</a>
+<input class="btn_btn-outline-primary" id="send_temppwd" type="button" value="임시비밀번호 발송">
