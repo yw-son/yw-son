@@ -46,5 +46,5 @@ public class RegPartner {
 	
 	private String filePath; // 파일 저장 경로
 	
-	
+
 }
