@@ -1,0 +1,371 @@
+/* 변수를 할당해서 전체 색상 변경 가능(전체 수정 필요할때 용이) */
+:root {
+    --text-color: #f0f4f5;
+    --background-color: #263343;
+    --accent-color: #d49466;
+}
+
+.jj_main {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+.jj_navbar a {
+    text-decoration: none;
+    color: var(--text-color);
+}
+
+.jj_navbar {
+	/* 네비 상단 고정  */
+    position: sticky;
+    top: 0px;
+    display: flex;
+    /* 한 줄로 나란히 하기 */
+    justify-content: space-between;
+    /* 같은 중심축으로 해서 중간에 스페이스 넣기*/
+    align-items: center;
+    /* 수직적으로 중간으로 배치 */
+    background-color: var(--background-color);
+    padding: 8px 12px;
+}
+
+.jj_navbar_logo {
+    font-size: 24px;
+    color: var(--text-color);
+}
+
+.jj_navbar_logo i {
+    color: var(--accent-color);
+}
+
+.jj_navbar_menu {
+    display: flex;
+    list-style: none;
+    /* 리스트 점 없애기! */
+    padding-left: 0;
+    /* 메뉴 왼쪽 패딩 없애기 */
+}
+
+.jj_navbar_menu a {
+    padding: 8px 12px;
+    /* 클릭 범위 넓히기 위해서 */
+}
+
+.jj_navbar_menu a:hover {
+    background-color: var(--accent-color);
+    border-radius: 4px;
+}
+
+.jj_navbar_toogleBtn {
+    /* 화면이 작아졌을 때만 햄버거 버튼 나오게함 */
+    display: none;
+    /* 햄버거 아이콘이 현재 플렉스 박스 안 왼쪽 밑에 배치되어 있음, 오른쪽 위에 배치하고 싶을 경우 플렉스 박스에서 나와서(흐름에서 나와서) 재포지션  */
+    position: absolute;
+    right: 32px;
+    font-size: 24;
+    color: var(--accent-color);
+}
+
+/* 검색창 */
+
+.jj_search {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.jj_search {
+    position: relative;
+}
+
+.jj_search_input {
+    outline: none;
+    border: none;
+    border-radius: 100px;
+    padding: 5px 10px;
+    width: 40px;
+    transition: width 0.3s ease;
+}
+
+.jj_search_input::placeholder {
+    color: #f0f4f5;
+}
+
+.jj_search.active .jj_search_input {
+    width: 400px;
+}
+
+.jj_search_btn {
+    width: 65px;
+    padding: 7px;
+    margin: -1px;
+    cursor: pointer;
+    border-radius: 100px;
+    border: none;
+    background: #263343;
+    display: inline;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.56);
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: transform 0.3s ease;
+}
+
+.jj_search.active .jj_search_btn {
+    transform: translateX(400px);
+}
+
+.fa-solid {
+    color: #f0f4f5;
+}
+
+배너 슬라이드 .jj_slide_container all {
+    box-sizing: border-box;
+
+
+}
+
+.jj_slide_container {
+    width: 300vw;
+    height: 500px;
+    display: block;
+    margin: auto;
+    transition: transform 0.5s;
+}
+
+.jj_slide-box {
+    width: 100vw;
+    display: flex;
+    float: left;
+
+}
+
+.jj_slide-box img {
+    width: 100%;
+    height: 500px;
+
+    /* object-fit: cover; */
+}
+
+.jj_btns {
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+    z-index: 5;
+    top: -70px;
+    position: relative;
+}
+
+.jj_dot_btn {
+    background: gray;
+    border: none;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    transform: translate(0, -55%);
+    margin: 0, 5px;
+}
+
+.jj_dot_btn:focus {
+    background: rgb(224, 224, 224);
+}
+
+/* 숙소 카테고리 아이콘 */
+.jj_icon {
+    text-align: center;
+
+}
+
+.jj_icon a {
+    display: inline-block;
+    justify-content: space-around;
+    height: 107px;
+    font-size: 20px;
+    color: rgba(0, 0, 0, 0.56);
+    text-align: center;
+    padding: 0;
+    margin: 0 50px 30px;
+    list-style: none;
+    text-decoration: none;
+
+}
+
+/* 추천 숙소 */
+.jj_recommend h2 {
+    width: 1000px;
+    height: 24px;
+    font-size: 18px;
+    /* margin: 0 50px 30px; */
+    line-height: 1;
+    color: rgba(0, 0, 0, 0.56);
+    /* margin: 30px 30px 13px 30px; */
+    text-align: left;
+    display: block;
+    margin: auto;
+
+
+
+}
+
+.jj_recommend_container * {
+    margin: 0;
+    padding: 0;
+}
+
+.jj_recommend_container {
+    position: relative;
+    width: 960px;
+    margin: 0 auto;
+    height: 300px;
+    overflow: hidden;
+}
+
+.jj_recommend_slide {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 2610px;
+    margin: 20px 30px;
+}
+
+.jj_recommend_slide li:not(:last-child) {
+    float: left;
+    margin-right: 30px;
+}
+
+.jj_recommend_slide li {
+    list-style: none;
+}
+
+.jj_recommend_slide li img {
+    width: 200px;
+}
+
+.jj_controls {
+    text-align: center;
+    margin-top: 50px;
+}
+
+.jj_controls span {
+    background: #333;
+    color: #fff;
+    padding: 10px 20px;
+    margin: 0 10px;
+}
+
+.jj_controls span prev {
+    right: calc(100% + 50px);
+}
+
+.jj_controls span next {
+    left: calc(100% + 50px);
+}
+
+/* 반응형 */
+@media screen and (max-width: 768px) {
+
+    /* 창이 768보다 작아지면 메뉴와 아이템을 밑으로 내림 */
+    .jj_navbar {
+        flex-direction: column;
+        align-items: flex-start;
+        /* 수평 왼쪽으로*/
+        padding: 8px 24px;
+    }
+
+    /* 메뉴도 한줄에서 밑으로 내림 */
+    .jj_navbar_menu {
+        /* 햄버거 눌렀을 때만 메뉴 나오게 */
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        /* 메뉴만 센터로*/
+        width: 100%;
+        /* 센터로 안감, 메뉴 너비를 최대한으로 바꿔줘야함 */
+    }
+
+    .jj_navbar_menu li {
+        /* 메뉴 하이라이트 전체 너비로 */
+        width: 100%;
+        /* 너비가 넓어졌을 때(width :100%) 자동으로 텍스트는 자동으로 왼쪽 정렬됨 */
+        text-align: center;
+    }
+
+    .jj_navbar_toogleBtn {
+        /* 화면이 작아졌을 때만 햄버거 버튼 나오게함 */
+        display: block;
+    }
+
+    /* 768보다 작으면 메뉴 안보여줌 but 햄버거가 클릭됐을 때 메뉴 보여줌*/
+    .jj_navbar_menu.active {
+        display: flex;
+    }
+
+
+
+    .jj_slide-box img {
+        width: 100vw;
+        height: 300px;
+        object-fit: cover;
+        text-align: center;
+    }
+
+    /* 숙소 카테고리 아이콘 */
+    .jj_icon {
+        text-align: center;
+
+    }
+
+    .jj_icon a {
+        display: inline-block;
+        justify-content: space-around;
+        height: 107px;
+        font-size: 16px;
+        color: rgba(0, 0, 0, 0.56);
+        text-align: center;
+        padding: 0;
+        margin: 0 20px 10px;
+        list-style: none;
+        text-decoration: none;
+
+    }
+
+    /* 추천 숙소 */
+    .jj_recommend_slide li img {
+        width: 150px;
+    }
+
+    .jj_recommend h2 {
+        width: 443px;
+        height: 14px;
+        font-size: 18px;
+        /* margin: 0 50px 30px; */
+        line-height: 1;
+        color: rgba(0, 0, 0, 0.56);
+        /* margin: 30px 30px 13px 30px; */
+        text-align: left;
+        display: block;
+        margin: auto;
+
+    }
+
+
+
+
+}
+
+@media screen and (max-width: 965px) {
+
+    /* 검색창 */
+    .jj_search.active .jj_search_input {
+        width: 150px;
+    }
+
+    .jj_search.active .jj_search_btn {
+        transform: translateX(150px);
+    }
+
+
+}
