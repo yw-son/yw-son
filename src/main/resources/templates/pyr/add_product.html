@@ -6,20 +6,35 @@
 <title>addProduct</title>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script>
-	
-</script>
+<style>
+a {
+	text-decoration: none;
+	color: black;
+}
+
+.box {
+	width: 350px;
+	height: 500px;
+	margin: 20px;
+	border-color: black;
+	border-style: inset;
+	box-sizing: border-box;
+}
+</style>
+
 
 </head>
+
+
 
 
 <div>
 
 	<h2>업소 등록</h2>
 
-	<form th:action="@{/product/addproduct}" method="post"
-		enctype="multipart/form-data">
-
+	<!-- <form th:action="@{/product/addproduct}" method="post"
+		enctype="multipart/form-data"> -->
+	<form id="productForm" method="post" enctype="multipart/form-data">
 		<!-- <br> <label>업소 이름<input type="text" autofocus
 			placeholder="정확한 업소명을 입력해주세요" minlength="1" maxlength="20" required />
 		</label> <br /> <label> 업종 <select name="product_sectors" required>
@@ -45,18 +60,517 @@
 		</label> <label>체크아웃 <input type="time" value="11:00:00"
 			name="product_checkout">
 		</label> <br> <label> 객실 사진 <input type="file"
-			multiple="multiple" name="product_photo">
+			multiple="multiple" name="product_photo" id="addPhoto">
 		</label> <br>
 		<div>
-			<button type="submit">등록하기</button>
+			<button type="button" id="addProductButton">등록하기</button>
 			<button type="reset">초기화</button>
 		</div>
 	</form>
 
-	<div>
-		<button>등록 완료</button>
-	</div>
-
-
-
 </div>
+<hr>
+
+
+
+
+<div>
+
+
+	<h2>상품리스트</h2>
+
+	<div id="productListContainer">
+
+		<div id="productContainer" th:each="product : ${productList}"
+			class="box">
+			<!-- 
+			//이거 전체 클릭 가능하게 하는 a 버튼인데 추후 고객한테 상품 리스트 보여줄 때 사용할 것!!!!
+			<a th:href="@{/productDetails(productId=${product.product_id})}">
+ -->
+			<!-- <div th:if="${not #lists.isEmpty(product.productImgs)}">
+				<img th:src="${product.productImgs[0].img_url}" alt="Product Image"
+					width="200" height="200">
+			</div> -->
+
+			<div th:if="${not #lists.isEmpty(product.productImgs)}">
+				<div th:each="img : ${product.productImgs}">
+					<img th:src="${img.img_url}" alt="Product Image" width="200"
+						height="200">
+				</div>
+			</div>
+
+			<p>
+				객실 번호 : <span th:text="${product.product_id}" class="product_id"></span>
+			</p>
+
+			<p>
+				객실 수 : <span th:text="${product.product_count}"
+					class="product_count"></span>
+			</p>
+			<p>
+				객실 형태 : <span th:text="${product.product_type}" class="product_type"></span>
+			</p>
+			<p>
+				최대 인원수 : <span th:text="${product.product_pernum}"
+					class="product_pernum"></span>
+			</p>
+			<p>
+				금액 : <span th:text="${product.product_amount}"
+					class="product_amount"></span>
+			</p>
+			<p>
+				체크인 : <span th:text="${product.checkin}" class="checkin"></span>
+				체크아웃 : <span th:text="${product.checkout}" class="checkout"></span>
+			</p>
+
+
+			<button class="editProduct">객실수정</button>
+			<button class="deleteProduct">객실삭제</button>
+			<button class="editOkProduct">수정완료</button>
+			<button class="cancelProduct">수정취소</button>
+			<button class="resetProduct">초기화</button>
+			<!-- </a> -->
+		</div>
+
+	</div>
+	<div th:if="${#lists.isEmpty(productList)}">현재 등록된 상품이 없습니다.</div>
+</div>
+
+
+
+
+<script>
+	//추후에 공통 ajax 만들 때 form 인지 아닌지 구분해서 만들어야 함
+
+	//등록하기 버튼 클릭 이벤트 처리
+	$(document)
+			.ready(
+					function() {
+
+						$('#addProductButton')
+								.click(
+										function() {
+											var form = $('#productForm')[0]; //첫 번째 form요소
+											var formData = new FormData(form);
+
+											console.log(form);
+
+											$
+													.ajax({
+														url : '/product/addproduct',
+														type : 'POST',
+														data : formData,
+														enctype : 'multipart/form-data',
+														processData : false,
+														contentType : false,
+
+														success : function(
+																response) {
+															// 성공적으로 처리된 경우의 동작
+															// 등록된 상품을 화면에 추가
+
+															/*
+															console.log(response);
+
+															// 상품 목록을 업데이트하기 위해 특정한 영역을 다시 로드
+															$('#reload').load('/product/addproduct');
+
+															// 등록 후 form 초기화
+															$('#productForm')[0].reset();
+															
+															 */
+
+															// 상품 요소를 동적으로 생성
+															var newProductElement = createProductElement(response);
+
+															var productListContainer = document
+																	.getElementById('productListContainer');
+															productListContainer
+																	.appendChild(newProductElement);
+
+															// 등록 후 form 초기화
+															$('#productForm')[0]
+																	.reset();
+
+														},
+														error : function(xhr,
+																status, error) {
+															// 처리 중에 에러가 발생한 경우의 동작 
+
+															console.log(xhr);
+															console.log(status);
+															console.log(error);
+
+															// 요청 실패 시 실행할 코드
+															console
+																	.log('AJAX 요청 실패');
+															console
+																	.log(xhr.responseText);
+
+														}
+													});
+										});
+					});
+
+	/* =====================  수정버튼 기능 구현 ===================== */
+
+	//기존에 있는 값을 담기 위한 배열
+	var originalValues = {};
+
+	//버튼 숨기고 보여주기
+	$('.editProduct, .deleteProduct').show();
+	$('.editOkProduct, .cancelProduct, .resetProduct').hide();
+
+	//수정 버튼 클릭 이벤트
+	$(document).ready(
+			function() {
+				$('.editProduct').click(
+						function() {
+							console.log("비동기인데여");
+
+							var editButten = $(this);
+							console.log("editButten" + editButten);
+
+							var productId = parseInt(editButten.siblings()
+									.find('.product_id').text());
+
+							console.log(productId);
+							console.log(typeof productId); // number
+
+							//원래의 기존 값을 배열에 저장하기 위한 코드 =======
+							// 해당 컨테이너 찾기	
+							var productContainer = $(this).closest(
+									'#productContainer');
+
+							// 기존 값 저장
+							originalValues['count'] = productContainer.find(
+									'.product_count').text();
+							originalValues['type'] = productContainer.find(
+									'.product_type').text();
+							originalValues['pernum'] = productContainer.find(
+									'.product_pernum').text();
+							originalValues['amount'] = productContainer.find(
+									'.product_amount').text();
+
+							originalValues['checkin'] = productContainer.find(
+									'.checkin').text();
+							originalValues['checkout'] = productContainer.find(
+									'.checkout').text();
+
+							console.log("=============");
+
+							console.log(originalValues);
+							console.log(originalValues['checkin'] + "배열");
+							console.log(originalValues['checkout'] + "배열");
+							console.log(originalValues['type']);
+
+							console.log("=============");
+
+							//=============================
+
+							//객실 수정에 대한 함수
+							updateProductContainer(editButten);
+
+							//버튼 추가, 다시 재 이벤트 
+							// 이벤트 위임으로 인해서 (부모-> 자식 ) 해당 방법 안되서 아예
+							//버튼을 만들어서 숨김, 나타내기 형식으로 해야 한다. 
+
+						});
+
+			});
+
+	/* =====================  수정버튼 기능 구현 ===================== */
+
+	// 삭제 버튼 클릭 이벤트 처리
+	$(document).ready(
+			function() {
+				$('.deleteProduct').click(
+						function() {
+							var deleteButton = $(this);
+
+							var productId = parseInt(deleteButton.siblings()
+									.find('.product_id').text()); //해당 id값으로 가져옴
+
+							console.log(productId);
+							console.log(typeof productId); // number
+
+							$.ajax({
+								url : '/product/deleteProduct',
+								method : 'POST',
+								dataType : 'json',
+								data : {
+									"productId" : productId,
+								},
+								success : function(response) {
+									// 삭제 성공 시 동작
+									deleteButton.closest('.box').remove(); // 저장한 변수 사용
+									console.log('AJAX 요청 성공');
+									console.log(response);
+								},
+								error : function(xhr, status, error) {
+									console.log(error);
+								}
+							});
+
+						});
+			});
+
+	//바로 아래 목록에 상품 등록 하기 위한 영역
+	function createProductElement(product) {
+		var newProduct = document.createElement('div');
+		newProduct.classList.add('box');
+
+		//main사진만 보이도록 설정(기존 코드)
+		/* 
+		 var imageContainer = document.createElement('div');
+		 if (product.productImgs.length > 0) {
+		 var image = document.createElement('img');
+		 image.src = product.productImgs[0].img_url;
+
+		 image.alt = 'Product Image';
+		 image.width = 200;
+		 image.height = 200;
+		 imageContainer.appendChild(image);
+		 }
+		 */
+
+		var imageContainer = document.createElement('div');
+		if (product.productImgs.length > 0) {
+			for (var i = 0; i < product.productImgs.length; i++) {
+				var image = document.createElement('img');
+				image.src = product.productImgs[i].img_url;
+				image.alt = 'Product Image';
+				image.width = 200;
+				image.height = 200;
+				imageContainer.appendChild(image);
+			}
+		}
+
+		var productNumber = document.createElement('p');
+		productNumber.innerHTML = '객실 번호: <span>' + product.product_id
+				+ '</span>';
+
+		var productCount = document.createElement('p');
+		productCount.innerHTML = '객실 수: <span>' + product.product_count
+				+ '</span>';
+
+		var productType = document.createElement('p');
+		productType.innerHTML = '객실 형태: <span>' + product.product_type
+				+ '</span>';
+
+		var productPerNum = document.createElement('p');
+		productPerNum.innerHTML = '최대 인원수: <span>' + product.product_pernum
+				+ '</span>';
+
+		var productAmount = document.createElement('p');
+		productAmount.innerHTML = '금액: <span>' + product.product_amount
+				+ '</span>';
+
+		var checkIn = document.createElement('p');
+		checkIn.innerHTML = '체크인: <span>' + product.checkin + '</span>';
+
+		var checkOut = document.createElement('p');
+		checkOut.innerHTML = '체크아웃: <span>' + product.checkout + '</span>';
+
+		var editButton = document.createElement('button');
+		editButton.classList.add('editProduct');
+		editButton.innerHTML = '객실수정';
+
+		var deleteButton = document.createElement('button');
+		deleteButton.classList.add('deleteProduct');
+		deleteButton.innerHTML = '객실삭제';
+
+		var deleteButton = document.createElement('button');
+		deleteButton.classList.add('editOkProduct');
+		deleteButton.innerHTML = '수정완료';
+
+		var deleteButton = document.createElement('button');
+		deleteButton.classList.add('cancelProduct');
+		deleteButton.innerHTML = '수정취소';
+
+		var deleteButton = document.createElement('button');
+		deleteButton.classList.add('resetProduct');
+		deleteButton.innerHTML = '초기화';
+
+		newProduct.appendChild(imageContainer);
+		newProduct.appendChild(productNumber);
+		newProduct.appendChild(productCount);
+		newProduct.appendChild(productType);
+		newProduct.appendChild(productPerNum);
+		newProduct.appendChild(productAmount);
+		newProduct.appendChild(checkIn);
+		newProduct.appendChild(checkOut);
+		newProduct.appendChild(editButton);
+		newProduct.appendChild(deleteButton);
+
+		//추가
+		newProduct.appendChild(editOkProduct);
+		newProduct.appendChild(cancelProduct);
+		newProduct.appendChild(resetProduct);
+
+		//버튼 숨김, 보여주기 이벤트 등록 
+		$('.editProduct, .deleteProduct').show();
+		$('.editOkProduct, .cancelProduct, .resetProduct').hide();
+
+		return newProduct;
+	}
+
+	// productContainer 객실 수정 함수
+	function updateProductContainer(editButton) {
+
+		//해당 컨테이너 찾고 
+		var productContainer = $(editButton).closest('#productContainer');
+
+		//해당 버튼을 숨기고 보여주기
+		productContainer.find('.editProduct').hide();
+		productContainer.find('.deleteProduct').hide();
+		productContainer.find('.editOkProduct, .cancelProduct, .resetProduct')
+				.show();
+
+		//해당 컨테이너에 있는 각 영역을 가져옴
+		var countSpan = productContainer.find('.product_count');
+		var typeSpan = productContainer.find('.product_type');
+		var pernumSpan = productContainer.find('.product_pernum');
+
+		var amountSpan = productContainer.find('.product_amount');
+		var checkinSpan = productContainer.find('.checkin');
+		var checkoutSpan = productContainer.find('.checkout');
+
+		// 현재 값 가져오기
+		var countValue = countSpan.text();
+		var typeValue = typeSpan.text();
+		var pernumValue = pernumSpan.text();
+		var amountValue = amountSpan.text();
+		var checkinValue = checkinSpan.text();
+		var checkoutValue = checkoutSpan.text();
+
+		// 입력 필드로 변경
+		var inputCountField = $('<input type="text" class="edit_count">').val(
+				countValue);
+		countSpan.replaceWith(inputCountField);
+
+		var inputTypeField = $('<input type="text" class="edit_type">').val(
+				typeValue);
+		typeSpan.replaceWith(inputTypeField);
+
+		var inputPernumField = $('<input type="text" class="edit_pernum">')
+				.val(pernumValue);
+		pernumSpan.replaceWith(inputPernumField);
+
+		var inputAmountField = $('<input type="text" class="edit_amount">')
+				.val(amountValue);
+		amountSpan.replaceWith(inputAmountField);
+
+		var inputCheckInField = $('<input type="time" class="edit_checkin">')
+				.val(checkinValue);
+		checkinSpan.replaceWith(inputCheckInField);
+
+		var inputCheckOutField = $('<input type="time" class="edit_checkout">')
+				.val(checkoutValue);
+		checkoutSpan.replaceWith(inputCheckOutField);
+
+		// 포커스를 객실 수 필드로 이동
+		inputCountField.focus();
+
+		//버튼 수정, 수정취소, 초기화 하는 버튼을 추가한다. 
+
+		// 초기화 버튼 클릭 이벤트 처리 ===========================================
+
+		$('.resetProduct')
+				.click(
+						function() {
+							// 초기화 버튼 클릭 시 처리할 로직 작성
+							// 해당 컨테이너 찾기
+							var productContainer = $(this).closest(
+									'#productContainer');
+
+							console.log(productContainer + " 초기화 영역 입니다.");
+
+							//해당 영역만을 초기화 시킴
+							productContainer.find('.edit_count').val(
+									originalValues['count']);
+							productContainer.find('.edit_type').val(
+									originalValues['type']);
+							productContainer.find('.edit_pernum').val(
+									originalValues['pernum']);
+							productContainer.find('.edit_amount').val(
+									originalValues['amount']);
+							productContainer.find('.edit_checkin').val(
+									originalValues['checkin']);
+							productContainer.find('.edit_checkout').val(
+									originalValues['checkout']);
+
+						});
+
+		//수정 취소 버튼을 눌렀을 시 ==========================
+
+		//수정취소버튼
+		$('.cancelProduct')
+				.click(
+						function() {
+							// 초기화 버튼 클릭 시 처리할 로직 작성
+							// 해당 컨테이너 찾기
+							var productContainer = $(this).closest(
+									'#productContainer');
+
+							console.log("수정취소 버튼입니다.");
+
+							// 해당 컨테이너에 있는 각 영역을 가져옴
+							var countInput = productContainer
+									.find('.edit_count');
+							var typeInput = productContainer.find('.edit_type');
+							var pernumInput = productContainer
+									.find('.edit_pernum');
+							var amountInput = productContainer
+									.find('.edit_amount');
+							var checkinInput = productContainer
+									.find('.edit_checkin');
+							var checkoutInput = productContainer
+									.find('.edit_checkout');
+
+							// 원래의 값을 가져온다. 
+							//span 은 val이 안되므로 text로 가져와야 한다. 
+
+							var countInputField = $(
+									'<span type="text" class="product_count">')
+									.text(originalValues['count']);
+							countInput.replaceWith(countInputField);
+
+							var typeInputField = $(
+									'<span type="text" class="product_type">')
+									.text(originalValues['type']);
+							typeInput.replaceWith(typeInputField);
+
+							var pernumInputField = $(
+									'<span type="text" class="product_pernum">')
+									.text(originalValues['pernum']);
+							pernumInput.replaceWith(pernumInputField);
+
+							var amountInputField = $(
+									'<span type="text" class="product_amount">')
+									.text(originalValues['amount']);
+							amountInput.replaceWith(amountInputField);
+
+							var checkinInputField = $(
+									'<span type="text" class="checkin">').text(
+									originalValues['checkin']);
+							checkinInput.replaceWith(checkinInputField);
+
+							var checkoutInputField = $(
+									'<span type="text" class="checkout">')
+									.text(originalValues['checkout']);
+							checkoutInput.replaceWith(checkoutInputField);
+
+							//해당하는 이벤트 div 에만 해당사하잉 적용되도록 기능 구현 
+
+							productContainer.find('.editProduct').show();
+							productContainer.find('.deleteProduct').show();
+							productContainer
+									.find(
+											'.editOkProduct, .cancelProduct, .resetProduct')
+									.hide();
+
+						});
+
+	}
+</script>

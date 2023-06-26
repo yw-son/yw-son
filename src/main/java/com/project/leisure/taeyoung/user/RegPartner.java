@@ -32,5 +32,4 @@ public class RegPartner {
 	
 	private String username; // 신청자 아이디
 
-
 }

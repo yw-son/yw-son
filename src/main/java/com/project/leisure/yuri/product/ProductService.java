@@ -3,6 +3,7 @@ package com.project.leisure.yuri.product;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.time.LocalTime;
 import java.util.List;
@@ -30,22 +31,20 @@ public class ProductService {
 		return this.productImgRepository.findAll();
 	}
 
-	/*
-	 * // 해당 product에 해당되는 이미지를 보여준다. public ProductImg getImg(Product product) {
-	 * Optional<ProductImg> img = this.productImgRepository.findById(null); if
-	 * (img.isPresent()) { return img.get(); } return null; }
-	 */
+	// 해당 product_id로 상품의 정보를 조회
+	public Product getProduct(Long product_id) {
+		Optional<Product> findProduct = this.productRepository.findById(product_id);
+		if (findProduct.isPresent()) {
+			Product product = findProduct.get();
 
-	public ProductImg getImg(Product product) {
-		List<ProductImg> productImgs = product.getProductImgs();
-		if (!productImgs.isEmpty()) {
-			return productImgs.get(0);
+			return product;
+		} else {
+			return null; // 또는 예외 처리 등 추후 작성
 		}
-		return null;
 	}
 
 	// 해당 상품의 pk를 가져와서 img 앤티티 연결
-	public void updateImg(MultipartFile product_photo, Long product_id) {
+	public Integer updateImg(MultipartFile product_photo, Long product_id) {
 
 		Optional<Product> productOptional = this.productRepository.findById(product_id);
 
@@ -77,6 +76,7 @@ public class ProductService {
 				e.printStackTrace();
 			}
 		}
+		return 1;
 
 	}
 
@@ -94,6 +94,49 @@ public class ProductService {
 		this.productRepository.save(product);
 
 		return product.getProduct_id();
+	}
+
+	// 상품을 삭제
+	public Integer pdDelete(Long product_id) {
+		Optional<Product> productOptional = this.productRepository.findById(product_id);
+		if (productOptional.isPresent()) {
+			Product product = productOptional.get();
+
+			// Product와 연결된 모든 ProductImg를 삭제
+			List<ProductImg> productImgs = product.getProductImgs();
+			for (ProductImg productImg : productImgs) {
+
+				String baseDirectory = "src/main/resources/static/";
+				String imgPath = productImg.getImg_url(); // 이미지 파일의 경로
+
+				String fileImgPath = baseDirectory + imgPath;
+
+				try {
+
+					Path imagePath = Paths.get(fileImgPath);
+					Files.delete(imagePath); // 서버 파일 삭제
+
+					System.out.println("이미지 파일 삭제: " + imagePath);
+
+				} catch (IOException e) {
+					System.out.println("이미지 파일 삭제 실패: " + fileImgPath);
+					e.printStackTrace();
+				}
+
+				// 외래키 제약 조건으로 인해서 1.서버 이미지 삭제 2.데이터 베이스 이미지 삭제
+				// 그리고 for문 다 돌리고 PK 존재인 3.해당 상품 삭제 순으로 간다
+
+				productImgRepository.delete(productImg); // 데이터 베이스 이미지 삭제
+
+			}
+
+			productRepository.delete(product); // 해당 상품 삭제
+
+			return 1; // 성공
+
+		}
+		return 0; // 실패
+
 	}
 
 }
