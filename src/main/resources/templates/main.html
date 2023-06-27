@@ -3,3 +3,7 @@
   <a class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/user/logout}">로그아웃</a>
   
    <a class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/user/mypage/me}">마이페이지로</a>
+
+  <th:block sec:authorize="hasRole('ADMIN')">
+    <a class="nav-link" th:href="@{/admin/adminMain}">관리자페이지</a>
+</th:block>

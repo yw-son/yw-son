@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,47 +14,57 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.project.leisure.taeyoung.email.PrincipalDetails;
 import com.project.leisure.taeyoung.user.UserRepository;
 import com.project.leisure.taeyoung.user.UserRole;
+import com.project.leisure.taeyoung.user.UserSecurityService;
 import com.project.leisure.taeyoung.user.Users;
 
 import lombok.RequiredArgsConstructor;
+
 @RequiredArgsConstructor
 @Controller
 @RequestMapping("/admin")
 public class adminController {
-	
-	
+
 	private final UserRepository userRepository;
-	private final UserListService userService;
-	
-	
+	@Autowired
+	private final UserListService userListService;
+
 	@GetMapping("/adminMain")
-	public String adminMain () {
-		
+	public String adminMain() {
+		System.out.println("메인페이지로 이동");
 		return "khk/adminMain";
 	}
-	
+
 	@GetMapping("/userListPage")
-	public String Userlist (Model model) {
-        List<Users> users = this.userRepository.findAll();
-        model.addAttribute("users",users);
+	public String Userlist(Model model) {
+		userListService.userList(model);
 		return "khk/userListPage";
 	}
-	
-	
-	@PostMapping("/users/{userId}/role")
-	public void updateUserRole(@PathVariable("userId") Long userId, @RequestParam("role") UserRole role) {
-        // DB에서 해당 userId의 사용자를 조회하여 회원 등급 변경 및 admin_code 업데이트
-		
-		System.out.println("============");
-		System.out.println(role);
-		System.out.println(userId);
-		System.out.println("============");
 
-        userService.updateUserRole(userId, role);
-//        return ResponseEntity.ok("회원 등급이 변경되었습니다.");
-    }
+	@PostMapping("/{id}/adminRole")
+	public String updateUserRole(@PathVariable("id") Long id, @RequestParam("role") UserRole role, Model model) {
+	    try {
+	        userListService.updateUserRole(id, role); // 서비스를 통해 DB 업데이트 수행
+	        List<Users> userList = userListService.userList(model); // 변경된 회원 목록을 조회
+	        model.addAttribute("users", userList); // 변경된 회원 목록을 모델에 추가
+	        return "khk/userListPage"; // 회원 목록 페이지로 이동
+	    } catch (IllegalArgumentException e) {
+	        return "redirect:/khk/adminMain"; // 예외 발생 시 관리자 메인 페이지로 이동
+	    }
+	}
+
+//	@PostMapping("/users/{id}/role")
+//	public String updateUserRole(@PathVariable("id") Long id, @RequestParam("role") UserRole role) {
+//	    try {
+//	        userListService.updateUserRole(id, role); // 선택한 옵션으로 DB 업데이트
+//	        return "redirect:/userListPage";
+//	    } catch (IllegalArgumentException e) {
+//	        return "redirect:/khk/adminMain";
+//	    }
+//	}
+
 //	
 //	 @Autowired 
 //	 @PostMapping("/toggle-account")
@@ -72,6 +83,5 @@ public class adminController {
 //	   
 //
 //	
-	    }
+	}
 
-	

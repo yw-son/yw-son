@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import com.project.leisure.taeyoung.user.UserRepository;
 import com.project.leisure.taeyoung.user.UserRole;
@@ -16,6 +17,9 @@ public class UserListService {
     public UserListService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
+    
+    
+    
 
     public void updateUserRole(Long userId, UserRole role) {
         Optional<Users> userOptional = userRepository.findById(userId);
@@ -33,13 +37,25 @@ public class UserListService {
     
     private void updateAdminCode(Users user) {
         if (user.getRole() == UserRole.ADMIN) {
+        	user.setPartner_code(0);
             user.setAdmin_code(1111);
+            userRepository.save(user);
         } else if (user.getRole() == UserRole.PARTNER) {
-            user.setAdmin_code(3333);
+            user.setAdmin_code(0);
+            user.setPartner_code(3333);
+            userRepository.save(user);
         } else {
             user.setAdmin_code(0);
+            user.setPartner_code(0);
+            userRepository.save(user);
         }
     }
+    
+    
+    
+    
+    
+    
 
     public void lockUserAccount(String username) {
         Optional<Users> userOptional = getUserByUsername(username);
@@ -66,6 +82,12 @@ public class UserListService {
 	public void saveUser(Users user) {
 		// TODO Auto-generated method stub
 		 userRepository.save(user);
+	}
+
+	public List<Users> userList(Model model) {
+		List<Users> users = this.userRepository.findAll();
+		model.addAttribute("users", users);
+		return users;
 	}
 
 }

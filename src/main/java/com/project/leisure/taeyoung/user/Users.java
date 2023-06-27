@@ -19,6 +19,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 // 회원DB 엔티티
 @Getter
 @Setter
@@ -57,7 +58,7 @@ public class Users {
 	private String addr3; // 상세 주소
 
 	private int islock = 0; // 계정 잠금 여부(1: 계정 잠김, 0: 계정 안잠김)
-	
+
 	private int partner_reg; // 파트너 신청 여부 (1이면 파트너 신청한 사용자, 0이면 신청 안한 사용자)
 
 	public Users update(String username) {
@@ -87,37 +88,25 @@ public class Users {
 		return this.role.getValue();
 	}
 
+	/////////////////////////////////////////////////////// 효경이 수정
 
-	public Object getAuthority() {
-		// TODO Auto-generated method stub
-		return null;
+	public UserRole getCurrentRole() {
+
+		if (this.role == UserRole.ADMIN) {
+			return UserRole.ADMIN;
+		} else if (this.role == UserRole.PARTNER)
+
+		{
+			return UserRole.PARTNER;
+		} else if (this.role == UserRole.USER) {
+			return UserRole.USER;
+		} else if (this.role == UserRole.SNS_USER) {
+			return UserRole.SNS_USER;
+		}
+
+		// 기본값으로 USER를 반환하거나 예외 처리 등을 수행할 수 있습니다.
+		return UserRole.USER;
+
 	}
-	
-	 public Collection<GrantedAuthority> getAuthorities() {
-	        java.util.Set<GrantedAuthority> authorities = new HashSet<>();
-	        // 권한 정보를 설정하는 로직을 구현
-	        authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
-	        return authorities;
-	    }
-	
-	
-///////////////////////////////////////////////////////효경이 수정
-	
-//	public void setRole(UserRole role) {
-//	    this.role = role;
-//	    // role 값에 따라 admin_code 변경
-//	    if (role == UserRole.ADMIN) {
-//	        this.admin_code = 1;
-//	    } else {
-//	        this.admin_code = 0;
-//	    }
-//	}
 
-	
-	
-	
-	
-		
-	
-	
 }

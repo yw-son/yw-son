@@ -50,6 +50,19 @@ input[type="submit"] {
 input[type="submit"]:hover {
 	background-color: #45a049;
 }
+
+/* 추가된 CSS */
+span.role-USER {
+	color: black;
+}
+
+span.role-PARTNER {
+	color: blue;
+}
+
+span.role-ADMIN {
+	color: red;
+}
 </style>
 </head>
 <body>
@@ -63,8 +76,8 @@ input[type="submit"]:hover {
 						<th>아이디</th>
 						<th>이메일</th>
 						<th>회원등급</th>
-<!-- 						<th>계정 상태</th> -->
 						<th>계정 생성일</th>
+						<th>계정 상태</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -73,29 +86,50 @@ input[type="submit"]:hover {
 						<td th:text="${user.username}"></td>
 						<td th:text="${user.email}"></td>
 						<td>
-							<!-- <form th:action="@{/users/{userId}/role(user.id)}" method="post">
- -->
-							<form th:action="@{'/users/' + ${user.id} + '/role'}"
+							<p>
+								<span th:text="${user.role}">
+<!-- 									th:class="${'role-' + user.role.toLowerCase()}"> -->
+									</span>
+							</p>
+
+							<form th:action="@{'/admin/' + ${user.id} + '/adminRole'}"
 								method="post">
-								<select name="role" onchange="this.form.submit()">
+								<select name="role" onchange="this.nextElementSibling.click()">
 									<option value="USER" th:selected="${user.role == 'USER'}">일반회원</option>
 									<option value="PARTNER" th:selected="${user.role == 'PARTNER'}">파트너</option>
 									<option value="ADMIN" th:selected="${user.role == 'ADMIN'}">관리자</option>
-								</select> <input type="hidden" name="userId" th:value="${user.id}" />
+								</select> <input type="hidden" name="id" th:value="${user.id}" />
+								<button type="submit">변경</button>
+								<!-- 변경 버튼 추가 -->
 							</form>
 						</td>
-<!-- 						<td> -->
-<!-- 							<form th:action="@{'/toggle-account'}" method="post"> -->
-<!-- 								<input type="hidden" name="username" th:value="${user.username}" /> -->
-<!-- 								<input type="hidden" name="currentStatus" th:value="${user.isLock}" /> -->
-<!-- 								<input type="hidden" name="newStatus" th:value="${user.isLock == 0 ? 1 : 0}" /> -->
-<!-- 								<input type="submit" th:value="${user.isLock == 0 ? '활동 중' : '정지'}" /> -->
-<!-- 							</form> -->
+						<!-- 						<td> -->
+						<!-- 							<form th:action="@{'/toggle-account'}" method="post"> -->
+						<!-- 								<input type="hidden" name="username" th:value="${user.username}" /> -->
+						<!-- 								<input type="hidden" name="currentStatus" -->
+						<!-- 									th:value="${user.isLock}" /> <input type="hidden" -->
+						<!-- 									name="newStatus" th:value="${user.isLock == 0 ? 1 : 0}" /> <input -->
+						<!-- 									type="submit" th:value="${user.isLock == 0 ? '활동 중' : '정지'}" /> -->
+						<!-- 							</form> -->
 
-<!-- 						</td> -->
+						<!-- 						</td> -->
 						<td
 							th:text="${#temporals.format(user.create_userTime,'yyyy-MM-dd')}"></td>
 					</tr>
+
+					<script th:inline="javascript">
+						var reloadPage = function() {
+							window.location.reload();
+						};
+						document.addEventListener("DOMContentLoaded",
+								function() {
+									document.querySelectorAll("form").forEach(
+											function(form) {
+												form.addEventListener("submit",
+														reloadPage);
+											});
+								});
+					</script>
 				</tbody>
 			</table>
 		</div>

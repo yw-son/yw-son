@@ -27,5 +27,9 @@ public interface UserRepository extends JpaRepository<Users, Long> {
 	Optional<Users> findById(Long id);
 	
 	/////////////////효경 수정//////////////////
-	 Users save(Users user); // saveUser 메서드 추가
+	Users save(Users user); // saveUser 메서드 추가
+
+	default void saveUser(Users user) {
+		save(user);
+	}
 }
