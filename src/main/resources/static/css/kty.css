@@ -438,7 +438,7 @@ li.mypage_sidebar a.active {
 	height: 30px;
 	width: 185px;
 	border: none;
-
+	border-bottom: 1px solid rgb(128, 128, 128);
 }
 
 #modify_password_input_button {
@@ -465,14 +465,14 @@ li.mypage_sidebar a.active {
 	height: 30px;
 	width: 185px;
 	border: none;
-
+	border-bottom: 1px solid rgb(128, 128, 128);
 }
 
 .modify_password3 {
 	height: 30px;
 	width: 185px;
 	border: none;
-
+	border-bottom: 1px solid rgb(128, 128, 128);
 }
 
 #modifypassword {
@@ -571,6 +571,7 @@ li.mypage_sidebar a.active {
 	height: 50px;
 	width: 185px;
 	border: none;
+	border-bottom: 1px solid rgb(128, 128, 128);
 
 }
 
