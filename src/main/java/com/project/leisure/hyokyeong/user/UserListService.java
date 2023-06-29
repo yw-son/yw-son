@@ -57,12 +57,14 @@ public class UserListService {
     
     
 
-    public void lockUserAccount(String username) {
+    public int lockUserAccount(String username) {
         Optional<Users> userOptional = getUserByUsername(username);
         if (userOptional.isPresent()) {
             Users user = userOptional.get();
+            int currentStatus = user.getIslock();
             user.setIslock(1);
             saveUser(user);
+            return currentStatus;
         } else {
             // 사용자가 존재하지 않을 경우 예외 처리
             throw new IllegalArgumentException("User not found: " + username);

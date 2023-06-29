@@ -130,7 +130,7 @@ function toggleAccount(event, button) {
 
 </head>
 <body>
-	<h1>회원 리스트</h1>
+	<h1>권한 관리</h1>
 	<div class="container">
 		<div>
 			<table>
@@ -139,13 +139,8 @@ function toggleAccount(event, button) {
 						<th>회원 번호</th>
 						<th>아이디</th>
 						<th>이메일</th>
-						<th>닉네임</th>
 						<th>회원등급</th>
-						<th>우편번호</th>
-						<th>지번 주소</th>
-						<th>상세 주소</th>
 						<th>계정 상태</th>
-						<th>파트너 신청여부</th>
 						<th>계정 생성일</th>
 					</tr>
 				</thead>
@@ -154,7 +149,6 @@ function toggleAccount(event, button) {
 						<td th:text="${user.id}"></td>
 						<td th:text="${user.username}"></td>
 						<td th:text="${user.email}"></td>
-						<td th:text="${user.nickname}"></td>
 						<td>
 							<p>
 								<span th:text="${user.role}" th:class="'role-' + ${user.role}"></span>
@@ -171,9 +165,6 @@ function toggleAccount(event, button) {
 								<button type="submit">변경</button>
 							</form>
 						</td>
-						<td th:text="${user.addr1}"></td>
-						<td th:text="${user.addr2}"></td>
-						<td th:text="${user.addr3}"></td>
 						   <td>
                      <form th:action="@{'/admin/toggle-account'}" method="post">
                         <input type="hidden" name="username" th:value="${user.username}" />
@@ -181,7 +172,6 @@ function toggleAccount(event, button) {
                            onclick="toggleAccount(event, this)" />
                      </form>
                   </td>
-						<td th:text="${user.partner_reg}"></td>
 						
 						
 						

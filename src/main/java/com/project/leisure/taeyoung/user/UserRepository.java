@@ -28,8 +28,14 @@ public interface UserRepository extends JpaRepository<Users, Long> {
 	
 	/////////////////효경 수정//////////////////
 	Users save(Users user); // saveUser 메서드 추가
+	
 
+    // 회원 상태(islock)를 조회하는 메서드
+	@Query("SELECT u.islock FROM Users u WHERE u.username = :username")
+    int findIslockByUsername(@Param("username") String username);
+	
 	default void saveUser(Users user) {
 		save(user);
+		
 	}
 }
