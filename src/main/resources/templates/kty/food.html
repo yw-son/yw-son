@@ -310,11 +310,11 @@
 										}
 
 										if (e.includes("우뚝")) {
-											output += '<strong style="font-size:0px;"></strong> <span class="course" style="font-size:0px;">도심 속에 우뚝 솟은 대구의 랜드마크인 두류공원(頭流公園) 내에 위치한 유럽형 테마공원에 조성된 83타워!</span><br>';
+											output += '<strong>코스 설명:</strong> <span class="course">도심 속에 우뚝 솟은 대구의 랜드마크인 두류공원(頭流公園) 내에 위치한 유럽형 테마공원에 조성된 83타워!</span><br>';
 
 										}
 										if (e.includes("3.1만세운동길")) {
-											output += '<strong style="font-size:0px;"> 코스 주제 설명:</strong> <span class="course" style="font-size:0px;">타임머신 타고 대구 근대골목으로! 역사의 숨결을 느껴보세요!</span><br>';
+											output += '<strong style="font-size:0px;"> 코스 설명:</strong> <span class="course" style="font-size:0px;">타임머신 타고 대구 근대골목으로! 역사의 숨결을 느껴보세요!</span><br>';
 										}
 										if (e.includes("동성로축제는")) {
 											output += '<strong style="font-size:0px;"> 코스 주제 설명:</strong> <span class="course" style="font-size:0px;">대구의 열정과 다채로움이 만나는 절묘한 조화! 함께 춤추고 놀아요!!</span><br>';
@@ -453,77 +453,65 @@
 							var geocoder = new kakao.maps.services.Geocoder();
 
 							$(document).on('click','.output-item',function() {
-												var tour = $(this).find(
-														'.touristSite').text();
-												var address = $(this).find(
-														'.address').text(); // 클릭한 요소의 주소 값을 추출
-												var tel = $(this).find('.tel')
-														.text();
-												var d = $(this).find('.course')
-														.text();
-												var home = $(this).find(
-														'.homepage').text();
-												if (marker) {
-													marker.setMap(null); // 이전 마커 제거
-												}
+								 $(this).css('display', 'block');
+								 
+								var tour = $(this).find('.touristSite').text();
+								var address = $(this).find('.address').text(); // 클릭한 요소의 주소 값을 추출
+								var tel = $(this).find('.tel').text();
+								var d = $(this).find('.course').text();
+								var home = $(this).find('.homepage').text();
+												
+								if (marker) {
+									marker.setMap(null); // 이전 마커 제거
+									}
 
-												console.log(home);
-												if (address === "대구광역시 중구 일대") {
-													address = '대구광역시 중구 서성로 10';
+									//console.log(home);
+									if (address === "대구광역시 중구 일대") {
+											address = '대구광역시 중구 서성로 10';
+											}
+									if (selectedElement !== null) {
+										// 이전에 선택한 요소가 있을 경우 초기화
+										selectedElement.removeClass('selected');
 												}
-												if (selectedElement !== null) {
-													// 이전에 선택한 요소가 있을 경우 초기화
-													selectedElement
-															.removeClass('selected');
-												}
+									$(this).addClass('selected');
+										selectedElement = $(this);
 
-												$(this).addClass('selected');
-												selectedElement = $(this);
-
-												geocoder
-														.addressSearch(
-																address,
-																function(result,status) {
-																	if (status === kakao.maps.services.Status.OK) {
-																		var coords = new kakao.maps.LatLng(
-																				result[0].y,
-																				result[0].x);
-																		if (marker) {
-																			marker.setMap(''); // 이전 마커 제거
+										geocoder.addressSearch(address,function(result,status) {
+											if (status === kakao.maps.services.Status.OK) {
+												var coords = new kakao.maps.LatLng(result[0].y,result[0].x);
+														if (marker) {marker.setMap(''); // 이전 마커 제거
 																		}
 																		marker = new kakao.maps.Marker(
-																				{
+																			{
 																					map : map,
 																					position : coords,
 																					clickable : true
 																				});
 
-																		var linkHtml = '';
-																		if (home) {
-																			linkHtml = '<a href="' + home + '" target="_blank" class="link">홈페이지</a>';
-																		}
-																		var tourImage = '/img/tour/' + tour.replace(/\s/g, '') + '.jpg';
-																		var infowindowContent = '<div class="wrap">' + 
-												                        '    <div class="info">' + 
-												                        '        <div class="title">' + 
-												                        tour + 
-												                        '            <div class="close" onclick="closeOverlay()" title="닫기"></div>' + 
-												                        '        </div>' + 
-												                        '        <div class="body" >' + 
-												                        '            <div class="img">' +
-												                        '                <img src="' + tourImage + '" width="73" height="70">' +
-												                        '           </div>' + 
-												                        '            <div class="desc">' + 
-												                        address + 
-												                        '                <div class="jibun ellipsis">' + tel + '</div>' + 
-												                        '<a href="https://map.kakao.com/?q=' + address + '" target="_blank" class="link">길찾기  </a>'+ linkHtml +'<br>'+ 
-												                      //  d+
-												                        '            </div>' + 
-												                        '        </div>' + 
-												                        '    </div>' +    
-												                        '</div>';
-
-
+												var linkHtml = '';
+													if (home) {
+														linkHtml = '<a href="' + home + '" target="_blank" class="link">홈페이지</a>';
+															}
+															var tourImage = '/img/tour/' + tour.replace(/\s/g, '') + '.jpg';
+															var infowindowContent = '<div class="wrap">' + 
+												               '    <div class="info">' + 
+												               '        <div class="title">' + 
+												                tour + 
+												               '            <div class="close" onclick="closeOverlay()" title="닫기"></div>' + 
+												               '        </div>' + 
+												               '        <div class="body" >' + 
+												               '            <div class="img">' +
+												               '                <img src="' + tourImage + '" width="73" height="70">' +
+												               '           </div>' + 
+												               '            <div class="desc">' + 
+												                address + 
+												               '                <div class="jibun ellipsis">' + tel + '</div>' + 
+												               '<a href="https://map.kakao.com/?q=' + address + '" target="_blank" class="link">길찾기  </a>'+ linkHtml +'<br>'+ 
+												               
+												               '            </div>' + 
+												               '        </div>' + 
+												               '    </div>' +    
+												               '</div>';
 																		var overlay = new kakao.maps.CustomOverlay(
 																				{
 																					content : infowindowContent,
@@ -565,13 +553,10 @@
 						getCurrentPosition();
 					});
 			
-			function closeOverlay() {
-				 var wrapElement = document.querySelector('.wrap');
-				  if (wrapElement) {
-				    wrapElement.style.display = 'none';
-				  }
-				}
-			
+			$(document).on('click', '.close', function() {
+				  $('.output-item').css('display', 'none');
+				});
+
 		</script>
 	</div>
 
