@@ -1,240 +1,10 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-<style>
-/* 추가한 스타일 */
-.nav-line {
-	position: fixed;
-	top: 0;
-	left: 0;
-	height: 100%;
-	width: 1px;
-	background-color: black;
-}
-
-.nav-area {
-	position: fixed;
-	top: 0;
-	left: 0;
-	height: 92%;
-	margin-top: 86px;
-	width: 400px;
-	background-color: rgb(255, 255, 255);
-	/*overflow-y: scroll;*/
-	/* Add scrollable area */
-	display: flex;
-	/* Add flexbox display */
-	flex-direction: column;
-	/* Set flex-direction to column */
-}
-
-#address-map {
-	position: fixed;
-	top: 0;
-	left: 400px;
-	width: calc(100% - 400px);
-	height: 100%;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-
-#map {
-	width: 100%;
-	height: calc(100% - 80px);
-	margin-top: 92px;
-}
-
-.box {
-	width: 85%;
-	height: 80%;
-	margin-right: 2px;
-	border: 1px solid black;
-	text-align: center;
-	/* Added margin */
-	padding: 10px 10px 10px 10px;
-	margin-left: 20px;
-	overflow: auto;
-	margin-top: 50px;
-	/* Added margin-top */
-}
-
-.output-item {
-	width: 320px;
-	height: 180px;
-	border: 1px solid black;
-	text-align: left;
-	border-radius: 5px;
-	padding-top: 15px;
-	padding-left: 5px;
-	font-size: 14px;
-	background-color: rgb(255, 230, 234);
-	}
-
-.output-item:hover {
-	cursor: pointer;
-}
-
-.selected {
-	background-color: rgb(255, 255, 128);
-	font-weight: bold;
-}
-
-#daegu_top10_title {
-	position: absolute;
-	top: 50px;
-	font-size: 18px;
-	left: 55px;
-	text-align: center;
-}
-
-.wrap {
-	position: absolute;
-	left: 0;
-	bottom: 40px;
-	width: 288px;
-	height: 132px;
-	margin-left: -144px;
-	text-align: left;
-	overflow: hidden;
-	font-size: 12px;
-	font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;
-	line-height: 1.5;
-}
-
-.wrap * {
-	padding: 0;
-	margin: 0;
-}
-
-.wrap .info {
-	width: 286px;
-	height: 120px;
-	border-radius: 5px;
-	border-bottom: 2px solid #ccc;
-	border-right: 1px solid #ccc;
-	overflow: hidden;
-	background: #fff;
-}
-
-.wrap .info:nth-child(1) {
-	border: 0;
-	box-shadow: 0px 1px 2px #888;
-}
-
-.info .title {
-	padding: 5px 0 0 10px;
-	height: 30px;
-	background: #eee;
-	border-bottom: 1px solid #ddd;
-	font-size: 18px;
-	font-weight: bold;
-}
-
-.info .close {
-	position: absolute;
-	top: 10px;
-	right: 10px;
-	color: #888;
-	width: 17px;
-	height: 17px;
-	background:
-		url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/overlay_close.png');
-}
-
-.info .close:hover {
-	cursor: pointer;
-}
-
-.info .body {
-	position: relative;
-	overflow: hidden;
-	
-}
-
-.info .desc {
-	position: relative;
-	margin: 13px 0 0 90px;
-	height: 75px;
-}
-
-.desc .ellipsis {
-	overflow: hidden;
-	text-overflow: ellipsis;
-	white-space: nowrap;
-	
-}
-
-.desc .jibun {
-	font-size: 11px;
-	color: #888;
-	margin-top: -2px;
-}
-
-.info .img {
-	position: absolute;
-	top: 6px;
-	left: 5px;
-	width: 73px;
-	height: 71px;
-	border: 1px solid #ddd;
-	color: #888;
-	overflow: hidden;
-}
-
-.info:after {
-	content: '';
-	position: absolute;
-	margin-left: -12px;
-	left: 50%;
-	bottom: 0;
-	width: 22px;
-	height: 12px;
-	background:
-		url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')
-}
-
-.info .link {
-	color: #5085BB;
-	
-}
-</style>
-<meta charset="utf-8">
-<title>주소로 장소 표시하기</title>
-</head>
-
-<body>
-	<div class="nav-line"></div>
-	<!-- 네비게이션을 그리는 선 -->
-	<div class="nav-area">
-		<input type="button" id="current_me_position" value="내 현재 위치">
-		<br> <span id="daegu_top10_title">요기어때가 추천하는 대구 여행 코스 ❤️</span>
-		<div class="box"></div>
-	</div>
-
-	<header>
-		<html layout:decorate="~{jjj/header}">
-<div id="my_infomation_modify" layout:fragment="content"
-	class="container my-3">
-	</header>
-	</div>
-
-	<div id="address-map">
-		<div id="map"></div>
-
-		<script type="text/javascript"
-			src="//dapi.kakao.com/v2/maps/sdk.js?appkey=5084cc8a2f9c3459393c15e560d75404&libraries=services"></script>
-		<script>
-			fetchData();
+fetchData();
 
 			function fetchData() {
 				var myurl = 'https://api.odcloud.kr/api/15087234/v1/uddi:927f8b4b-0241-4461-9924-f8dfffbe5394?page=1&perPage=36&serviceKey=OzZTUnMJGM1btfj8YuaBUFh5ZYDn85xrzW1n3S82xZEHM5pZI7D%2FVYzTXPfmQtxC5iY8pE9vmfFPf5qzo%2FKQnQ%3D%3D';
-				$
-						.ajax({
-							url : myurl,
-						})
-						.done(
+				$.ajax({
+					url : myurl,
+						}).done(
 								function(response) {
 									console.log(response);
 									var items = response.data;
@@ -422,143 +192,104 @@
 						});
 			}
 
-			kakao.maps
-					.load(function() {
-						var map;
-						var marker;
-						var selectedElement = null; // 클릭한 요소를 저장하는 변수
+		$(document).on('click','.output-item',function() {
+					 $(this).css('display', 'block');
+					 
+					var tour = $(this).find('.touristSite').text();
+					var address = $(this).find('.address').text(); // 클릭한 요소의 주소 값을 추출
+					var tel = $(this).find('.tel').text();
+					var d = $(this).find('.course').text();
+					var home = $(this).find('.homepage').text();
+									
+					if (marker) {
+						marker.setMap(null); // 이전 마커 제거
+						}
 
-						function initializeMap(latitude, longitude) {
-							var mapContainer = document.getElementById('map');
-							var mapOption = {
-								center : new kakao.maps.LatLng(latitude,
-										longitude),
-								level : 3
-							};
-
-							map = new kakao.maps.Map(mapContainer, mapOption);
-							var mapTypeControl = new kakao.maps.MapTypeControl();
-
-							// 지도에 컨트롤을 추가해야 지도위에 표시됩니다
-							// kakao.maps.ControlPosition은 컨트롤이 표시될 위치를 정의하는데 TOPRIGHT는 오른쪽 위를 의미합니다
-							map.addControl(mapTypeControl,
-									kakao.maps.ControlPosition.TOPRIGHT);
-
-							// 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
-							var zoomControl = new kakao.maps.ZoomControl();
-							map.addControl(zoomControl,
-									kakao.maps.ControlPosition.RIGHT);
-							// 주소-좌표 변환 객체를 생성합니다
-							var geocoder = new kakao.maps.services.Geocoder();
-
-							$(document).on('click','.output-item',function() {
-								 $(this).css('display', 'block');
-								 
-								var tour = $(this).find('.touristSite').text();
-								var address = $(this).find('.address').text(); // 클릭한 요소의 주소 값을 추출
-								var tel = $(this).find('.tel').text();
-								var d = $(this).find('.course').text();
-								var home = $(this).find('.homepage').text();
-												
-								if (marker) {
-									marker.setMap(null); // 이전 마커 제거
+						//console.log(home);
+						if (address === "대구광역시 중구 일대") {
+								address = '대구광역시 중구 서성로 10';
+								}
+						if (selectedElement !== null) {
+							// 이전에 선택한 요소가 있을 경우 초기화
+							selectedElement.removeClass('selected');
 									}
+						$(this).addClass('selected');
+							selectedElement = $(this);
 
-									//console.log(home);
-									if (address === "대구광역시 중구 일대") {
-											address = '대구광역시 중구 서성로 10';
-											}
-									if (selectedElement !== null) {
-										// 이전에 선택한 요소가 있을 경우 초기화
-										selectedElement.removeClass('selected');
-												}
-									$(this).addClass('selected');
-										selectedElement = $(this);
-
-										geocoder.addressSearch(address,function(result,status) {
-											if (status === kakao.maps.services.Status.OK) {
-												var coords = new kakao.maps.LatLng(result[0].y,result[0].x);
-														if (marker) {marker.setMap(''); // 이전 마커 제거
-																		}
-																		marker = new kakao.maps.Marker(
-																			{
-																					map : map,
-																					position : coords,
-																					clickable : true
-																				});
-
-												var linkHtml = '';
-													if (home) {
-														linkHtml = '<a href="' + home + '" target="_blank" class="link">홈페이지</a>';
+							geocoder.addressSearch(address,function(result,status) {
+								if (status === kakao.maps.services.Status.OK) {
+									var coords = new kakao.maps.LatLng(result[0].y,result[0].x);
+											if (marker) {marker.setMap(''); // 이전 마커 제거
 															}
-															var tourImage = '/img/tour/' + tour.replace(/\s/g, '') + '.jpg';
-															var infowindowContent = '<div class="wrap">' + 
-												               '    <div class="info">' + 
-												               '        <div class="title">' + 
-												                tour + 
-												               '            <div class="close" onclick="closeOverlay()" title="닫기"></div>' + 
-												               '        </div>' + 
-												               '        <div class="body" >' + 
-												               '            <div class="img">' +
-												               '                <img src="' + tourImage + '" width="73" height="70">' +
-												               '           </div>' + 
-												               '            <div class="desc">' + 
-												                address + 
-												               '                <div class="jibun ellipsis">' + tel + '</div>' + 
-												               '<a href="https://map.kakao.com/?q=' + address + '" target="_blank" class="link">길찾기  </a>'+ linkHtml +'<br>'+ 
-												               
-												               '            </div>' + 
-												               '        </div>' + 
-												               '    </div>' +    
-												               '</div>';
-																		var overlay = new kakao.maps.CustomOverlay(
-																				{
-																					content : infowindowContent,
-																					map : map,
-																					position : marker.getPosition(),
-																				});
+															marker = new kakao.maps.Marker(
+																{
+																		map : map,
+																		position : coords,
+																		clickable : true
+																	});
 
-																		kakao.maps.event.addListener(marker,'click',function() {
-																						overlay.setMap(map);
-																						});
+									var linkHtml = '';
+										if (home) {
+											linkHtml = '<a href="' + home + '" target="_blank" class="link">홈페이지</a>';
+												}
+												var tourImage = '/img/tour/' + tour.replace(/\s/g, '') + '.jpg';
+												var infowindowContent = '<div class="wrap">' + 
+									               '    <div class="info">' + 
+									               '        <div class="title">' + 
+									                tour + 
+									               '            <div class="close" onclick="closeOverlay()" title="닫기"></div>' + 
+									               '        </div>' + 
+									               '        <div class="body" >' + 
+									               '            <div class="img">' +
+									               '                <img src="' + tourImage + '" width="73" height="70">' +
+									               '           </div>' + 
+									               '            <div class="desc">' + 
+									                address + 
+									               '                <div class="jibun ellipsis">' + tel + '</div>' + 
+									               '<a href="https://map.kakao.com/?q=' + address + '" target="_blank" class="link">길찾기  </a>'+ linkHtml +'<br>'+ 
+									               
+									               '            </div>' + 
+									               '        </div>' + 
+									               '    </div>' +    
+									               '</div>';
+															var overlay = new kakao.maps.CustomOverlay(
+																	{
+																		content : infowindowContent,
+																		map : map,
+																		position : marker.getPosition(),
+																	});
 
-				
-																		map.setCenter(coords);
-																	}
-																});
-											});
-						}
-
-						function getCurrentPosition() {
-							if ("geolocation" in navigator) {
-								navigator.geolocation
-										.getCurrentPosition(function(position) {
-											var latitude = position.coords.latitude; // 현재 위치의 위도
-											var longitude = position.coords.longitude; // 현재 위치의 경도
-
-											if (marker) {
-												marker.setMap(null); // 이전 마커 제거
-											}
-											initializeMap(latitude, longitude);
-										});
-							}
-						}
-
-						document.getElementById('current_me_position')
-								.addEventListener('click', function() {
-									getCurrentPosition();
+															kakao.maps.event.addListener(marker,'click',function() {
+																			overlay.setMap(map);
+																			});
+															map.setCenter(coords);
+														}
+													});
 								});
+	function getCurrentPosition() {
+  if ("geolocation" in navigator) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+      var latitude = position.coords.latitude; // 현재 위치의 위도
+      var longitude = position.coords.longitude; // 현재 위치의 경도
 
-						getCurrentPosition();
-					});
-			
-			$(document).on('click', '.close', function() {
-				  $('.wrap').css('display', 'none');
-				});
+      if (marker) {
+        marker.setMap(null); // 이전 마커 제거
+      }
+      initializeMap(latitude, longitude);
+    });
+  }
+}
 
-		</script>
-	</div>
+document.getElementById('current_me_position').addEventListener('click', function() {
+  getCurrentPosition();
+});
 
-</body>
+$(document).on('click', '.close', function() {
+  $('.wrap').css('display', 'none');
+});
 
-</html>
+getCurrentPosition();
+
+
+
+
