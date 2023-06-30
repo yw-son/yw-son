@@ -65,16 +65,12 @@ span.role-ADMIN {
 }
 
 /* 추가된 CSS */
-.role-USER {
-	color: black;
-}
-
-.role-PARTNER {
-	color: blue;
-}
-
-.role-ADMIN {
+.account-status-disabled {
 	color: red;
+}
+
+input[type="submit"].account-status-disabled {
+	background-color: gray;
 }
 </style>
 
@@ -91,41 +87,60 @@ span.role-ADMIN {
 </script>
 
 <script>
-function toggleAccount(event, button) {
-    event.preventDefault(); // 기본 동작(페이지 새로고침) 방지
+	function toggleAccount(event, button) {
+		event.preventDefault(); // 기본 동작(페이지 새로고침) 방지
 
-    var form = button.closest("form");
-    var accountStatus = button.closest("tr").querySelector(".account-status"); // 계정 상태 요소
+		var form = button.closest("form");
 
-    // 버튼 비활성화
-    button.disabled = true;
+		// 버튼 비활성화
+		button.disabled = true;
 
-    // 서버로 Ajax 요청 보내기
-    var xhr = new XMLHttpRequest();
-    xhr.open(form.method, form.action, true);
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    xhr.onload = function() {
-        if (xhr.status === 200) {
-            /* // 요청이 성공한 경우 계정 상태 변경
-            accountStatus.textContent = "계정 정지됨";
-            accountStatus.classList.add("account-status-disabled"); */
+		// 서버로 Ajax 요청 보내기
+		var xhr = new XMLHttpRequest();
+		xhr.open(form.method, form.action, true);
+		xhr.setRequestHeader('Content-Type',
+				'application/x-www-form-urlencoded');
+		xhr.onload = function() {
+			if (xhr.status === 200) {
+				console.log(xhr.responseText);
+				var response = JSON.parse(xhr.responseText);
+				var newStatus = response.newStatus;
 
-            // 버튼 비활성화 및 텍스트 변경
-              button.style.backgroundColor = "#ccc";
-            button.disabled = true;
-            button.value = "계정 정지됨";
-            button.classList.add("account-status-disabled");
-        } else {
-            // 요청이 실패한 경우 버튼 활성화
-            button.disabled = false;
-        }
-    };
-    xhr.onerror = function() {
-        // 요청이 실패한 경우 버튼 활성화
-        button.disabled = false;
-    };
-    xhr.send(new URLSearchParams(new FormData(form)));
-}
+				// 변경된 상태를 실시간으로 업데이트하기 위해 페이지 일부를 새로 고침
+				var url = form.getAttribute("action");
+				var xhrUpdate = new XMLHttpRequest();
+				xhrUpdate.open("GET", url, true);
+				xhrUpdate.onload = function() {
+					if (xhrUpdate.status === 200) {
+						var parser = new DOMParser();
+						var responseDoc = parser.parseFromString(
+								xhrUpdate.responseText, "text/html");
+						var newTable = responseDoc.querySelector("table");
+						button.closest("table").parentNode.replaceChild(
+								newTable, button.closest("table"));
+					}
+				};
+				xhrUpdate.send();
+
+				// 버튼 활성화 및 텍스트 변경
+				if (newStatus === 0) {
+					button.style.backgroundColor = ""; // 이전 색상으로 변경하거나 적절한 스타일 적용
+				} else {
+					button.style.backgroundColor = "red";
+				}
+				button.disabled = false;
+				button.value = (newStatus === 0) ? "활동 중" : "활동 정지";
+			} else {
+				// 요청이 실패한 경우 버튼 활성화
+				button.disabled = false;
+			}
+		};
+		xhr.onerror = function() {
+			// 요청이 실패한 경우 버튼 활성화
+			button.disabled = false;
+		};
+		xhr.send(new URLSearchParams(new FormData(form)));
+	}
 </script>
 
 </head>
@@ -145,12 +160,12 @@ function toggleAccount(event, button) {
 						<th>지번 주소</th>
 						<th>상세 주소</th>
 						<th>계정 상태</th>
-						<th>파트너 신청여부</th>
 						<th>계정 생성일</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr th:each="user : ${users}">
+					<tr th:each="user : ${users}" th:data-user-id="${user.id}"
+						th:data-account-status="${user.islock}">
 						<td th:text="${user.id}"></td>
 						<td th:text="${user.username}"></td>
 						<td th:text="${user.email}"></td>
@@ -174,26 +189,28 @@ function toggleAccount(event, button) {
 						<td th:text="${user.addr1}"></td>
 						<td th:text="${user.addr2}"></td>
 						<td th:text="${user.addr3}"></td>
-						   <td>
-                     <form th:action="@{'/admin/toggle-account'}" method="post">
-                        <input type="hidden" name="username" th:value="${user.username}" />
-                        <input type="submit" value="계정 정지"
-                           onclick="toggleAccount(event, this)" />
-                     </form>
-                  </td>
-						<td th:text="${user.partner_reg}"></td>
-						
-						
-						
-						
-						<!-- <td>
-							<form th:action="@{'/toggle-account'}" method="post">
+						<!-- 						   <td> -->
+						<!--                      <form th:action="@{'/admin/toggle-account'}" method="post"> -->
+						<!--                         <input type="hidden" name="username" th:value="${user.username}" /> -->
+						<!--                         <input type="submit" value="계정 활동 정지" -->
+						<!--                            onclick="toggleAccount(event, this)" /> -->
+						<!--                      </form> -->
+						<!--                   </td> -->
+
+
+
+						<td
+							th:class="${user.islock == 0 ? '' : 'account-status-disabled'}">
+							<form th:action="@{'/admin/toggle-account'}" method="post">
 								<input type="hidden" name="username" th:value="${user.username}" />
-								<input type="hidden" name="currentStatus" th:value="${user.islock}" />
-								<input type="hidden" name="newStatus" th:value="${user.islock == 0 ? 1 : 0}" />
-								<input type="submit" th:value="${user.islock == 0 ? '활동 중' : '정지'}" />
+								<input type="hidden" name="currentStatus"
+									th:value="${user.islock}" /> <input type="hidden"
+									name="newStatus" th:value="${user.islock == 0 ? 1 : 0}" /> <input
+									type="submit" th:value="${user.islock == 0 ? '활동 중' : '활동 정지'}"
+									onclick="toggleAccount(event, this)"
+									th:style="${user.islock == 0 ? '' : 'background-color: red;'}" />
 							</form>
-						</td> -->
+						</td>
 						<td
 							th:text="${#temporals.format(user.create_userTime,'yyyy-MM-dd')}"></td>
 					</tr>

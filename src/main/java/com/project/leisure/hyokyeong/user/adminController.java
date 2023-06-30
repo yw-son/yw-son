@@ -1,11 +1,11 @@
 package com.project.leisure.hyokyeong.user;
 
+import java.util.HashMap;
 import java.util.List;
-import java.util.Optional;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,10 +14,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.project.leisure.taeyoung.email.PrincipalDetails;
 import com.project.leisure.taeyoung.user.UserRepository;
 import com.project.leisure.taeyoung.user.UserRole;
-import com.project.leisure.taeyoung.user.UserSecurityService;
 import com.project.leisure.taeyoung.user.Users;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -29,6 +27,7 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/admin")
 public class adminController {
 
+	@Autowired
 	private final UserRepository userRepository;
 	@Autowired
 	private final UserListService userListService;
@@ -44,6 +43,7 @@ public class adminController {
 		userListService.userList(model);
 		return "khk/authorityPage";
 	}
+
 	@GetMapping("/userListPage")
 	public String userListPage(Model model) {
 		userListService.userList(model);
@@ -52,34 +52,37 @@ public class adminController {
 
 	@PostMapping("/{id}/adminRole")
 	public String updateUserRole(@PathVariable("id") Long id, @RequestParam("role") UserRole role, Model model) {
+		try {
+			userListService.updateUserRole(id, role); // 서비스를 통해 DB 업데이트 수행
+			List<Users> userList = userListService.userList(model); // 변경된 회원 목록을 조회
+			model.addAttribute("users", userList); // 변경된 회원 목록을 모델에 추가
+			return "khk/authorityPage"; // 회원 목록 페이지로 이동
+		} catch (IllegalArgumentException e) {
+			return "redirect:/khk/adminMain"; // 예외 발생 시 관리자 메인 페이지로 이동
+		}
+	}
+
+	@PostMapping("/toggle-account")
+	public ResponseEntity<Map<String, Integer>> toggleAccount(@RequestParam(name = "username", value = "") String username,
+	        HttpServletRequest request) {
 	    try {
-	        userListService.updateUserRole(id, role); // 서비스를 통해 DB 업데이트 수행
-	        List<Users> userList = userListService.userList(model); // 변경된 회원 목록을 조회
-	        model.addAttribute("users", userList); // 변경된 회원 목록을 모델에 추가
-	        return "khk/authorityPage"; // 회원 목록 페이지로 이동
+	        int newStatus = userListService.toggleAccountStatus(username); // 계정 상태 토글 메서드 호출
+
+	        // 토글된 사용자 및 새로운 상태를 Map으로 저장
+	        Map<String, Integer> response = new HashMap<>();
+	        response.put("newStatus", newStatus);
+
+	        HttpSession session = request.getSession();
+	        session.setAttribute("toggledUser", username); // 토글된 사용자를 세션에 저장
+
+	        return ResponseEntity.ok(response);
 	    } catch (IllegalArgumentException e) {
-	        return "redirect:/khk/adminMain"; // 예외 발생 시 관리자 메인 페이지로 이동
+	        // 예외 처리
+	        return ResponseEntity.badRequest().build();
 	    }
 	}
 
 
-	
-	@PostMapping("/toggle-account")
-	   public String toggleAccount(@RequestParam(name = "username", value = "") String username, HttpServletRequest request) {
-	       try {
-	          userListService.lockUserAccount(username);
-	           
-	          // 계정 상태를 유지하기 위해 세션에 상태 정보 저장
-	          HttpSession session = request.getSession();
-	           session.setAttribute("lockedUser", username);
-	           
-	       } catch (IllegalArgumentException e) {
-	           // 예외 처리
-	       }
-	       return "redirect:/admin/authorityPage";
-	   }
-
-	
 //	 @Autowired  
 //	 @PostMapping("/toggle-account")
 //	 public String toggleAccount(@RequestParam(name = "username", value = "") String username) {
@@ -100,8 +103,7 @@ public class adminController {
 //	}
 
 //////////////////////////파트너 관리 컨트롤러///////////////////////////////////	
-	
-	
+
 	@GetMapping("/partnerListPage")
 	public String partnerlist(Model model) {
 		userListService.userList(model);

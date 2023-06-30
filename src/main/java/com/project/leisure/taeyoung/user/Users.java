@@ -1,14 +1,7 @@
 package com.project.leisure.taeyoung.user;
 
 import java.time.LocalDateTime;
-import java.util.Collection;
-import java.util.HashSet;
 
-import org.hibernate.mapping.Set;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -31,7 +24,6 @@ public class Users {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id; // 회원 번호(PK)
 
-	@Column(unique = true)
 	private String username; // 회원 ID
 
 	private String password; // 회원 PWD
@@ -58,8 +50,8 @@ public class Users {
 	private String addr3; // 상세 주소
 
 	private int islock = 0; // 계정 잠금 여부(1: 계정 잠김, 0: 계정 안잠김)
-
-	private int partner_reg; // 파트너 신청 여부 (1이면 파트너 신청한 사용자, 0이면 신청 안한 사용자)
+	
+	private LocalDateTime lockTime = LocalDateTime.now(); //계정 잠금 시간
 
 	public Users update(String username) {
 		this.username = username;
@@ -69,9 +61,9 @@ public class Users {
 
 	// 소셜 로그인 시 등록되는 정보
 	@Builder
-	public Users(String nickname, String email, UserRole role, String sns) {
+	public Users(String nickname, UserRole role, String sns) {
 		this.nickname = nickname;
-		this.email = email;
+		//this.email = email;
 		this.sns = sns;
 		this.role = role;
 	}
@@ -109,4 +101,11 @@ public class Users {
 
 	}
 
+
+	public LocalDateTime getLockTime() {
+	    return this.lockTime;
+	}
+
+	
+	
 }

@@ -1,15 +1,11 @@
 package com.project.leisure.taeyoung.user;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.security.core.GrantedAuthority;
-
-import com.nimbusds.oauth2.sdk.Role;
 
 //회원DB 접근 레퍼지토리
 public interface UserRepository extends JpaRepository<Users, Long> {
