@@ -2,203 +2,7 @@
 <html>
 
 <head>
-<style>
-/* 추가한 스타일 */
-.nav-line {
-	position: fixed;
-	top: 0;
-	left: 0;
-	height: 100%;
-	width: 1px;
-	background-color: black;
-}
-
-.nav-area {
-	position: fixed;
-	top: 0;
-	left: 0;
-	height: 92%;
-	margin-top: 86px;
-	width: 400px;
-	background-color: rgb(255, 255, 255);
-	/*overflow-y: scroll;*/
-	/* Add scrollable area */
-	display: flex;
-	/* Add flexbox display */
-	flex-direction: column;
-	/* Set flex-direction to column */
-}
-
-#address-map {
-	position: fixed;
-	top: 0;
-	left: 400px;
-	width: calc(100% - 400px);
-	height: 100%;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-
-#map {
-	width: 100%;
-	height: calc(100% - 80px);
-	margin-top: 92px;
-}
-
-.box {
-	width: 85%;
-	height: 80%;
-	margin-right: 2px;
-	border: 1px solid black;
-	text-align: center;
-	/* Added margin */
-	padding: 10px 10px 10px 10px;
-	margin-left: 20px;
-	overflow: auto;
-	margin-top: 50px;
-	/* Added margin-top */
-}
-
-.output-item {
-	width: 320px;
-	height: 182px;
-	border: 1px solid black;
-	text-align: left;
-	border-radius: 5px;
-	padding-top: 15px;
-	padding-left: 5px;
-	font-size: 14px;
-	background-color: rgb(255, 232, 236);
-}
-
-.output-item:hover {
-	cursor: pointer;
-}
-
-.selected {
-	background-color: rgb(255, 255, 128);
-	font-weight: bold;
-}
-
-#daegu_top10_title {
-	position: absolute;
-	top: 50px;
-	font-size: 18px;
-	left: 55px;
-	text-align: center;
-}
-
-.wrap {
-	position: absolute;
-	left: 0;
-	bottom: 40px;
-	width: 288px;
-	height: 132px;
-	margin-left: -144px;
-	text-align: left;
-	overflow: hidden;
-	font-size: 12px;
-	font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;
-	line-height: 1.5;
-}
-
-.wrap * {
-	padding: 0;
-	margin: 0;
-}
-
-.wrap .info {
-	width: 286px;
-	height: 120px;
-	border-radius: 5px;
-	border-bottom: 2px solid #ccc;
-	border-right: 1px solid #ccc;
-	overflow: hidden;
-	background: #fff;
-}
-
-.wrap .info:nth-child(1) {
-	border: 0;
-	box-shadow: 0px 1px 2px #888;
-}
-
-.info .title {
-	padding: 5px 0 0 10px;
-	height: 30px;
-	background: #eee;
-	border-bottom: 1px solid #ddd;
-	font-size: 18px;
-	font-weight: bold;
-}
-
-.info .close {
-	position: absolute;
-	top: 10px;
-	right: 10px;
-	color: #888;
-	width: 17px;
-	height: 17px;
-	background:
-		url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/overlay_close.png');
-}
-
-.info .close:hover {
-	cursor: pointer;
-}
-
-.info .body {
-	position: relative;
-	overflow: hidden;
-}
-
-.info .desc {
-	position: relative;
-	margin: 13px 0 0 90px;
-	height: 75px;
-}
-
-.desc .ellipsis {
-	overflow: hidden;
-	text-overflow: ellipsis;
-	white-space: nowrap;
-}
-
-.desc .jibun {
-	font-size: 11px;
-	color: #888;
-	margin-top: -2px;
-}
-
-.info .img {
-	position: absolute;
-	top: 6px;
-	left: 5px;
-	width: 73px;
-	height: 71px;
-	border: 1px solid #ddd;
-	color: #888;
-	overflow: hidden;
-}
-
-.info:after {
-	content: '';
-	position: absolute;
-	margin-left: -12px;
-	left: 50%;
-	bottom: 0;
-	width: 22px;
-	height: 12px;
-	background:
-		url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')
-}
-
-.info .link {
-	color: #5085BB;
-}
-
-
-</style>
+<link rel="stylesheet" href="/css/kty2.css">
 <meta charset="utf-8">
 <title>주소로 장소 표시하기</title>
 </head>
@@ -209,10 +13,9 @@
 	<div class="nav-area">
 
 		<input type="button" id="current_me_position" value="내 현재 위치">
-		<form action="검색결과페이지.html" method="POST">
-			<input type="text" name="검색어" placeholder="검색어를 입력하세요">
-			<button type="submit" disabled>검색하기</button>
-		</form>
+		<form method="POST">
+   <span  class="keyword_search2" >키워드 검색 : </span><input type="text"  class="keyword_search" name="검색어" placeholder="검색어를 입력하세요">
+</form>
 
 
 		<div class="box"></div>
@@ -433,9 +236,9 @@
 							alert('실패');
 						});
 			}
+			
 
-			kakao.maps
-					.load(function() {
+			kakao.maps.load(function() {
 						var map;
 						var marker;
 						var selectedElement = null; // 클릭한 요소를 저장하는 변수
@@ -463,24 +266,14 @@
 							// 주소-좌표 변환 객체를 생성합니다
 							var geocoder = new kakao.maps.services.Geocoder();
 
-							$(document)
-									.on(
-											'click',
-											'.output-item',
-											function() {
+							$(document).on('click','.output-item',function() {
 												$(this).css('display', 'block');
 
-												var tour = $(this).find(
-														'.touristSite').text();
-												var address = $(this).find(
-														'.address').text(); // 클릭한 요소의 주소 값을 추출
-												var tel = $(this).find('.tel')
-														.text();
-												var d = $(this).find('.course')
-														.text();
-												var home = $(this).find(
-														'.homepage').text();
-
+												var tour = $(this).find('.touristSite').text();
+												var address = $(this).find('.address').text(); // 클릭한 요소의 주소 값을 추출
+												var tel = $(this).find('.tel').text();
+												var d = $(this).find('.course').text();
+												var home = $(this).find('.homepage').text();
 												if (marker) {
 													marker.setMap(null); // 이전 마커 제거
 												}
@@ -497,19 +290,13 @@
 												$(this).addClass('selected');
 												selectedElement = $(this);
 
-												geocoder
-														.addressSearch(
-																address,
-																function(
-																		result,
-																		status) {
+												geocoder.addressSearch(address,function(result,status) {
 																	if (status === kakao.maps.services.Status.OK) {
 																		var coords = new kakao.maps.LatLng(
 																				result[0].y,
 																				result[0].x);
 																		if (marker) {
-																			marker
-																					.setMap(''); // 이전 마커 제거
+																			marker.setMap(''); // 이전 마커 제거
 																		}
 																		marker = new kakao.maps.Marker(
 																				{
