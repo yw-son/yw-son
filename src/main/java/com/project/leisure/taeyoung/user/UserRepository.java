@@ -25,6 +25,12 @@ public interface UserRepository extends JpaRepository<Users, Long> {
 	List<Users> findByNickname(String nickname);
 	
 	Optional<Users> findById(Long id);
+	
+/////////////////효경 수정//////////////////
+	Users save(Users user); // saveUser 메서드 추가
 
+	default void saveUser(Users user) {
+		save(user);
+	}
 
 }

@@ -2,19 +2,21 @@
 <html>
 
 <head>
-	<meta charset="UTF-8">
-	<title>저기어때</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-	<link rel="preconnect" href="https://fonts.gstatic.com" />
+<!-- 	<meta charset="UTF-8"> -->
+<!-- 	<title>저기어때</title> -->
+<!-- 	<meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+<!-- 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
+<!-- 	<link rel="preconnect" href="https://fonts.gstatic.com" /> -->
 	<link rel="stylesheet" href="/css/kty.css">
 	<script th:src="@{/js/kty_join.js}"></script>
-	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script> <!-- sweetalert2 CDN-->
-	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script> <!-- 다음 주소 검색 api-->
-	<script th:src="@{/js/kty_mypage.js}"></script>
+<!-- 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script> sweetalert2 CDN -->
+<!-- 	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script> 다음 주소 검색 api -->
+<!-- 	<SCRIPT TH:SRC="@{/JS/KTY_MYPAGE.JS}"></SCRIPT> -->
 </head>
 
 <body id="userinfo_modify">
+<html layout:decorate="~{jjj/header}">
+<div layout:fragment="content" class="container my-3">
 	<div id="my_infomation_modify">
 
 		<table class="userinfo_table">
@@ -146,5 +148,6 @@
 			</ul>
 		</nav>
 </div>
+</html>
 </body>
 </html>
