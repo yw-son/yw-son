@@ -2,18 +2,8 @@
 <html>
 
 <head>
-	<meta charset="UTF-8">
-	<title>저기어때</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-	<link rel="preconnect" href="https://fonts.gstatic.com" />
-	<link rel="stylesheet" href="/css/kty.css">
-	<script th:src="@{/js/kty_join.js}"></script>
-	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script> <!-- sweetalert2 CDN-->
-	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script> <!-- 다음 주소 검색 api-->
-	<script th:src="@{/js/kty_mypage.js}"></script>
 </head>
-
+<html layout:decorate="~{jjj/header}"></html>
 <body id="userinfo_modify2">
 	<div id="mypage_partner_reg">
 
@@ -22,7 +12,7 @@
 				<th class="partner_table-th1">업체명<span id="essential_mark" style="font-weight: bold; color: orangered;">
 						*</span></th>
 				<td colspan="3" class="partner_table-th2" style="text-align: center;"> <input type="text"
-						id="company_name"></td>
+						id="company_name" maxlength="20"></td>
 
 
 			</tr>
@@ -31,8 +21,19 @@
 				<th class="partner_table-th1">업체주소<span id="essential_mark"
 						style="font-weight: bold; color: orangered;"> *</span></th>
 				<td colspan="3" class="partner_table-th2" style="text-align: center;"> <input type="text"
-						id="company_address"></td>
+						id="company_address" maxlength="50"></td>
 
+			</tr>
+			<tr>
+				<th class="partner_table-th1">인감 증명서<br> 첨부<span id="essential_mark"
+						style="font-weight: bold; color: orangered;"> *</span></th>
+				<td colspan="3" class="partner_table-th2" style="text-align: center;">
+					<input type="file"  multiple="multiple" id="partner_input-file" style="display: none;" >
+					<label for="partner_input-file" id="ch_file"
+						style="display: block; cursor: pointer; color:rgb(128, 128, 128); text-align: center; line-height: 3;">
+						파일 선택을 선택하세요( 이미지 또는 pdf 파일 첨부)
+					</label>
+				</td>
 			</tr>
 			<tr>
 				<th class="partner_table-th1">담당자명<span id="essential_mark"
@@ -40,7 +41,8 @@
 				<td class="partner_table-th2" style="text-align: center;"> <input type="text" id="partner_name"></td>
 				<td class="partner_table-th3"><b>담당자 연락처</b><span id="essential_mark"
 						style="font-weight: bold; color: orangered;"> *</span></td>
-				<td class="partner_table-th2" style="text-align: center;"> <input type="text" style=" font-size: 16px;" id="partner_tel" placeholder="  - '하이픈' 포함"></td>
+				<td class="partner_table-th2" style="text-align: center;"> <input type="text" style=" font-size: 16px;"
+						id="partner_tel" maxlength="13" placeholder="  - '하이픈' 포함"></td>
 
 			</tr>
 			<tr>

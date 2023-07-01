@@ -1,11 +1,17 @@
 <!-- 메인 페이지 (제작 중) -->
 <!--   <a class="nav-link" sec:authorize="isAnonymous()" th:href="@{/user/login}">로그인</a> -->
 <!--   <a class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/user/logout}">로그아웃</a> -->
-  
+
+
+<!-- <th:block sec:authorize="hasRole('ADMIN')"> -->
+<!-- 				<a class="nav-link" th:href="@{/admin/adminMain}">관리자페이지</a> -->
+<!-- 			</th:block> -->
+
+
 <!--    <a class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/user/mypage/me}">마이페이지로</a> -->
 
 
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
@@ -14,6 +20,7 @@
 <body>
 <html layout:decorate="~{jjj/header}">
 <div layout:fragment="content" class="container my-3">
+
 
 <!-- 슬라이드 -->
     <div id="slider" style="overflow: hidden;">
