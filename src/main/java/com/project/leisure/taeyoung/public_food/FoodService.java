@@ -1,5 +1,10 @@
 package com.project.leisure.taeyoung.public_food;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,5 +31,14 @@ public class FoodService {
 
         foodRepository.save(food);
         System.out.println("음식 저장됨: " + shopId);
+    }
+    public List<Food> getAllFoods() {
+        return foodRepository.findAll();
+    }
+    
+    
+    public Page<Food> getList(int page) {
+      Pageable pageable = PageRequest.of(page, 20);
+        return foodRepository.findAll(pageable);
     }
 }

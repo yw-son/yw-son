@@ -1,15 +1,19 @@
 package com.project.leisure.taeyoung.tour;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.data.domain.Page;
 import com.project.leisure.taeyoung.public_food.Food;
 import com.project.leisure.taeyoung.public_food.FoodService;
 
@@ -24,13 +28,19 @@ public class TourController {
         this.foodService = foodService;
     }
 
-    @GetMapping("/daegu_top10")
+    @GetMapping("/daegu_travel")
     public String address2() {
         // System.out.println("카카오 API 테스트");
         return "kty/daegu_tour10";
     }
 
-    @GetMapping("food")
+    
+    
+    
+    /* 아래 맛집 데이터 뽑는 과정 */
+    
+    
+    @GetMapping("/food")
     public String food() {
         return "kty/food";
     }
@@ -46,4 +56,15 @@ public class TourController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error saving food: " + e.getMessage());
         }
     }
+    
+    @GetMapping("/daegu_public_food")
+    public String daegu_food(Model model,@RequestParam(value="page", defaultValue="0") int page) {
+        List<Food> foodList = foodService.getAllFoods(); // Assuming you have a FoodService instance called foodService
+
+        Page<Food> paging = this.foodService.getList(page);
+        model.addAttribute("paging", paging);
+        model.addAttribute("foodList", foodList);
+        return "kty/daegufood";
+    }
+    
 }

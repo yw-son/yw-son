@@ -21,31 +21,31 @@ public class Food {
 	    private Long id;
 
 	    @Column(name = "shop_id")
-	    private String shopId;
+	    private String shopId; // 공공데이터 내 포함된 공공데이터 id 
 
 	    @Column(name = "shop_addr")
-	    private String shopAddr;
+	    private String shopAddr; // 가게 주소
 
 	    @Column(name = "shop_category")
-	    private String shopCategory;
+	    private String shopCategory; //가게 업종 (ex: 한식 , 중식 , 일식 ...)
 
 	    @Column(name = "shop_name")
-	    private String shopName;
+	    private String shopName; // 가게명
 
 	    @Column(name = "shop_tel")
-	    private String shopTel;
+	    private String shopTel; // 가게 전화번호
 
-	    @Column(name = "shop_opening") // 수정된 부분
-	    private String shopOpening;
+	    @Column(name = "shop_opening") 
+	    private String shopOpening; // 영업시간
 
 	    @Column(name = "shop_parking")
-	    private String shopParking;
+	    private String shopParking; // 주차  가능 여부
 
 	    @Column(name = "shop_menu")
-	    private String shopMenu;
+	    private String shopMenu; // 메뉴
 
 	    @Column(name = "shop_info")
-	    private String shopInfo;
+	    private String shopInfo; // 가게 소개
 
 	    public Food() {
 	        // Default constructor required by JPA
