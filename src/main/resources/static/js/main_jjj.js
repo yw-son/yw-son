@@ -27,19 +27,22 @@ jj_search_btn.addEventListener("click", () => {
     jj_search_input.focus();
 });
 
+
+
+
 // 슬라이드 버튼
 document.querySelector('.jj_dot_btn_slide-1').addEventListener('click', function () {
-    document.querySelector('.jj_slide_container').style.transform = 'translate(1vw)';
+    document.querySelector('.jj_slide_container').style.transform = 'translateX(0)';
 
 });
 
 document.querySelector('.jj_dot_btn_slide-2').addEventListener('click', function () {
-    document.querySelector('.jj_slide_container').style.transform = 'translate(-100vw)';
+    document.querySelector('.jj_slide_container').style.transform = 'translateX(-1200px)';
 
 });
 
 document.querySelector('.jj_dot_btn_slide-3').addEventListener('click', function () {
-    document.querySelector('.jj_slide_container').style.transform = 'translate(-200vw)';
+    document.querySelector('.jj_slide_container').style.transform = 'translateX(-2400px)';
 
 });
 

@@ -21,69 +21,197 @@
 <html layout:decorate="~{jjj/header}">
 <div layout:fragment="content" class="container my-3">
 
-	<!-- 슬라이드 -->
-	<div id="slider" style="overflow: hidden;">
-		<div class="jj_slide_container">
-			<div class="jj_slide-box">
-				<img src="./img/bg-1.jpg">
-			</div>
-			<div class="jj_slide-box">
-				<img src="./img/bg-2.jpg">
-			</div>
-			<div class="jj_slide-box">
-				<img src="./img/bg-3.jpg">
-			</div>
-		</div>
-		<div class="jj_btns">
-			<button class="jj_dot_btn_slide-1"></button>
-			<button class="jj_dot_btn_slide-2"></button>
-			<button class="jj_dot_btn_slide-3"></button>
-		</div>
-	</div>
 
-	<!-- 숙소 카테고리 아이콘 -->
-	<div class="jj_icon">
-		<a href="#"> <span class="fa-solid fa-hotel fa-3x"></span>
-			<p>호텔</p>
-		</a> <a href="#"> <span class="fa-solid fa-bed fa-3x"></span>
-			<p>모텔</p>
-		</a> <a href="#"> <span class="fa-solid fa-caravan fa-3x"></span>
-			<p>캠핑</p>
-		</a> <a href="#"> <span class="fa-solid fa-umbrella-beach fa-3x"></span>
-			<p>펜션</p>
-		</a> <a href="#"> <span class="fa-solid fa-earth-americas fa-3x"></span>
-			<p>해외</p>
-		</a>
-	</div>
+<!-- 슬라이드 -->
+    <div id="slider" style="overflow: hidden;">
+        <div class="jj_slide_container">
+            <div class="jj_slide-box">
+                <img src="../img/main_jjj/bg-1.jpg">
+            </div>
+            <div class="jj_slide-box">
+                <img src="./img/main_jjj/bg-2.jpg">
+            </div>
+            <div class="jj_slide-box">
+                <img src="./img/main_jjj/bg-3.jpg">
+            </div>
+        </div>
+        <div class="jj_btns">
+            <button class="jj_dot_btn_slide-1"></button>
+            <button class="jj_dot_btn_slide-2"></button>
+            <button class="jj_dot_btn_slide-3"></button>
+        </div>
 
-	<!-- 추천 숙소 -->
-	<div class="jj_recommend">
-		<h2>추천 숙소</h2>
-		<div class="jj_recommend_container">
-			<ul class="jj_recommend_slide">
-				<li><a href="#"> <img
-						src="https://yaimg.yanolja.com/v5/2023/06/16/16/648c8a677a8a09.51038607.png">
-				</a></li>
-				<li><a href="#"> <img
-						src="https://yaimg.yanolja.com/v5/2023/06/16/11/648c4227c0eac2.58598696.png">
-				</a></li>
-				<li><a href="#"> <img
-						src="https://yaimg.yanolja.com/v5/2023/06/16/16/648c8878422f22.87896477.png">
-				</a></li>
-				<li><a href="#"> <img
-						src="https://yaimg.yanolja.com/v5/2023/06/16/16/648c8878422f22.87896477.png">
-				</a></li>
-				<li><a href="#"> <img
-						src="https://yaimg.yanolja.com/v5/2023/06/16/16/648c8878422f22.87896477.png">
-				</a></li>
-			</ul>
-			<p class="jj_controls">
-				<span class="prev"></span> <span class="next"></span>
-			</p>
-		</div>
 
-	</div>
-</div>
+
+    </div>
+
+    <!-- 숙소 카테고리 아이콘 -->
+    <div class="jj_icon">
+        <a href="#">
+            <span class="fa-solid fa-hotel fa-3x"></span>
+            <p>호텔</p>
+        </a>
+        <a href="#">
+            <span class="fa-solid fa-bed fa-3x"></span>
+            <p>모텔</p>
+        </a>
+        <a href="#">
+            <span class="fa-solid fa-caravan fa-3x"></span>
+            <p>캠핑</p>
+        </a>
+        <a href="#">
+            <span class="fa-solid fa-umbrella-beach fa-3x"></span>
+            <p>펜션</p>
+        </a>
+        <a href="#">
+            <span class="fa-solid fa-earth-americas fa-3x"></span>
+            <p>해외</p>
+        </a>
+    </div>
+
+    <!-- 추천 숙소 -->
+    <div class="jj_recommend">
+        <h2>추천 숙소</h2>
+        <div class="jj_recommend_container">
+            <ul class="jj_recommend_slide">
+                <li>
+                    <a href="#">
+                        <img src="./img/main_jjj/rc-1.jpg">
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <img src="./img/main_jjj/rc-2.jpg">
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <img src="./img/main_jjj/rc-3.jpg">
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <img src="./img/main_jjj/rc-4.jpg">
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <img src="./img/main_jjj/rc-5.jpg">
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <img src="./img/main_jjj/rc-6.jpg">
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <img src="./img/main_jjj/rc-1.jpg">
+                    </a>
+                </li>
+
+
+            </ul>
+            <p class="jj_controls">
+                <span class="prev">&lang;</span>
+                <span class="next">&rang;</span>
+            </p>
+        </div>
+
+        <!-- 추천 여행 코스 -->
+        <div class="jj_course">
+            <h2>추천 여행 코스</h2>
+            <div class="jj_course_container">
+                <div class="jj_course_img_1">
+                    <a href="http://localhost:8080/tour/daegu_travel" target="_self">
+                    	<img src="./img/main_jjj/cr-1.jpg">
+                    </a>
+
+                </div>
+            </div>
+            <h5>
+                <a
+                    href="https://kr.freepik.com/free-vector/hand-drawn-kids-map-illustration_29913146.htm#page=2&query=world%20map&position=2&from_view=search&track=ais">출처
+                    Freepik</a>
+            </h5>
+        </div>
+
+        <!-- 추천 휴양지 -->
+        <div class="jj_spot">
+            <h2>추천 휴양지</h2>
+            <div class="jj_spot_container">
+                <div class="jj_spot_slide">
+                    <li>
+                        <div class="jj_spot_img_1">
+                            <a href="#">
+                                <img src="./img/main_jjj/sp-1.jpg">
+                                <h4 class="jj_spot_text_1">제주도</h4>
+                            </a>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <img src="./img/main_jjj/sp-2.jpg">
+                            <h4 class="jj_spot_text_2">부산</h4>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <img src="./img/main_jjj/sp-3.jpg">
+                            <h4 class="jj_spot_text_3">강원도</h4></a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <img src="./img/main_jjj/sp-4.jpg">
+                            <h4 class="jj_spot_text_4">울릉도</h4></a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <img src="./img/main_jjj/sp-5.jpg">
+                            <h4 class="jj_spot_text_5">서울</h4></a>
+                    </li>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- 푸터(수정) -->
+        <footer>
+            <div class="jj_align">
+                <ul class="jj_link">
+                    <li>회사소개<span>|</span></li>
+                    <li>이용약관<span>|</span></li>
+                    <li>개인정보처리방침<span>|</span></li>
+                    <li>소비자 분쟁해결 기준<span>|</span></li>
+                    <li>사업자 정보확인<span>|</span></li>
+                    <li>액티비티 호스트센터<span>|</span></li>
+                    <li>HOTEL 요기어때<span>|</span></li>
+                    <li>콘텐츠산업진흥법에 의한 표시<span>|</span></li>
+                    <li>마케팅센터<span>|</span></li>
+                </ul>
+                <p>
+                    <b>고객 센터 0000-0000</b>
+                    <span>9:00 - 18:00(평일)</span>
+                </p>
+                <address>
+                    <span>요기어때</span>
+                    주소 : 대구시 서대구로7길 2
+                    <br>
+                    통신판매번호 : 0000 | 관광사업자 등록번호 : 0000 | 전화번호 : 0000-0000 | 호스팅 : 00000
+                    <span class="jj_order">
+                        요기어때는 통신판매중개자로서 통신판매의 당사자가 아니며, 상품의 예약, 이용 및 환불 등과 관련한 의무와 책임은 각 판매자에게 있습니다.
+                    </span>
+                    <br>
+                    Copyright GC COMPANY Corp. All rights reserved.
+                </address>
+
+
+            </div>
+
+        </footer>
+        <!-- defer : 페이지가 모두 로드된 후에 해당 외부 스크립트가 실행  -->
+        <script src="main01.js" defer></script>
+
 </body>
-</html>
 
+</html>
