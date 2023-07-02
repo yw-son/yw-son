@@ -1,60 +1,15 @@
 <!DOCTYPE html>
-<html>
+<html layout:decorate="~{jjj/header}">
 
 <head>
-	<meta charset="UTF-8">
-	<title>Validation Example</title>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-	<link rel="preconnect" href="https://fonts.gstatic.com" />
-	<link rel="stylesheet" href="/css/kty.css">
-	<script th:src="@{/js/kty_join.js}"></script>
-	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script> <!-- sweetalert2 CDN-->
-	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script> <!-- 다음 주소 검색 api-->
-	<script>
-		$(document).ready(function () {
-			var $checkEmail = $('#send_temppwd');
-			var $email = $('#find_email');
-			var $username = $('#find_username');
-
-			$checkEmail.on('click', function () {
-				var email = $email.val();
-				var username = $username.val();
-				if (email.trim() !== '') {
-					$.ajax({
-						url: "/user/temp_pwd",
-						type: "POST",
-						data: {
-							"email": email,
-							"username": username
-						},
-						success: function (response) {
-							var data = response; // 인증번호 데이터 저장
-							Swal.fire({
-								title: 'Success',
-								html: '<b>임시비밀번호가 발송되었습니다.</b>',
-								icon: 'success'
-							});
-
-						},
-						error: function (xhr, status, error) {
-							Swal.fire({
-								title: 'Error!',
-								html: '<b>회원이 아니거나 아이디와 이메일이 맞지 않습니다.</b>',
-								icon: 'error'
-							});
-						}
-					});
-				}
-			});
-		});
-
-	</script>
 </head>
-<div class="container_my-find">
+<div layout:fragment="content" class="container_my-find">
 	<div class="my-3 border-bottom">
 		<div>
-			<h4 class="title_find_pw">비밀번호 찾기</h4>
+			<h4 class="title_find_pw">비밀번호 재설정</h4>
+			<p style="color:rgb(128, 128, 128);">회원가입 시 등록한 사용자ID와 이메일 주소를 입력해 주세요.</p>
 		</div>
+
 	</div>
 	<div class="mb-findpwd">
 		<label for="find_username" class="form-label">사용자ID</label>
@@ -64,7 +19,5 @@
 		<label for="find_email" class="form-label">이메일</label>
 		<input type="find_email" maxlength="35" class="form-control" id="find_email">
 	</div>
-	<input class="btn_btn-outline-primary" id="send_temppwd" type="button" value="임시비밀번호 발송">
 	<br />
-	<br />
-	<a href="/user/login" class="btn btn-facebook btn-user btn-block">로그인 페이지로</a>
+<input class="btn_btn-outline-primary" id="send_temppwd" type="button" value="임시비밀번호 발송">

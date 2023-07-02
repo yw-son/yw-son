@@ -53,6 +53,11 @@ a {
 	border: 3px rgb(0, 247, 255) solid;
 }
 
+/* 배열에 저장된 이미지 슬라이드 위해서 바로 보여지는 이미지 숨김 */
+.showImgs img {
+	display: none;
+}
+
 .list_img {
 	width: 50px;
 	height: 50px;
@@ -242,7 +247,8 @@ a {
 							<div class="slide">
 								<!-- 해당 이미지의 경로를 가져온다.   -->
 								<img th:src="${img.img_url}" alt="Product Image" width="100%"
-									height="100%" class="showImgs">
+									height="100%" class="showImgs"><span
+									th:text="${img.img_id}" style="display: none;" class="img_id"></span>
 							</div>
 							<div class="prev">&lt;</div>
 							<div class="next">&gt;</div>
@@ -337,6 +343,26 @@ a {
 <script>
     //추후에 공통 ajax 만들 때 form 인지 아닌지 구분해서 만들어야 함
 
+
+
+    //최초 등록시 사진은 최대 5개 까지만 등록 가능하도록 설정
+    $(document).ready(function () {
+        $('#addPhoto').on('change', function () {
+            var files = $(this).get(0).files;
+            var maxAllowedFiles = 5;
+
+            if (files.length > maxAllowedFiles) {
+                alert('객실 사진은 최대 5장까지 등록할 수 있습니다.');
+                // 선택한 파일 초기화
+                $(this).val('');
+            }
+        });
+    });
+
+
+
+
+
     //등록하기 버튼 클릭 이벤트 처리
     $(document)
         .ready(
@@ -345,10 +371,18 @@ a {
                 $('#addProductButton')
                     .click(
                         function () {
+
                             var form = $('#productForm')[0]; //첫 번째 form요소
                             var formData = new FormData(form);
 
                             console.log(form);
+
+                            // 이미지 파일이 선택되었는지 확인
+                            var files = $('#addPhoto').get(0).files;
+                            if (files.length === 0) {
+                                alert('이미지가 최소 1개가 필요합니다.');
+                                return; // 이미지가 선택되지 않았으므로 함수 종료
+                            }
 
                             $
                                 .ajax({
@@ -422,9 +456,9 @@ a {
 
     //기존에 있는 값을 담기 위한 객체선언
     var originalValues = {}; //
-    
+
     //기존에 있는 이미지를 담기 위한 배열
-   var originalImageUrls  = []; //배열
+    var originalImageUrls = []; //배열
 
     // formData 전역 변수로 선언
     var formData = new FormData();
@@ -440,6 +474,9 @@ a {
 
                     var productId = parseInt(editButten.siblings()
                         .find('.product_id').text());
+
+                    //   var img_id = editButten.parent().siblings().find('.img_id').text();
+
 
 
                     //원래의 기존 값을 배열에 저장하기 위한 코드 =======
@@ -462,31 +499,38 @@ a {
                     originalValues['checkout'] = productContainer.find(
                         '.checkout').text();
 
-                     
-/*                     
-                    // 기존 이미지 URL들 저장
-            // 기존 이미지 URL들 저장
-productContainer.find('.imgContainer').each(function() {
-  var originalImgUrl = $(this).find('.showImgs').attr('src');
-  originalImageUrls.push(originalImgUrl);
-});
 
-console.log("삭제된 객실 이미지 담는다" + originalImageUrls); */
-
-
-//기존 이미지 URL들 저장 + productId와 함께 저장
-productContainer.find('.imgContainer').each(function() {
-	  var imageInfo = {
-	    imageUrl: $(this).find('.showImgs').attr('src'),
-	    productId: productId // 해당 이미지의 상품 ID를 저장
-	  };
-	  originalImageUrls.push(imageInfo);
-	});
-
-	console.log("이미지 정보 배열:", originalImageUrls);
+                    // 이미지 ID 가져오기
+                    /*    var imgId = parseInt(productContainer.find('.img_id').text());
+                       console.log(imgId); */
 
 
 
+                    /*                     
+                                        // 기존 이미지 URL들 저장
+                                // 기존 이미지 URL들 저장
+                    productContainer.find('.imgContainer').each(function() {
+                      var originalImgUrl = $(this).find('.showImgs').attr('src');
+                      originalImageUrls.push(originalImgUrl);
+                    });
+                    
+                    console.log("삭제된 객실 이미지 담는다" + originalImageUrls); */
+
+
+                    //기존 이미지 URL들 저장 + productId와 함께 저장
+                    productContainer.find('.imgContainer').each(function () {
+
+                        var imgid = $(this).find('.img_id').text();
+                        console.log(imgid);
+
+                        var imageInfo = {
+                            imageUrl: $(this).find('.showImgs').attr('src'),
+                            productId: productId,// 해당 이미지의 상품 ID를 저장
+                            imgid: imgid
+                        };
+                        originalImageUrls.push(imageInfo);
+                    });
+                    console.log("이미지 정보 배열:", originalImageUrls);
 
                     //객실 수정에 대한 함수
                     updateProductContainer(editButten);
@@ -605,29 +649,29 @@ productContainer.find('.imgContainer').each(function() {
         imageList.classList.add('image-list');
 
         if (product.productImgs && product.productImgs.length > 0) {
-        	  for (var i = 0; i < product.productImgs.length; i++) {
-        	    var imgListItem = document.createElement('li');
-        	    var imgDiv = document.createElement('div');
-        	    imgDiv.classList.add('img_list_position');
-        	    var img = document.createElement('img');
-        	    img.src = product.productImgs[i].img_url;
-        	    img.alt = 'Product Image';
-        	    img.classList.add('list_img');
+            for (var i = 0; i < product.productImgs.length; i++) {
+                var imgListItem = document.createElement('li');
+                var imgDiv = document.createElement('div');
+                imgDiv.classList.add('img_list_position');
+                var img = document.createElement('img');
+                img.src = product.productImgs[i].img_url;
+                img.alt = 'Product Image';
+                img.classList.add('list_img');
 
-        	    var deleteButton = document.createElement('button');
-        	    deleteButton.classList.add('imgLists_deleteButton');
-        	    deleteButton.innerHTML = 'X';
+                var deleteButton = document.createElement('button');
+                deleteButton.classList.add('imgLists_deleteButton');
+                deleteButton.innerHTML = 'X';
 
-        	    var deleteButtonPosition = document.createElement('div');
-        	    deleteButtonPosition.classList.add('imgLists_deleteButton_position');
-        	    deleteButtonPosition.appendChild(deleteButton);
+                var deleteButtonPosition = document.createElement('div');
+                deleteButtonPosition.classList.add('imgLists_deleteButton_position');
+                deleteButtonPosition.appendChild(deleteButton);
 
-        	    imgDiv.appendChild(img);
-        	    imgDiv.appendChild(deleteButtonPosition);
-        	    imgListItem.appendChild(imgDiv);
-        	    imageList.appendChild(imgListItem);
-        	  }
-        	}
+                imgDiv.appendChild(img);
+                imgDiv.appendChild(deleteButtonPosition);
+                imgListItem.appendChild(imgDiv);
+                imageList.appendChild(imgListItem);
+            }
+        }
 
         imgListsContainer.appendChild(imageList);
 
@@ -741,73 +785,7 @@ productContainer.find('.imgContainer').each(function() {
 
         // 초기화 버튼 클릭 이벤트 처리 ===========================================
 
-        $('.resetProduct')
-            .click(
-                function () {
-                    // 초기화 버튼 클릭 시 처리할 로직 작성
-                    // 해당 컨테이너 찾기
-                    var productContainer = $(this).closest(
-                        '#productContainer');
 
-                    console.log(productContainer + " 초기화 영역 입니다.");
-
-                    //해당 영역만을 초기화 시킴
-                    productContainer.find('.edit_count').val(
-                        originalValues['count']);
-                    productContainer.find('.edit_type').val(
-                        originalValues['type']);
-                    productContainer.find('.edit_pernum').val(
-                        originalValues['pernum']);
-                    productContainer.find('.edit_amount').val(
-                        originalValues['amount']);
-                    productContainer.find('.edit_checkin').val(
-                        originalValues['checkin']);
-                    productContainer.find('.edit_checkout').val(
-                        originalValues['checkout']);
-
-                });
-
-        //수정 취소 버튼을 눌렀을 시 ==========================
-
- // 수정취소 버튼 클릭 이벤트 핸들러
-$('.cancelProduct').click(function () {
-  var productContainer = $(this).closest('#productContainer');
-  var productId = parseInt(productContainer.find('.product_id').text());
-
-  // 이전에 저장한 기존 값들로 각 input 필드 초기화
-  productContainer.find('.edit_count').val(originalValues['count']);
-  productContainer.find('.edit_type').val(originalValues['type']);
-  productContainer.find('.edit_pernum').val(originalValues['pernum']);
-  productContainer.find('.edit_amount').val(originalValues['amount']);
-  productContainer.find('.edit_checkin').val(originalValues['checkin']);
-  productContainer.find('.edit_checkout').val(originalValues['checkout']);
-
-  // 기존 이미지 요소들 초기화
-  restoreImages(productContainer, productId);
-
-  console.log('이미지가 원상복구되었습니다.');
-  
-  productContainer.find('.editProduct').show();
-  productContainer.find('.deleteProduct').show();
-  productContainer
-    .find('.editOkProduct, .cancelProduct, .resetProduct , .imgLists_deleteButton')
-    .hide();
-
-  // 해당 input 영역 보여주기
-  productContainer.find('.product_count, .product_type, .product_pernum, .product_amount ,.checkin, .checkout')
-    .show();
-
-  // 기존의 input 영역 숨기기
-  productContainer.find('.edit_count, .edit_type, .edit_pernum, .edit_amount ,.edit_checkin, .edit_checkout')
-    .hide();
-  
-  
-  
-  
-  
-});
-        
-        
         //수정 완료 버튼 클릭 시 이벤트를 처리 ===============
         $('.editOkProduct')
             .click(
@@ -834,27 +812,48 @@ $('.cancelProduct').click(function () {
 
                     // 수정된 값을 FormData에 추가
                     //var formData = new FormData(); // FormData 객체 초기화
-
-                    for (var key in editedValues) {
+                    
+                    
+  					for (var key in editedValues) {
                         formData.append(key, editedValues[key]);
                     }
+                    
+                    
+                    
+                    
+                    //이미지 관련 수정사항 ========================
 
                     // 수정된 이미지 파일들과 삭제된 이미지 파일들을 FormData 객체에 추가
                     var editedImages = productContainer.find('.edited_images');
                     var deletedImages = productContainer.find('.deleted_images');
 
-                    // 수정된 파일들 순회하며 파일 객체를 가져와 images[]라는 키로 FormData 객체에 추가
+                    
+                 /*    // 수정된 파일들 순회하며 파일 객체를 가져와 images[]라는 키로 FormData 객체에 추가
                     for (var i = 0; i < editedImages.length; i++) {
                         var editedImageFile = editedImages[i].files[0];
                         formData.append('images[]', editedImageFile);
+                    } */
+                    
+                    
+                    for (var i = 0; i < editedImages.length; i++) {
+                        var editedImageFile = editedImages[i].files[0];
+                        formData.append('images[]', editedImageFile || null);
                     }
+
 
                     // 삭제된 이미지 파일들을 순회하면서 FormData 객체에 추가
                     for (var i = 0; i < deletedImages.length; i++) {
                         var deletedImageId = deletedImages[i].getAttribute('data-image-id');
                         formData.append('deletedImages[]', deletedImageId);
-                    }
+                    } 
 
+                    //이미지 관련 수정사항 끝 ========================
+
+                    
+                    
+                    
+                    
+                    
                     // AJAX 요청을 통해 데이터를 서버에 전송하고 값을 변경
                     $.ajax({
                         url: '/product/updateProduct',
@@ -872,6 +871,7 @@ $('.cancelProduct').click(function () {
                             var updatedProductContainer = productContainer.clone(); // 현재 상태를 복제
                             productContainer.replaceWith(updatedProductContainer); // 리로드된 요소로 교체
 
+                            
                         },
                         error: function (xhr, status, error, product) {
                             // 처리 중에 에러가 발생한 경우의 동작 
@@ -891,20 +891,35 @@ $('.cancelProduct').click(function () {
         $('.imgLists').on('click', '.imgLists_deleteButton', function () {
             var imageURL = $(this).closest('li').find('.list_img').attr('src');
 
+
             var deletedImageId = $(this).closest('div').find('span').text();
             var deletedImageContainer = $(this).closest('li');
 
             console.log(imageURL + "imageURL"); // 이미지 URL 출력
             console.log(deletedImageId + "deletedImageId"); // 이미지 ID(PK) 출력
-
+            
             // 화면에서 삭제된 이미지를 제거
-            deletedImageContainer.hide(); // 숨기기
-
+      	  	// deletedImageContainer.hide(); // 숨기기
+         
             // 삭제된 이미지 파일을 FormData 객체에 추가
             formData.append('deletedImages[]', deletedImageId);
 
             console.log(deletedImageId); //해당 이미지의 pk를 가져온다. 
+            
 
+            // 이미지 개수 체크
+   			 var imageCount = $(this).closest('.imgLists').find('.image-list li').length;
+
+            // 최소 이미지 개수보다 작으면 알림 메시지 표시
+            if (imageCount <= 1) {
+                alert('이미지는 최소 1개가 필요합니다.');
+                return;
+            }  
+
+            // 화면에서 삭제된 이미지를 제거
+            deletedImageContainer.remove(); // 이미지 요소 제거
+            
+        
         });
 
         // 이미지 추가 버튼 클릭 시 파일 선택 인풋 클릭 이벤트 발생
@@ -915,11 +930,27 @@ $('.cancelProduct').click(function () {
                     '.imageUploadInput').click();
             });
 
+        
+        //이미지 길이 비요해서 제한두는거 ==========================
         // 이미지 업로드 인풋 필드의 값이 변경되면 실행되는 이벤트 핸들러
         $('.imageUploadInput').change(function () {
-            var files = this.files;
-            var imageList = $('.image-list');
+        	
+        	  var files = this.files;
+              var imageList = $('.image-list');
+              
+              
+              
+             //이미지 추가 갯수 제한
+              var MaxImgCount = $(this).closest('.imgLists').find('.image-list li').length;
+                console.log("MaxImgCount : " + MaxImgCount);
+              
+                //최대 이미지 개수보다 많으면 알림 메시지 표시
+                if (MaxImgCount >= 5) {
+                    alert('이미지는 최대 5개만 가능합니다.');
+                    return;
+                }  
 
+ 
             // 선택된 파일들을 순회하며 이미지를 화면에 추가
             for (var i = 0; i < files.length; i++) {
                 var file = files[i];
@@ -934,10 +965,10 @@ $('.cancelProduct').click(function () {
                     var buttonContainer = $('<div></div>').addClass('imgLists_deleteButton_position');
                     // 이미지를 리스트에 추가
                     imageContainer.append(image);
-     				buttonContainer.append(deleteButton);
-    		  		listItem.append(imageContainer);
-    		  		listItem.append(buttonContainer);
-    		  		imageList.append(listItem);
+                    buttonContainer.append(deleteButton);
+                    listItem.append(imageContainer);
+                    listItem.append(buttonContainer);
+                    imageList.append(listItem);
 
 
                     // 이미지 파일을 FormData 객체에 추가
@@ -948,7 +979,6 @@ $('.cancelProduct').click(function () {
                     for (var pair of formData.entries()) {
                         console.log(pair[0] + ": ", pair[1]);
                     }
-
                 };
 
                 reader.readAsDataURL(file);
@@ -1001,8 +1031,19 @@ $('.cancelProduct').click(function () {
         const nextButton = slideshowContainer.find('.next');
 
         // 첫 번째 이미지로 초기화
-        slide.css('background-image',
-            `url(${images[currentSlideIndex].imgUrl})`);
+      	  slide.css('background-image',
+            `url(${images[currentSlideIndex].imgUrl})`); 
+             
+            /* 
+            // 슬라이드 업데이트 함수 (에니메이션 효과와 함께 슬라이드를 업데이트)
+            function updateSlide() {
+              const imgUrl = images[currentSlideIndex].imgUrl;
+              slide.css('background-image', `url(${imgUrl})`);
+            }
+
+            // 첫 번째 이미지로 초기화
+            updateSlide(); */
+            
 
         // 이전 이미지로 이동하는 함수
         function goToPrevSlide() {
@@ -1035,46 +1076,134 @@ $('.cancelProduct').click(function () {
         nextButton.on('click', goToNextSlide);
 
     }
-    
-   
- 
- 
- // 이미지 원상복구
-function restoreImages(productContainer, productId) {
-  var imageListContainer = productContainer.find('.imgLists .image-list');
-  imageListContainer.empty();
 
-  for (var i = 0; i < originalImageUrls.length; i++) {
-    var imageInfo = originalImageUrls[i];
-    var roomNumber = imageInfo.productId;
-    var imageUrl = imageInfo.imageUrl || '';
 
-        console.log("==========");
 
-        console.log(originalImageUrls + "originalImageUrls");
-        console.log(imageInfo + "imageInfo");
-        console.log(roomNumber + "roomNumber");
-        console.log(imageUrl + "imageUrl");
-        console.log(productId + "productId");
 
-        console.log(typeof imageInfo); // imageInfo의 데이터 타입 출력
-        console.log(typeof roomNumber); // roomNumber의 데이터 타입 출력
-        console.log(typeof imageUrl); // imageUrl의 데이터 타입 출력
-        console.log(typeof productId); // imageUrl의 데이터 타입 출력
 
-        console.log(i + " i i ");
-        console.log("==========");
-        
+    //수정 취소 버튼을 눌렀을 시 ==========================
 
-        if (roomNumber === productId) {
-            var listItem = $('<li><div class="img_list_position"><img src="' + imageUrl + '" alt="Product Image" class="list_img"></div><div class="imgLists_deleteButton_position"><button class="imgLists_deleteButton">x</button></div></li>');
-            imageListContainer.append(listItem);
-            originalImageUrls.splice(i, 1);
-            i--; // 인덱스 감소
-            continue; // 다음 반복으로 건너뜁니다.
-          }
+
+    $(document).on('click', '.cancelProduct', function () {
+        var productContainer = $(this).closest('#productContainer');
+        var productId = parseInt(productContainer.find('.product_id').text());
+
+        // 이전에 저장한 기존 값들로 각 input 필드 초기화
+        productContainer.find('.edit_count').val(originalValues['count']);
+        productContainer.find('.edit_type').val(originalValues['type']);
+        productContainer.find('.edit_pernum').val(originalValues['pernum']);
+        productContainer.find('.edit_amount').val(originalValues['amount']);
+        productContainer.find('.edit_checkin').val(originalValues['checkin']);
+        productContainer.find('.edit_checkout').val(originalValues['checkout']);
+
+        // 기존 이미지 요소들 초기화
+        restoreImages(productContainer, productId);
+
+        console.log('이미지가 원상복구되었습니다.');
+
+        productContainer.find('.editProduct').show();
+        productContainer.find('.deleteProduct').show();
+        productContainer
+            .find('.editOkProduct, .cancelProduct, .resetProduct , .imgLists_deleteButton')
+            .hide();
+
+        // 해당 input 영역 보여주기
+        productContainer.find('.product_count, .product_type, .product_pernum, .product_amount ,.checkin, .checkout')
+            .show();
+
+        // 기존의 input 영역 숨기기
+        productContainer.find('.edit_count, .edit_type, .edit_pernum, .edit_amount ,.edit_checkin, .edit_checkout')
+            .hide();
+    });
+
+
+    // 이미지 원상복구
+    function restoreImages(productContainer, productId) {
+        var imageListContainer = productContainer.find('.imgLists .image-list');
+        imageListContainer.empty();
+
+        for (var i = 0; i < originalImageUrls.length; i++) {
+            var imageInfo = originalImageUrls[i];
+            var roomNumber = imageInfo.productId;
+            var imageUrl = imageInfo.imageUrl || '';
+            var imgId = imageInfo.imgId; // 수정: 변수명 imgId로 변경
+
+            if (roomNumber === productId) {
+                var listItem = $('<li><div class="img_list_position"><img src="' + imageUrl + '" alt="Product Image" class="list_img"><span th:text="' + imgId + '" style="display: none;" class="img_id"></span></div><div class="imgLists_deleteButton_position"><button class="imgLists_deleteButton">x</button></div></li>');
+
+                imageListContainer.append(listItem);
+                originalImageUrls.splice(i, 1);
+                i--; // 인덱스 감소
+            }
         }
-      }
-    
-    
+    }
+
+
+
+
+
+    // 초기화 버튼 클릭 이벤트 처리 ===========================================
+
+    $(document).on('click', '.resetProduct', function () {
+        // 초기화 버튼 클릭 시 처리할 로직 작성
+        // 해당 컨테이너 찾기
+        var productContainer = $(this).closest('#productContainer');
+        var productId = parseInt(productContainer.find('.product_id').text());
+
+        console.log(productContainer + " 초기화 영역 입니다.");
+
+        //해당 영역만을 초기화 시킴
+        productContainer.find('.edit_count').val(originalValues['count']);
+        productContainer.find('.edit_type').val(originalValues['type']);
+        productContainer.find('.edit_pernum').val(originalValues['pernum']);
+        productContainer.find('.edit_amount').val(originalValues['amount']);
+        productContainer.find('.edit_checkin').val(originalValues['checkin']);
+        productContainer.find('.edit_checkout').val(originalValues['checkout']);
+
+
+        resetImages(productContainer, productId);
+
+        productContainer.find('.editProduct').hide();
+        productContainer.find('.deleteProduct').hide();
+        productContainer
+            .find('.editOkProduct, .cancelProduct, .resetProduct , .imgLists_deleteButton')
+            .show();
+
+        // 해당 input 영역 보여주기
+        productContainer.find('.product_count, .product_type, .product_pernum, .product_amount ,.checkin, .checkout')
+            .hide();
+
+        // 기존의 input 영역 숨기기
+        productContainer.find('.edit_count, .edit_type, .edit_pernum, .edit_amount ,.edit_checkin, .edit_checkout')
+            .show();
+
+
+    });
+
+
+
+
+    // 이미지 초기화
+    function resetImages(productContainer, productId) {
+        var imageListContainer = productContainer.find('.imgLists .image-list');
+        imageListContainer.empty();
+
+        for (var i = 0; i < originalImageUrls.length; i++) {
+            var imageInfo = originalImageUrls[i];
+            var roomNumber = imageInfo.productId;
+            var imageUrl = imageInfo.imageUrl || '';
+            var imgId = imageInfo.imgId; // 수정: 변수명 imgId로 변경
+
+            if (roomNumber === productId) {
+                var listItem = $('<li><div class="img_list_position"><img src="' + imageUrl + '" alt="Product Image" class="list_img"><span th:text="' + imgId + '" style="display: none;" class="img_id"></span></div><div class="imgLists_deleteButton_position"><button class="imgLists_deleteButton">x</button></div></li>');
+
+                imageListContainer.append(listItem);
+
+                //객실 수정과는 달리 배열에서 이미지 삭제 기능을 없앰
+            }
+        }
+    }
+
+
+
 </script>

@@ -36,9 +36,10 @@ public class ProductController {
 		Optional<Users> _siteUser = this.userRepository.findByusername(username);
 		int partner = _siteUser.get().getPartner_code();
 
-		if (!(partner > 3000)) {
-			throw new DataNotFoundException("접근 권한이 없습니다.");
-		}
+		// 추후 점주만이 들어올 수 있도록 설정
+//		if (!(partner > 3000)) {
+//			throw new DataNotFoundException("접근 권한이 없습니다.");
+//		}
 
 		// 전체 리스트를 불러와서 등록한 숙소를 보여준다.
 		List<Product> productList = this.productService.getList();
@@ -136,17 +137,39 @@ public class ProductController {
 
 		// 상품 조회 해당하는 상픔의 pk를 가져와서 조회한다.
 		Product product = this.productService.getProduct(product_id);
+
 		if (product == null) {
 			throw new DataNotFoundException("상품을 찾을 수 없습니다.");
 		}
 
-		// 개별 이미지 삭제 (해당 이미지의 pk를 가져와서 삭제한다)
-		int pdEditImgDelete = this.productService.pdEditImgDelete(deletedImageIds);
+		System.out.println("=====================");
+		System.out.println(deletedImageIds);
+		System.out.println("=====================");
 
-		// 들어온 이미지 추가 for 문으로 여려개의 이미지를 상품PK와 연결해서 저장
-		for (MultipartFile product_photos : editedImages) {
-			this.productService.updateImg(product_photos, product_id);
+//		
+//		// 개별 이미지 삭제 (해당 이미지의 pk를 가져와서 삭제한다)
+//		int pdEditImgDelete = this.productService.pdEditImgDelete(deletedImageIds);
+//
+//		// 들어온 이미지 추가 for 문으로 여려개의 이미지를 상품PK와 연결해서 저장
+//		for (MultipartFile product_photos : editedImages) {
+//			this.productService.updateImg(product_photos, product_id);
+//		}
+
+		// 개별 이미지 삭제 (해당 이미지의 pk를 가져와서 삭제한다)
+		if (deletedImageIds != null && !deletedImageIds.isEmpty()) {
+			int pdEditImgDelete = this.productService.pdEditImgDelete(deletedImageIds);
 		}
+		
+		
+
+		// 들어온 이미지 추가 for 문으로 여러 개의 이미지를 상품 PK와 연결해서 저장
+		if (editedImages != null && editedImages.length > 0) {
+			for (MultipartFile productPhoto : editedImages) {
+				if (!productPhoto.isEmpty()) {
+					this.productService.updateImg(productPhoto, product_id);
+				}
+			}
+		} 
 
 		// 이제 값을 받은 부분들을 다시 업데이트 해야 한다.
 

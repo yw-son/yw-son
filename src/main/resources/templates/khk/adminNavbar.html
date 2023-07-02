@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="/css/khk.css">
+</head>
+<style>
+body {
+	font-family: Arial, sans-serif;
+	background-color: #f8f8f8;
+	margin: 0;
+	padding: 0;
+}
+
+.navbar {
+	background-color: #333;
+	color: #fff;
+	padding: 10px 0;
+	text-align: center;
+}
+
+.navbar a {
+	margin: 0 10px;
+	text-decoration: none;
+	color: #fff;
+	transition: color 0.3s;
+}
+
+.navbar a:hover {
+	color: #ffc107;
+}
+
+.navbar a.active {
+	font-weight: bold;
+}
+
+.navbar span {
+	color: #fff;
+	margin: 0 5px;
+}
+</style>
+<body>
+    <div class="navbar">
+        <a href="/khk/adminMain" class="active">관리자 홈</a>
+        <span>|</span>
+        <a href="/khk/userListPage">회원 관리</a>
+        <span>|</span>
+        <a href="#">업체 관리</a>
+        <span>|</span>
+        <a href="#">권한 관리</a>
+        <span>|</span>
+        <a href="#">고객 지원</a>
+        <span>|</span>
+        <a href="#">신고 관리</a>
+        <span>|</span>
+        <a href="#">통계 / 분석</a>
+    </div>
+</body>
+</html>
