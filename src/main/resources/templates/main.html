@@ -1,5 +1,103 @@
-메인 페이지 (제작 중) 
-  <a class="nav-link" sec:authorize="isAnonymous()" th:href="@{/user/login}">로그인</a>
-  <a class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/user/logout}">로그아웃</a>
+<!-- 메인 페이지 (제작 중) -->
+<!--   <a class="nav-link" sec:authorize="isAnonymous()" th:href="@{/user/login}">로그인</a> -->
+<!--   <a class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/user/logout}">로그아웃</a> -->
   
-   <a class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/user/mypage/me}">마이페이지로</a>
+<!--    <a class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/user/mypage/me}">마이페이지로</a> -->
+
+
+ <!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>요기어때</title>
+</head>
+<body>
+<html layout:decorate="~{jjj/header}">
+<div layout:fragment="content" class="container my-3">
+
+<!-- 슬라이드 -->
+    <div id="slider" style="overflow: hidden;">
+        <div class="jj_slide_container">
+            <div class="jj_slide-box">
+                <img src="./img/bg-1.jpg">
+            </div>
+            <div class="jj_slide-box">
+                <img src="./img/bg-2.jpg">
+            </div>
+            <div class="jj_slide-box">
+                <img src="./img/bg-3.jpg">
+            </div>
+        </div>
+        <div class="jj_btns">
+            <button class="jj_dot_btn_slide-1"></button>
+            <button class="jj_dot_btn_slide-2"></button>
+            <button class="jj_dot_btn_slide-3"></button>
+        </div>
+    </div>
+
+    <!-- 숙소 카테고리 아이콘 -->
+    <div class="jj_icon">
+        <a href="#">
+            <span class="fa-solid fa-hotel fa-3x"></span>
+            <p>호텔</p>
+        </a>
+        <a href="#">
+            <span class="fa-solid fa-bed fa-3x"></span>
+            <p>모텔</p>
+        </a>
+        <a href="#">
+            <span class="fa-solid fa-caravan fa-3x"></span>
+            <p>캠핑</p>
+        </a>
+        <a href="#">
+            <span class="fa-solid fa-umbrella-beach fa-3x"></span>
+            <p>펜션</p>
+        </a>
+        <a href="#">
+            <span class="fa-solid fa-earth-americas fa-3x"></span>
+            <p>해외</p>
+        </a>
+    </div>
+
+    <!-- 추천 숙소 -->
+    <div class="jj_recommend">
+        <h2>추천 숙소</h2>
+        <div class="jj_recommend_container">
+            <ul class="jj_recommend_slide">
+                <li>
+                    <a href="#">
+                        <img src="https://yaimg.yanolja.com/v5/2023/06/16/16/648c8a677a8a09.51038607.png">
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <img src="https://yaimg.yanolja.com/v5/2023/06/16/11/648c4227c0eac2.58598696.png">
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <img src="https://yaimg.yanolja.com/v5/2023/06/16/16/648c8878422f22.87896477.png">
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <img src="https://yaimg.yanolja.com/v5/2023/06/16/16/648c8878422f22.87896477.png">
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <img src="https://yaimg.yanolja.com/v5/2023/06/16/16/648c8878422f22.87896477.png">
+                    </a>
+                </li>
+            </ul>
+            <p class="jj_controls">
+                <span class="prev"></span>
+                <span class="next"></span>
+            </p>
+        </div>
+
+
+</div>
+
+</html>
+</body>

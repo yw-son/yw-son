@@ -350,6 +350,7 @@ a {
 /* 마이페이지  css */
 
 
+
 #my_infomation_modify {
 	position: absolute;
 	display: flex;
@@ -395,6 +396,11 @@ a {
 .mypage_sidebar {
 	list-style-type: none;
 	padding-bottom: 40px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+
 }
 
 #mypage_sidebar_nav {
@@ -573,7 +579,7 @@ li.mypage_sidebar a.active {
 
 
 #mypage_partner_reg {
-		position: absolute;
+	position: absolute;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -659,3 +665,75 @@ li.mypage_sidebar a.active {
 #reg_partner_final:hover {
 	cursor: pointer;
 }
+
+#partner_input-file {
+	width: 90%;
+
+	height: 45px;
+	border: 1px solid rgb(207, 207, 207);
+
+}
+
+#ch_file {
+	width: 96%;
+	display: inline-block;
+	margin-left: 10px;
+	/* 오른쪽으로 10px 이동 */
+	height: 45px;
+	border: 1px solid rgb(207, 207, 207);
+}
+
+
+/* 비밀번호 찾기 css */
+
+
+.container_my-find {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	height: 30vh;
+	/* 변경: 전체 뷰포트 높이로 설정 */
+	margin-top: 350px;
+	/* 예시로 20px의 여백을 추가 */
+}
+
+
+
+.mb-findpwd {
+	border-bottom: 2px solid #adadad;
+	margin: 13px;
+	flex: 1;
+}
+
+
+#find_username,
+#find_email {
+	width: 100%;
+	border: none;
+	outline: none;
+	color: #636e72;
+	font-size: 16px;
+	height: 25px;
+	background: none;
+}
+
+.title_find_pw {
+	margin-left: 30px;
+	margin-top: -70px;
+	font-size: 35px;
+}
+
+#send_temppwd{
+	border: 1px solid grey;
+	border-radius: 8px;
+	background-color: white;
+	color: black;
+	width: 200px;
+	height: 40px;
+	margin-top:15px;
+}
+#send_temppwd:hover{
+	cursor: pointer;
+}
+

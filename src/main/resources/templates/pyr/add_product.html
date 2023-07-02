@@ -13,19 +13,155 @@ a {
 }
 
 .box {
-	width: 350px;
-	height: 500px;
-	margin: 20px;
-	border-color: black;
-	border-style: inset;
+	width: 800px;
+	height: 400px;
+	margin-bottom: 20px;
+	border: 3px rgb(74, 16, 235) solid;
 	box-sizing: border-box;
+	display: flex;
+}
+
+/* ============== 이미지 부분 시작*/
+.boxCintainer {
+	flex-direction: column;
+	border: 3px rgb(255, 0, 200) solid;
+	width: 50%;
+	height: 100%;
+	box-sizing: border-box;
+}
+
+.itemexer {
+	border: 3px rgb(0, 255, 13) solid;
+	height: 50%;
+	box-sizing: border-box;
+}
+
+.imgLists {
+	border: 3px rgb(56, 0, 44) solid;
+	height: 50%;
+	box-sizing: border-box;
+}
+
+.slideshow-container {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	box-sizing: border-box;
+	margin-right: 10px;
+	margin: 0 auto;
+	overflow: hidden;
+	border: 3px rgb(0, 247, 255) solid;
+}
+
+.list_img {
+	width: 50px;
+	height: 50px;
+}
+
+/* ================ 이미지 부분 끝*/
+
+/* 내용들이 담겨야 하는부분 */
+.Product_contents {
+	border: 1px rgb(49, 96, 224) solid;
+	width: 50%;
+	padding-left: 18px;
+}
+
+.slide {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-size: cover;
+	background-position: center;
+	transition: opacity 0.4s ease-in-out;
+	border: 3px rgb(46, 75, 1) solid;
+}
+
+.prev, .next {
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	width: 30px;
+	height: 30px;
+	line-height: 30px;
+	text-align: center;
+	color: white;
+	background-color: rgba(0, 0, 0, 0.5);
+	cursor: pointer;
+}
+
+.prev {
+	left: 10px;
+}
+
+.next {
+	right: 10px;
+}
+
+/* display: flex하기 위한 영역 */
+.imgLists .image-list {
+	box-sizing: border-box;
+	display: flex;
+	flex-wrap: wrap;
+	/* justify-content: space-around; */
+	justify-content: flex-start;
+}
+
+.image-list {
+	padding: 0;
+	margin: 5px;
+}
+
+/* 해당 이미지 리스트에 있는 이미지 영역 */
+.imgLists .image-list li {
+	list-style-type: none;
+	position: relative;
+	width: 80px;
+	height: 80px;
+	padding: 0;
+	margin: 5px 15px;
+}
+
+.list_img {
+	width: 80px;
+	height: 80px;
+}
+
+/* 이미지가 담겨져 있는 크기를 조정 */
+.img_list_position {
+	width: 80px;
+	height: 80px;
+}
+
+/* 이미지 추가에서 파일 선택 숨김 */
+.imageUploadInput {
+	display: none;
+}
+
+.imgLists_deleteButton_position {
+	position: absolute;
+	top: 0;
+	right: 0;
+	z-index: 1;
+}
+
+.imgLists_deleteButton {
+	font-size: 20px;
+	color: #080808;
+	background-color: rgb(206, 206, 206);
+	border: none;
+	cursor: pointer;
+	outline: none;
+	padding: 5px;
 }
 </style>
 
 
+
+
 </head>
-
-
 
 
 <div>
@@ -74,503 +210,871 @@ a {
 
 
 
-<div>
-
+<div class="addProductListAll">
 
 	<h2>상품리스트</h2>
-
 	<div id="productListContainer">
 
 		<div id="productContainer" th:each="product : ${productList}"
 			class="box">
+
+
 			<!-- 
-			//이거 전체 클릭 가능하게 하는 a 버튼인데 추후 고객한테 상품 리스트 보여줄 때 사용할 것!!!!
-			<a th:href="@{/productDetails(productId=${product.product_id})}">
- -->
-			<!-- <div th:if="${not #lists.isEmpty(product.productImgs)}">
-				<img th:src="${product.productImgs[0].img_url}" alt="Product Image"
-					width="200" height="200">
-			</div> -->
+    			//이거 전체 클릭 가능하게 하는 a 버튼인데 추후 고객한테 상품 리스트 보여줄 때 사용할 것!!!!
+    			<a th:href="@{/productDetails(productId=${product.product_id})}">
+     -->
+			<!-- 
+    			이 코드는 0번째 이미지 불러오는거임 (추후 다른 코드에 적용할 가능서 있으므로 삭제 하지 말것)
+    			<div th:if="${not #lists.isEmpty(product.productImgs)}">
+    				<img th:src="${product.productImgs[0].img_url}" alt="Product Image"
+    					width="200" height="200">
+    			</div> -->
 
-			<div th:if="${not #lists.isEmpty(product.productImgs)}">
-				<div th:each="img : ${product.productImgs}">
-					<img th:src="${img.img_url}" alt="Product Image" width="200"
-						height="200">
+
+			<div class="boxCintainer">
+
+				<div class="itemexer">
+
+					<div th:if="${not #lists.isEmpty(product.productImgs)}"
+						class="slideshow-container">
+						<!-- 해당 배열의 이미지를 보여줌 -->
+						<div th:each="img : ${product.productImgs}" class="imgContainer">
+							<div class="slide">
+								<!-- 해당 이미지의 경로를 가져온다.   -->
+								<img th:src="${img.img_url}" alt="Product Image" width="100%"
+									height="100%" class="showImgs">
+							</div>
+							<div class="prev">&lt;</div>
+							<div class="next">&gt;</div>
+						</div>
+					</div>
+
 				</div>
+
+				<div class="imgLists">
+					<ul class="image-list">
+						<li th:each="img : ${product.productImgs}">
+							<div class="img_list_position">
+								<img th:src="${img.img_url}" alt="Product Image"
+									class="list_img"> <span th:text="${img.img_id}"
+									style="display: none;"></span>
+
+								<!-- 	<button class="imgLists_deleteButton">삭제하기</button> -->
+
+								<!-- &#8339; -->
+								<div class="imgLists_deleteButton_position">
+									<button class="imgLists_deleteButton">x</button>
+								</div>
+
+							</div>
+						</li>
+					</ul>
+
+					<div class="imageUploadContainer">
+						<button class="addImagesButton">이미지 추가</button>
+						<input type="file" name="images[]" multiple
+							class="imageUploadInput">
+					</div>
+
+				</div>
+
+
+
+
 			</div>
+			<div class="Product_contents">
+				<p>
+					객실 번호: <span th:text="${product.product_id}" class="product_id"></span>
+				</p>
+				<p>
+					객실 수: <span th:text="${product.product_count}"
+						class="product_count"></span> <input type="number"
+						class="edit_count" th:value="${product.product_count}">
+				</p>
+				<p>
+					객실 형태: <span th:text="${product.product_type}" class="product_type"></span>
+					<input type="text" class="edit_type"
+						th:value="${product.product_type}">
+				</p>
+				<p>
+					최대 인원수: <span th:text="${product.product_pernum}"
+						class="product_pernum"></span> <input type="number"
+						class="edit_pernum" th:value="${product.product_pernum}">
 
-			<p>
-				객실 번호 : <span th:text="${product.product_id}" class="product_id"></span>
-			</p>
+				</p>
+				<p>
+					금액: <span th:text="${product.product_amount}"
+						class="product_amount"></span> <input type="number"
+						class="edit_amount" th:value="${product.product_amount}">
 
-			<p>
-				객실 수 : <span th:text="${product.product_count}"
-					class="product_count"></span>
-			</p>
-			<p>
-				객실 형태 : <span th:text="${product.product_type}" class="product_type"></span>
-			</p>
-			<p>
-				최대 인원수 : <span th:text="${product.product_pernum}"
-					class="product_pernum"></span>
-			</p>
-			<p>
-				금액 : <span th:text="${product.product_amount}"
-					class="product_amount"></span>
-			</p>
-			<p>
-				체크인 : <span th:text="${product.checkin}" class="checkin"></span>
-				체크아웃 : <span th:text="${product.checkout}" class="checkout"></span>
-			</p>
+				</p>
+				<p>
+					체크인: <span th:text="${product.checkin}" class="checkin"></span> <input
+						type="time" class="edit_checkin" th:value="${product.checkin}">
+					체크아웃: <span th:text="${product.checkout}" class="checkout"></span>
+					<input type="time" class="edit_checkout"
+						th:value="${product.checkout}">
+				</p>
 
-
-			<button class="editProduct">객실수정</button>
-			<button class="deleteProduct">객실삭제</button>
-			<button class="editOkProduct">수정완료</button>
-			<button class="cancelProduct">수정취소</button>
-			<button class="resetProduct">초기화</button>
-			<!-- </a> -->
+				<!-- 	<button class="addEditImg">이미지 추가</button> -->
+				<button class="editProduct">객실수정</button>
+				<button class="deleteProduct">객실삭제</button>
+				<button class="editOkProduct">수정완료</button>
+				<button class="cancelProduct">수정취소</button>
+				<button class="resetProduct">초기화</button>
+			</div>
 		</div>
-
 	</div>
+
+	<!-- 이 부분 추후 수정해야한다. -->
 	<div th:if="${#lists.isEmpty(productList)}">현재 등록된 상품이 없습니다.</div>
+
 </div>
 
 
 
 
 <script>
-	//추후에 공통 ajax 만들 때 form 인지 아닌지 구분해서 만들어야 함
-
-	//등록하기 버튼 클릭 이벤트 처리
-	$(document)
-			.ready(
-					function() {
-
-						$('#addProductButton')
-								.click(
-										function() {
-											var form = $('#productForm')[0]; //첫 번째 form요소
-											var formData = new FormData(form);
-
-											console.log(form);
-
-											$
-													.ajax({
-														url : '/product/addproduct',
-														type : 'POST',
-														data : formData,
-														enctype : 'multipart/form-data',
-														processData : false,
-														contentType : false,
-
-														success : function(
-																response) {
-															// 성공적으로 처리된 경우의 동작
-															// 등록된 상품을 화면에 추가
-
-															/*
-															console.log(response);
-
-															// 상품 목록을 업데이트하기 위해 특정한 영역을 다시 로드
-															$('#reload').load('/product/addproduct');
-
-															// 등록 후 form 초기화
-															$('#productForm')[0].reset();
-															
-															 */
-
-															// 상품 요소를 동적으로 생성
-															var newProductElement = createProductElement(response);
-
-															var productListContainer = document
-																	.getElementById('productListContainer');
-															productListContainer
-																	.appendChild(newProductElement);
-
-															// 등록 후 form 초기화
-															$('#productForm')[0]
-																	.reset();
-
-														},
-														error : function(xhr,
-																status, error) {
-															// 처리 중에 에러가 발생한 경우의 동작 
-
-															console.log(xhr);
-															console.log(status);
-															console.log(error);
-
-															// 요청 실패 시 실행할 코드
-															console
-																	.log('AJAX 요청 실패');
-															console
-																	.log(xhr.responseText);
-
-														}
-													});
-										});
-					});
-
-	/* =====================  수정버튼 기능 구현 ===================== */
-
-	//기존에 있는 값을 담기 위한 배열
-	var originalValues = {};
-
-	//버튼 숨기고 보여주기
-	$('.editProduct, .deleteProduct').show();
-	$('.editOkProduct, .cancelProduct, .resetProduct').hide();
-
-	//수정 버튼 클릭 이벤트
-	$(document).ready(
-			function() {
-				$('.editProduct').click(
-						function() {
-							console.log("비동기인데여");
-
-							var editButten = $(this);
-							console.log("editButten" + editButten);
-
-							var productId = parseInt(editButten.siblings()
-									.find('.product_id').text());
-
-							console.log(productId);
-							console.log(typeof productId); // number
-
-							//원래의 기존 값을 배열에 저장하기 위한 코드 =======
-							// 해당 컨테이너 찾기	
-							var productContainer = $(this).closest(
-									'#productContainer');
-
-							// 기존 값 저장
-							originalValues['count'] = productContainer.find(
-									'.product_count').text();
-							originalValues['type'] = productContainer.find(
-									'.product_type').text();
-							originalValues['pernum'] = productContainer.find(
-									'.product_pernum').text();
-							originalValues['amount'] = productContainer.find(
-									'.product_amount').text();
-
-							originalValues['checkin'] = productContainer.find(
-									'.checkin').text();
-							originalValues['checkout'] = productContainer.find(
-									'.checkout').text();
-
-							console.log("=============");
-
-							console.log(originalValues);
-							console.log(originalValues['checkin'] + "배열");
-							console.log(originalValues['checkout'] + "배열");
-							console.log(originalValues['type']);
-
-							console.log("=============");
-
-							//=============================
-
-							//객실 수정에 대한 함수
-							updateProductContainer(editButten);
-
-							//버튼 추가, 다시 재 이벤트 
-							// 이벤트 위임으로 인해서 (부모-> 자식 ) 해당 방법 안되서 아예
-							//버튼을 만들어서 숨김, 나타내기 형식으로 해야 한다. 
-
-						});
-
-			});
-
-	/* =====================  수정버튼 기능 구현 ===================== */
-
-	// 삭제 버튼 클릭 이벤트 처리
-	$(document).ready(
-			function() {
-				$('.deleteProduct').click(
-						function() {
-							var deleteButton = $(this);
-
-							var productId = parseInt(deleteButton.siblings()
-									.find('.product_id').text()); //해당 id값으로 가져옴
-
-							console.log(productId);
-							console.log(typeof productId); // number
-
-							$.ajax({
-								url : '/product/deleteProduct',
-								method : 'POST',
-								dataType : 'json',
-								data : {
-									"productId" : productId,
-								},
-								success : function(response) {
-									// 삭제 성공 시 동작
-									deleteButton.closest('.box').remove(); // 저장한 변수 사용
-									console.log('AJAX 요청 성공');
-									console.log(response);
-								},
-								error : function(xhr, status, error) {
-									console.log(error);
-								}
-							});
-
-						});
-			});
-
-	//바로 아래 목록에 상품 등록 하기 위한 영역
-	function createProductElement(product) {
-		var newProduct = document.createElement('div');
-		newProduct.classList.add('box');
-
-		//main사진만 보이도록 설정(기존 코드)
-		/* 
-		 var imageContainer = document.createElement('div');
-		 if (product.productImgs.length > 0) {
-		 var image = document.createElement('img');
-		 image.src = product.productImgs[0].img_url;
-
-		 image.alt = 'Product Image';
-		 image.width = 200;
-		 image.height = 200;
-		 imageContainer.appendChild(image);
-		 }
-		 */
-
-		var imageContainer = document.createElement('div');
-		if (product.productImgs.length > 0) {
-			for (var i = 0; i < product.productImgs.length; i++) {
-				var image = document.createElement('img');
-				image.src = product.productImgs[i].img_url;
-				image.alt = 'Product Image';
-				image.width = 200;
-				image.height = 200;
-				imageContainer.appendChild(image);
-			}
-		}
-
-		var productNumber = document.createElement('p');
-		productNumber.innerHTML = '객실 번호: <span>' + product.product_id
-				+ '</span>';
-
-		var productCount = document.createElement('p');
-		productCount.innerHTML = '객실 수: <span>' + product.product_count
-				+ '</span>';
-
-		var productType = document.createElement('p');
-		productType.innerHTML = '객실 형태: <span>' + product.product_type
-				+ '</span>';
-
-		var productPerNum = document.createElement('p');
-		productPerNum.innerHTML = '최대 인원수: <span>' + product.product_pernum
-				+ '</span>';
-
-		var productAmount = document.createElement('p');
-		productAmount.innerHTML = '금액: <span>' + product.product_amount
-				+ '</span>';
-
-		var checkIn = document.createElement('p');
-		checkIn.innerHTML = '체크인: <span>' + product.checkin + '</span>';
-
-		var checkOut = document.createElement('p');
-		checkOut.innerHTML = '체크아웃: <span>' + product.checkout + '</span>';
-
-		var editButton = document.createElement('button');
-		editButton.classList.add('editProduct');
-		editButton.innerHTML = '객실수정';
-
-		var deleteButton = document.createElement('button');
-		deleteButton.classList.add('deleteProduct');
-		deleteButton.innerHTML = '객실삭제';
-
-		var deleteButton = document.createElement('button');
-		deleteButton.classList.add('editOkProduct');
-		deleteButton.innerHTML = '수정완료';
-
-		var deleteButton = document.createElement('button');
-		deleteButton.classList.add('cancelProduct');
-		deleteButton.innerHTML = '수정취소';
-
-		var deleteButton = document.createElement('button');
-		deleteButton.classList.add('resetProduct');
-		deleteButton.innerHTML = '초기화';
-
-		newProduct.appendChild(imageContainer);
-		newProduct.appendChild(productNumber);
-		newProduct.appendChild(productCount);
-		newProduct.appendChild(productType);
-		newProduct.appendChild(productPerNum);
-		newProduct.appendChild(productAmount);
-		newProduct.appendChild(checkIn);
-		newProduct.appendChild(checkOut);
-		newProduct.appendChild(editButton);
-		newProduct.appendChild(deleteButton);
-
-		//추가
-		newProduct.appendChild(editOkProduct);
-		newProduct.appendChild(cancelProduct);
-		newProduct.appendChild(resetProduct);
-
-		//버튼 숨김, 보여주기 이벤트 등록 
-		$('.editProduct, .deleteProduct').show();
-		$('.editOkProduct, .cancelProduct, .resetProduct').hide();
-
-		return newProduct;
-	}
-
-	// productContainer 객실 수정 함수
-	function updateProductContainer(editButton) {
-
-		//해당 컨테이너 찾고 
-		var productContainer = $(editButton).closest('#productContainer');
-
-		//해당 버튼을 숨기고 보여주기
-		productContainer.find('.editProduct').hide();
-		productContainer.find('.deleteProduct').hide();
-		productContainer.find('.editOkProduct, .cancelProduct, .resetProduct')
-				.show();
-
-		//해당 컨테이너에 있는 각 영역을 가져옴
-		var countSpan = productContainer.find('.product_count');
-		var typeSpan = productContainer.find('.product_type');
-		var pernumSpan = productContainer.find('.product_pernum');
-
-		var amountSpan = productContainer.find('.product_amount');
-		var checkinSpan = productContainer.find('.checkin');
-		var checkoutSpan = productContainer.find('.checkout');
-
-		// 현재 값 가져오기
-		var countValue = countSpan.text();
-		var typeValue = typeSpan.text();
-		var pernumValue = pernumSpan.text();
-		var amountValue = amountSpan.text();
-		var checkinValue = checkinSpan.text();
-		var checkoutValue = checkoutSpan.text();
-
-		// 입력 필드로 변경
-		var inputCountField = $('<input type="text" class="edit_count">').val(
-				countValue);
-		countSpan.replaceWith(inputCountField);
-
-		var inputTypeField = $('<input type="text" class="edit_type">').val(
-				typeValue);
-		typeSpan.replaceWith(inputTypeField);
-
-		var inputPernumField = $('<input type="text" class="edit_pernum">')
-				.val(pernumValue);
-		pernumSpan.replaceWith(inputPernumField);
-
-		var inputAmountField = $('<input type="text" class="edit_amount">')
-				.val(amountValue);
-		amountSpan.replaceWith(inputAmountField);
-
-		var inputCheckInField = $('<input type="time" class="edit_checkin">')
-				.val(checkinValue);
-		checkinSpan.replaceWith(inputCheckInField);
-
-		var inputCheckOutField = $('<input type="time" class="edit_checkout">')
-				.val(checkoutValue);
-		checkoutSpan.replaceWith(inputCheckOutField);
-
-		// 포커스를 객실 수 필드로 이동
-		inputCountField.focus();
-
-		//버튼 수정, 수정취소, 초기화 하는 버튼을 추가한다. 
-
-		// 초기화 버튼 클릭 이벤트 처리 ===========================================
-
-		$('.resetProduct')
-				.click(
-						function() {
-							// 초기화 버튼 클릭 시 처리할 로직 작성
-							// 해당 컨테이너 찾기
-							var productContainer = $(this).closest(
-									'#productContainer');
-
-							console.log(productContainer + " 초기화 영역 입니다.");
-
-							//해당 영역만을 초기화 시킴
-							productContainer.find('.edit_count').val(
-									originalValues['count']);
-							productContainer.find('.edit_type').val(
-									originalValues['type']);
-							productContainer.find('.edit_pernum').val(
-									originalValues['pernum']);
-							productContainer.find('.edit_amount').val(
-									originalValues['amount']);
-							productContainer.find('.edit_checkin').val(
-									originalValues['checkin']);
-							productContainer.find('.edit_checkout').val(
-									originalValues['checkout']);
-
-						});
-
-		//수정 취소 버튼을 눌렀을 시 ==========================
-
-		//수정취소버튼
-		$('.cancelProduct')
-				.click(
-						function() {
-							// 초기화 버튼 클릭 시 처리할 로직 작성
-							// 해당 컨테이너 찾기
-							var productContainer = $(this).closest(
-									'#productContainer');
-
-							console.log("수정취소 버튼입니다.");
-
-							// 해당 컨테이너에 있는 각 영역을 가져옴
-							var countInput = productContainer
-									.find('.edit_count');
-							var typeInput = productContainer.find('.edit_type');
-							var pernumInput = productContainer
-									.find('.edit_pernum');
-							var amountInput = productContainer
-									.find('.edit_amount');
-							var checkinInput = productContainer
-									.find('.edit_checkin');
-							var checkoutInput = productContainer
-									.find('.edit_checkout');
-
-							// 원래의 값을 가져온다. 
-							//span 은 val이 안되므로 text로 가져와야 한다. 
-
-							var countInputField = $(
-									'<span type="text" class="product_count">')
-									.text(originalValues['count']);
-							countInput.replaceWith(countInputField);
-
-							var typeInputField = $(
-									'<span type="text" class="product_type">')
-									.text(originalValues['type']);
-							typeInput.replaceWith(typeInputField);
-
-							var pernumInputField = $(
-									'<span type="text" class="product_pernum">')
-									.text(originalValues['pernum']);
-							pernumInput.replaceWith(pernumInputField);
-
-							var amountInputField = $(
-									'<span type="text" class="product_amount">')
-									.text(originalValues['amount']);
-							amountInput.replaceWith(amountInputField);
-
-							var checkinInputField = $(
-									'<span type="text" class="checkin">').text(
-									originalValues['checkin']);
-							checkinInput.replaceWith(checkinInputField);
-
-							var checkoutInputField = $(
-									'<span type="text" class="checkout">')
-									.text(originalValues['checkout']);
-							checkoutInput.replaceWith(checkoutInputField);
-
-							//해당하는 이벤트 div 에만 해당사하잉 적용되도록 기능 구현 
-
-							productContainer.find('.editProduct').show();
-							productContainer.find('.deleteProduct').show();
-							productContainer
-									.find(
-											'.editOkProduct, .cancelProduct, .resetProduct')
-									.hide();
-
-						});
-
-	}
+    //추후에 공통 ajax 만들 때 form 인지 아닌지 구분해서 만들어야 함
+
+    //등록하기 버튼 클릭 이벤트 처리
+    $(document)
+        .ready(
+            function () {
+
+                $('#addProductButton')
+                    .click(
+                        function () {
+                            var form = $('#productForm')[0]; //첫 번째 form요소
+                            var formData = new FormData(form);
+
+                            console.log(form);
+
+                            $
+                                .ajax({
+                                    url: '/product/addproduct',
+                                    type: 'POST',
+                                    data: formData,
+                                    enctype: 'multipart/form-data',
+                                    processData: false,
+                                    contentType: false,
+
+                                    success: function (
+                                        response) {
+                                        // 성공적으로 처리된 경우의 동작
+                                        // 등록된 상품을 화면에 추가
+
+                                        /*
+                                        console.log(response);
+
+                                        // 상품 목록을 업데이트하기 위해 특정한 영역을 다시 로드
+                                        $('#reload').load('/product/addproduct');
+
+                                        // 등록 후 form 초기화
+                                        $('#productForm')[0].reset();
+                                    	
+                                         */
+
+                                        // 상품 요소를 동적으로 생성
+                                        var newProductElement = createProductElement(response);
+
+                                        var productListContainer = document
+                                            .getElementById('productListContainer');
+                                        productListContainer
+                                            .appendChild(newProductElement);
+
+                                        // 등록 후 form 초기화
+                                        $('#productForm')[0]
+                                            .reset();
+
+                                    },
+                                    error: function (xhr,
+                                        status, error) {
+                                        // 처리 중에 에러가 발생한 경우의 동작 
+
+                                        console.log(xhr);
+                                        console.log(status);
+                                        console.log(error);
+
+                                        // 요청 실패 시 실행할 코드
+                                        console
+                                            .log('AJAX 요청 실패');
+                                        console
+                                            .log(xhr.responseText);
+
+                                    }
+                                });
+                        });
+            });
+
+    /* =====================  수정버튼 기능 구현  시작 ===================== */
+
+    //기존의 버튼 숨기고 보여주기 
+    $('.editProduct, .deleteProduct').show();
+    $(
+        '.editOkProduct, .cancelProduct, .resetProduct,.imgLists_deleteButton')
+        .hide();
+
+    //기존의 input영역 숨기기
+    $(
+        '.edit_count, .edit_type, .edit_pernum, .edit_amount ,.edit_checkin, .edit_checkout')
+        .hide();
+
+    //기존에 있는 값을 담기 위한 객체선언
+    var originalValues = {}; //
+    
+    //기존에 있는 이미지를 담기 위한 배열
+   var originalImageUrls  = []; //배열
+
+    // formData 전역 변수로 선언
+    var formData = new FormData();
+
+    //수정 버튼 클릭 이벤트
+    $(document).ready(
+        function () {
+            $('.editProduct').click(
+                function () {
+
+                    var editButten = $(this);
+                    console.log("editButton" + editButten);
+
+                    var productId = parseInt(editButten.siblings()
+                        .find('.product_id').text());
+
+
+                    //원래의 기존 값을 배열에 저장하기 위한 코드 =======
+                    // 해당 컨테이너 찾기	
+                    var productContainer = $(this).closest(
+                        '#productContainer');
+
+                    // 기존 값 저장
+                    originalValues['count'] = productContainer.find(
+                        '.product_count').text();
+                    originalValues['type'] = productContainer.find(
+                        '.product_type').text();
+                    originalValues['pernum'] = productContainer.find(
+                        '.product_pernum').text();
+                    originalValues['amount'] = productContainer.find(
+                        '.product_amount').text();
+
+                    originalValues['checkin'] = productContainer.find(
+                        '.checkin').text();
+                    originalValues['checkout'] = productContainer.find(
+                        '.checkout').text();
+
+                     
+/*                     
+                    // 기존 이미지 URL들 저장
+            // 기존 이미지 URL들 저장
+productContainer.find('.imgContainer').each(function() {
+  var originalImgUrl = $(this).find('.showImgs').attr('src');
+  originalImageUrls.push(originalImgUrl);
+});
+
+console.log("삭제된 객실 이미지 담는다" + originalImageUrls); */
+
+
+//기존 이미지 URL들 저장 + productId와 함께 저장
+productContainer.find('.imgContainer').each(function() {
+	  var imageInfo = {
+	    imageUrl: $(this).find('.showImgs').attr('src'),
+	    productId: productId // 해당 이미지의 상품 ID를 저장
+	  };
+	  originalImageUrls.push(imageInfo);
+	});
+
+	console.log("이미지 정보 배열:", originalImageUrls);
+
+
+
+
+                    //객실 수정에 대한 함수
+                    updateProductContainer(editButten);
+
+                });
+
+        });
+
+    /* =====================  수정버튼 기능 구현 ===================== */
+
+    // 삭제 버튼 클릭 이벤트 처리
+    $(document).ready(
+        function () {
+            $('.deleteProduct').click(
+                function () {
+                    var deleteButton = $(this);
+
+                    var productId = parseInt(deleteButton.siblings()
+                        .find('.product_id').text()); //해당 id값으로 가져옴
+
+                    console.log(productId);
+                    console.log(typeof productId); // number
+
+                    $.ajax({
+                        url: '/product/deleteProduct',
+                        method: 'POST',
+                        dataType: 'json',
+                        data: {
+                            "productId": productId,
+                        },
+                        success: function (response) {
+                            // 삭제 성공 시 동작
+                            deleteButton.closest('.box').remove(); // 저장한 변수 사용
+                            console.log('AJAX 요청 성공');
+                            console.log(response);
+                        },
+                        error: function (xhr, status, error) {
+                            console.log(error);
+                        }
+                    });
+
+                });
+        });
+
+    //main사진만 보이도록 설정(기존 코드) 추후 사용 예정
+    /* 
+     var imageContainer = document.createElement('div');
+     if (product.productImgs.length > 0) {
+     var image = document.createElement('img');
+     image.src = product.productImgs[0].img_url;
+
+     image.alt = 'Product Image';
+     image.width = 200;
+     image.height = 200;
+     imageContainer.appendChild(image);
+     }
+     */
+
+    //============   바로 아래 목록에 상품 등록 하기 위한 영역   =============
+    function createProductElement(product) {
+        var newProduct = document.createElement('div');
+        newProduct.classList.add('box');
+
+        var productContainer = document.createElement('div');
+        productContainer.classList.add('boxCintainer');
+
+        var itemExer = document.createElement('div');
+        itemExer.classList.add('itemexer');
+
+        var slideshowContainer = document.createElement('div');
+        slideshowContainer.classList.add('slideshow-container');
+
+        if (!product.productImgs || product.productImgs.length === 0) {
+            var noImageMessage = document.createElement('p');
+            noImageMessage.innerHTML = 'No images available';
+            slideshowContainer.appendChild(noImageMessage);
+        } else {
+            for (var i = 0; i < product.productImgs.length; i++) {
+                var imgContainer = document.createElement('div');
+                imgContainer.classList.add('imgContainer');
+
+                var slide = document.createElement('div');
+                slide.classList.add('slide');
+
+                var image = document.createElement('img');
+                image.src = product.productImgs[i].img_url;
+                image.alt = 'Product Image';
+                image.width = '100%';
+                image.height = '100%';
+                image.classList.add('showImgs');
+
+                slide.appendChild(image);
+                imgContainer.appendChild(slide);
+
+                var prevButton = document.createElement('div');
+                prevButton.classList.add('prev');
+                prevButton.innerHTML = '&lt;';
+
+                var nextButton = document.createElement('div');
+                nextButton.classList.add('next');
+                nextButton.innerHTML = '&gt;';
+
+                imgContainer.appendChild(prevButton);
+                imgContainer.appendChild(nextButton);
+
+                slideshowContainer.appendChild(imgContainer);
+            }
+        }
+
+        itemExer.appendChild(slideshowContainer);
+
+        var imgListsContainer = document.createElement('div');
+        imgListsContainer.classList.add('imgLists');
+
+        var imageList = document.createElement('ul');
+        imageList.classList.add('image-list');
+
+        if (product.productImgs && product.productImgs.length > 0) {
+        	  for (var i = 0; i < product.productImgs.length; i++) {
+        	    var imgListItem = document.createElement('li');
+        	    var imgDiv = document.createElement('div');
+        	    imgDiv.classList.add('img_list_position');
+        	    var img = document.createElement('img');
+        	    img.src = product.productImgs[i].img_url;
+        	    img.alt = 'Product Image';
+        	    img.classList.add('list_img');
+
+        	    var deleteButton = document.createElement('button');
+        	    deleteButton.classList.add('imgLists_deleteButton');
+        	    deleteButton.innerHTML = 'X';
+
+        	    var deleteButtonPosition = document.createElement('div');
+        	    deleteButtonPosition.classList.add('imgLists_deleteButton_position');
+        	    deleteButtonPosition.appendChild(deleteButton);
+
+        	    imgDiv.appendChild(img);
+        	    imgDiv.appendChild(deleteButtonPosition);
+        	    imgListItem.appendChild(imgDiv);
+        	    imageList.appendChild(imgListItem);
+        	  }
+        	}
+
+        imgListsContainer.appendChild(imageList);
+
+        var productContentsContainer = document.createElement('div');
+        productContentsContainer.classList.add('Product_contents');
+
+        var productNumber = document.createElement('p');
+        productNumber.innerHTML = '객실 번호: <span>' + product.product_id
+            + '</span>';
+
+        var productCount = document.createElement('p');
+        productCount.innerHTML = '객실 수: <span>' + product.product_count
+            + '</span>';
+
+        var productType = document.createElement('p');
+        productType.innerHTML = '객실 형태: <span>' + product.product_type
+            + '</span>';
+
+        var productPerNum = document.createElement('p');
+        productPerNum.innerHTML = '최대 인원수: <span>' + product.product_pernum
+            + '</span>';
+
+        var productAmount = document.createElement('p');
+        productAmount.innerHTML = '금액: <span>' + product.product_amount
+            + '</span>';
+
+        var checkIn = document.createElement('p');
+        checkIn.innerHTML = '체크인: <span>' + product.checkin + '</span>';
+
+        var checkOut = document.createElement('p');
+        checkOut.innerHTML = '체크아웃: <span>' + product.checkout + '</span>';
+
+
+        var addEditImgButton = document.createElement('button');
+        addEditImgButton.classList.add('addEditImg');
+        addEditImgButton.innerHTML = '이미지 추가';
+
+        var editButton = document.createElement('button');
+        editButton.classList.add('editProduct');
+        editButton.innerHTML = '객실수정';
+
+        var deleteButton = document.createElement('button');
+        deleteButton.classList.add('deleteProduct');
+        deleteButton.innerHTML = '객실삭제';
+
+        var editOkProduct = document.createElement('button');
+        editOkProduct.classList.add('editOkProduct');
+        editOkProduct.innerHTML = '수정완료';
+
+        var cancelProduct = document.createElement('button');
+        cancelProduct.classList.add('cancelProduct');
+        cancelProduct.innerHTML = '수정취소';
+
+        var resetProduct = document.createElement('button');
+        resetProduct.classList.add('resetProduct');
+        resetProduct.innerHTML = '초기화';
+
+        productContentsContainer.appendChild(productNumber);
+        productContentsContainer.appendChild(productCount);
+        productContentsContainer.appendChild(productType);
+        productContentsContainer.appendChild(productPerNum);
+        productContentsContainer.appendChild(productAmount);
+        productContentsContainer.appendChild(checkIn);
+        productContentsContainer.appendChild(checkOut);
+        productContentsContainer.appendChild(editButton);
+        productContentsContainer.appendChild(deleteButton);
+        productContentsContainer.appendChild(addEditImgButton);
+        productContentsContainer.appendChild(editOkProduct);
+        productContentsContainer.appendChild(cancelProduct);
+        productContentsContainer.appendChild(resetProduct);
+
+        productContainer.appendChild(itemExer);
+        productContainer.appendChild(imgListsContainer);
+        productContainer.appendChild(productContentsContainer);
+
+        newProduct.appendChild(productContainer);
+
+        $('.editProduct, .deleteProduct').show(); //수정, 삭제 보여줌
+        $(
+            '.editOkProduct, .cancelProduct, .resetProduct , .imgLists_deleteButton')
+            .hide();
+
+        return newProduct;
+    }
+
+    // productContainer 객실 수정 함수
+    function updateProductContainer(editButton) {
+
+        //해당 컨테이너 찾고 
+        var productContainer = $(editButton).closest('#productContainer');
+
+        //해당 버튼을 숨기고 보여주기
+        productContainer.find('.editProduct').hide();
+
+        productContainer.find('.deleteProduct').hide();
+        productContainer
+            .find(
+                '.editOkProduct, .cancelProduct, .resetProduct, .imgLists_deleteButton')
+            .show();
+
+        //해당 input영역 보여주기
+        productContainer.find(
+            '.edit_count, .edit_type, .edit_pernum, .edit_amount ,.edit_checkin, .edit_checkout')
+            .show();
+
+        //기존영역 숨기기  
+        productContainer.find(
+            '.product_count, .product_type, .product_pernum ,.product_amount,  .checkin, .checkout')
+            .hide();
+
+
+        // 초기화 버튼 클릭 이벤트 처리 ===========================================
+
+        $('.resetProduct')
+            .click(
+                function () {
+                    // 초기화 버튼 클릭 시 처리할 로직 작성
+                    // 해당 컨테이너 찾기
+                    var productContainer = $(this).closest(
+                        '#productContainer');
+
+                    console.log(productContainer + " 초기화 영역 입니다.");
+
+                    //해당 영역만을 초기화 시킴
+                    productContainer.find('.edit_count').val(
+                        originalValues['count']);
+                    productContainer.find('.edit_type').val(
+                        originalValues['type']);
+                    productContainer.find('.edit_pernum').val(
+                        originalValues['pernum']);
+                    productContainer.find('.edit_amount').val(
+                        originalValues['amount']);
+                    productContainer.find('.edit_checkin').val(
+                        originalValues['checkin']);
+                    productContainer.find('.edit_checkout').val(
+                        originalValues['checkout']);
+
+                });
+
+        //수정 취소 버튼을 눌렀을 시 ==========================
+
+ // 수정취소 버튼 클릭 이벤트 핸들러
+$('.cancelProduct').click(function () {
+  var productContainer = $(this).closest('#productContainer');
+  var productId = parseInt(productContainer.find('.product_id').text());
+
+  // 이전에 저장한 기존 값들로 각 input 필드 초기화
+  productContainer.find('.edit_count').val(originalValues['count']);
+  productContainer.find('.edit_type').val(originalValues['type']);
+  productContainer.find('.edit_pernum').val(originalValues['pernum']);
+  productContainer.find('.edit_amount').val(originalValues['amount']);
+  productContainer.find('.edit_checkin').val(originalValues['checkin']);
+  productContainer.find('.edit_checkout').val(originalValues['checkout']);
+
+  // 기존 이미지 요소들 초기화
+  restoreImages(productContainer, productId);
+
+  console.log('이미지가 원상복구되었습니다.');
+  
+  productContainer.find('.editProduct').show();
+  productContainer.find('.deleteProduct').show();
+  productContainer
+    .find('.editOkProduct, .cancelProduct, .resetProduct , .imgLists_deleteButton')
+    .hide();
+
+  // 해당 input 영역 보여주기
+  productContainer.find('.product_count, .product_type, .product_pernum, .product_amount ,.checkin, .checkout')
+    .show();
+
+  // 기존의 input 영역 숨기기
+  productContainer.find('.edit_count, .edit_type, .edit_pernum, .edit_amount ,.edit_checkin, .edit_checkout')
+    .hide();
+  
+  
+  
+  
+  
+});
+        
+        
+        //수정 완료 버튼 클릭 시 이벤트를 처리 ===============
+        $('.editOkProduct')
+            .click(
+                function () {
+                    //입력값 받은 값들을 가져온다
+                    var productContainer = $(this).closest('#productContainer');
+                    //해당 영역의 pk를 가져온다
+                    var productContentsContainer = $(this).closest('.Product_contents');
+
+                    var productId = parseInt($(this).closest('.box')
+                        .find('.product_id').text());
+
+
+                    // 수정된 값을 가져옴
+                    var editedValues = {
+                        productId: productId,
+                        count: productContainer.find('.edit_count').val(),
+                        type: productContainer.find('.edit_type').val(),
+                        pernum: productContainer.find('.edit_pernum').val(),
+                        amount: productContainer.find('.edit_amount').val(),
+                        checkin: productContainer.find('.edit_checkin').val(),
+                        checkout: productContainer.find('.edit_checkout').val()
+                    };
+
+                    // 수정된 값을 FormData에 추가
+                    //var formData = new FormData(); // FormData 객체 초기화
+
+                    for (var key in editedValues) {
+                        formData.append(key, editedValues[key]);
+                    }
+
+                    // 수정된 이미지 파일들과 삭제된 이미지 파일들을 FormData 객체에 추가
+                    var editedImages = productContainer.find('.edited_images');
+                    var deletedImages = productContainer.find('.deleted_images');
+
+                    // 수정된 파일들 순회하며 파일 객체를 가져와 images[]라는 키로 FormData 객체에 추가
+                    for (var i = 0; i < editedImages.length; i++) {
+                        var editedImageFile = editedImages[i].files[0];
+                        formData.append('images[]', editedImageFile);
+                    }
+
+                    // 삭제된 이미지 파일들을 순회하면서 FormData 객체에 추가
+                    for (var i = 0; i < deletedImages.length; i++) {
+                        var deletedImageId = deletedImages[i].getAttribute('data-image-id');
+                        formData.append('deletedImages[]', deletedImageId);
+                    }
+
+                    // AJAX 요청을 통해 데이터를 서버에 전송하고 값을 변경
+                    $.ajax({
+                        url: '/product/updateProduct',
+                        type: 'POST',
+                        data: formData,
+                        enctype: 'multipart/form-data',
+                        processData: false,
+                        contentType: false,
+                        success: function (response) {
+                            // 서버 응답에 따른 처리
+                            console.log("요청성공!!");
+                            console.log(response);
+
+                            //수정 완료되면 다시 원래의 형태로 돌아간다
+                            var updatedProductContainer = productContainer.clone(); // 현재 상태를 복제
+                            productContainer.replaceWith(updatedProductContainer); // 리로드된 요소로 교체
+
+                        },
+                        error: function (xhr, status, error, product) {
+                            // 처리 중에 에러가 발생한 경우의 동작 
+                            console.log('AJAX 요청 실패');
+                            console.log(xhr);
+                            console.log(status);
+                            console.log(error);
+                            console.log(product);
+
+                        }
+                    });
+
+                });
+
+
+        // 이미지 개당 삭제버튼 클릭 시 이벤트 
+        $('.imgLists').on('click', '.imgLists_deleteButton', function () {
+            var imageURL = $(this).closest('li').find('.list_img').attr('src');
+
+            var deletedImageId = $(this).closest('div').find('span').text();
+            var deletedImageContainer = $(this).closest('li');
+
+            console.log(imageURL + "imageURL"); // 이미지 URL 출력
+            console.log(deletedImageId + "deletedImageId"); // 이미지 ID(PK) 출력
+
+            // 화면에서 삭제된 이미지를 제거
+            deletedImageContainer.hide(); // 숨기기
+
+            // 삭제된 이미지 파일을 FormData 객체에 추가
+            formData.append('deletedImages[]', deletedImageId);
+
+            console.log(deletedImageId); //해당 이미지의 pk를 가져온다. 
+
+        });
+
+        // 이미지 추가 버튼 클릭 시 파일 선택 인풋 클릭 이벤트 발생
+        //해당 영역의 사진 추가 버튼만 구현이 된다
+        $('.addImagesButton').click(
+            function () {
+                $(this).closest('.imageUploadContainer').find(
+                    '.imageUploadInput').click();
+            });
+
+        // 이미지 업로드 인풋 필드의 값이 변경되면 실행되는 이벤트 핸들러
+        $('.imageUploadInput').change(function () {
+            var files = this.files;
+            var imageList = $('.image-list');
+
+            // 선택된 파일들을 순회하며 이미지를 화면에 추가
+            for (var i = 0; i < files.length; i++) {
+                var file = files[i];
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    var imageURL = e.target.result;
+                    var listItem = $('<li></li>');
+                    var imageContainer = $('<div></div>').addClass('img_list_position');
+                    var image = $('<img>').attr('src', imageURL).addClass('list_img');
+                    var deleteButton = $('<button></button>').text('x').addClass('imgLists_deleteButton');
+                    var buttonContainer = $('<div></div>').addClass('imgLists_deleteButton_position');
+                    // 이미지를 리스트에 추가
+                    imageContainer.append(image);
+     				buttonContainer.append(deleteButton);
+    		  		listItem.append(imageContainer);
+    		  		listItem.append(buttonContainer);
+    		  		imageList.append(listItem);
+
+
+                    // 이미지 파일을 FormData 객체에 추가
+                    formData.append('images[]', file);
+
+
+                    // FormData 객체에 담긴 값들 출력 (확인용)
+                    for (var pair of formData.entries()) {
+                        console.log(pair[0] + ": ", pair[1]);
+                    }
+
+                };
+
+                reader.readAsDataURL(file);
+            }
+        });
+
+    }
+
+    //===== 이미지 슬라이드 ==========
+
+    $(document).ready(
+        function () {
+            const productContainers = $('.slideshow-container');
+
+            productContainers.each(function () {
+                const slideshowContainer = $(this);
+                const images = [];
+
+                $(this).find('.imgContainer').each(
+                    function () {
+                        const img = $(this).find('img');
+                        const imgUrl = img.attr('src');
+
+                        /* 	console.log(img + "img");
+                            console.log(images + "images[]");
+                            console.log(imgUrl + "imgUrl");
+
+                            console.log("==============="); */
+
+                        var roomId = parseInt($(this).closest('.box')
+                            .find('.product_id').text());
+
+                        /* 	console.log(roomId + "roomId"); */
+
+                        images.push({
+                            imgUrl: imgUrl,
+                            roomId: roomId
+                        });
+                    });
+
+                startSlideshow(slideshowContainer, images);
+
+            });
+        });
+
+    function startSlideshow(slideshowContainer, images) {
+        let currentSlideIndex = 0;
+        const slide = slideshowContainer.find('.slide');
+        const prevButton = slideshowContainer.find('.prev');
+        const nextButton = slideshowContainer.find('.next');
+
+        // 첫 번째 이미지로 초기화
+        slide.css('background-image',
+            `url(${images[currentSlideIndex].imgUrl})`);
+
+        // 이전 이미지로 이동하는 함수
+        function goToPrevSlide() {
+            currentSlideIndex--;
+            if (currentSlideIndex < 0) {
+                currentSlideIndex = images.length - 1;
+            }
+            updateSlide();
+            console.log("goToPrevSlide");
+        }
+
+        // 다음 이미지로 이동하는 함수
+        function goToNextSlide() {
+            currentSlideIndex++;
+            if (currentSlideIndex >= images.length) {
+                currentSlideIndex = 0;
+            }
+            updateSlide();
+            console.log("goToNextSlide");
+        }
+
+        // 슬라이드 업데이트 함수 (에니메이션 효과와 함께 슬라이드를 업데이트)
+        function updateSlide() {
+            const imgUrl = images[currentSlideIndex].imgUrl;
+            slide.find('img').attr('src', imgUrl);
+            console.log(imgUrl);
+        }
+
+        prevButton.on('click', goToPrevSlide);
+        nextButton.on('click', goToNextSlide);
+
+    }
+    
+   
+ 
+ 
+ // 이미지 원상복구
+function restoreImages(productContainer, productId) {
+  var imageListContainer = productContainer.find('.imgLists .image-list');
+  imageListContainer.empty();
+
+  for (var i = 0; i < originalImageUrls.length; i++) {
+    var imageInfo = originalImageUrls[i];
+    var roomNumber = imageInfo.productId;
+    var imageUrl = imageInfo.imageUrl || '';
+
+        console.log("==========");
+
+        console.log(originalImageUrls + "originalImageUrls");
+        console.log(imageInfo + "imageInfo");
+        console.log(roomNumber + "roomNumber");
+        console.log(imageUrl + "imageUrl");
+        console.log(productId + "productId");
+
+        console.log(typeof imageInfo); // imageInfo의 데이터 타입 출력
+        console.log(typeof roomNumber); // roomNumber의 데이터 타입 출력
+        console.log(typeof imageUrl); // imageUrl의 데이터 타입 출력
+        console.log(typeof productId); // imageUrl의 데이터 타입 출력
+
+        console.log(i + " i i ");
+        console.log("==========");
+        
+
+        if (roomNumber === productId) {
+            var listItem = $('<li><div class="img_list_position"><img src="' + imageUrl + '" alt="Product Image" class="list_img"></div><div class="imgLists_deleteButton_position"><button class="imgLists_deleteButton">x</button></div></li>');
+            imageListContainer.append(listItem);
+            originalImageUrls.splice(i, 1);
+            i--; // 인덱스 감소
+            continue; // 다음 반복으로 건너뜁니다.
+          }
+        }
+      }
+    
+    
 </script>

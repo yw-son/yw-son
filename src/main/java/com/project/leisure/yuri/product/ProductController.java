@@ -124,4 +124,36 @@ public class ProductController {
 		return ResponseEntity.ok(response);
 	}
 
+	// ====! 예외처리 필수 if-else 로 return된 값 1일 경우에만 다음 코드가 실행되도록 처리 !=========
+	// 수정된 상품의 값, 이미지를 받아와서 적용
+	@PostMapping("/updateProduct")
+	public ResponseEntity<Integer> uploadFiles(@RequestParam("productId") Long product_id,
+			@RequestParam("images[]") MultipartFile[] editedImages,
+			@RequestParam("deletedImages[]") List<Long> deletedImageIds, @RequestParam("count") Integer count,
+			@RequestParam("type") String type, @RequestParam("pernum") Integer pernum,
+			@RequestParam("amount") Integer amount, @RequestParam("checkin") LocalTime checkin,
+			@RequestParam("checkout") LocalTime checkout) {
+
+		// 상품 조회 해당하는 상픔의 pk를 가져와서 조회한다.
+		Product product = this.productService.getProduct(product_id);
+		if (product == null) {
+			throw new DataNotFoundException("상품을 찾을 수 없습니다.");
+		}
+
+		// 개별 이미지 삭제 (해당 이미지의 pk를 가져와서 삭제한다)
+		int pdEditImgDelete = this.productService.pdEditImgDelete(deletedImageIds);
+
+		// 들어온 이미지 추가 for 문으로 여려개의 이미지를 상품PK와 연결해서 저장
+		for (MultipartFile product_photos : editedImages) {
+			this.productService.updateImg(product_photos, product_id);
+		}
+
+		// 이제 값을 받은 부분들을 다시 업데이트 해야 한다.
+
+		int updateProduct = this.productService.updateProduct(product_id, type, count, amount, pernum, checkin,
+				checkout);
+
+		return ResponseEntity.ok(updateProduct);
+		// return null;
+	}
 }

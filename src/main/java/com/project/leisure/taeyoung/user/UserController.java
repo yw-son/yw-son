@@ -32,6 +32,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.thymeleaf.util.StringUtils;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -135,22 +136,20 @@ public class UserController {
 	@ResponseBody
 	public String sendTempPwd(@RequestParam String email, @RequestParam String username) throws Exception {
 
-		List<Users> users = userService.find(username, email);
+	    List<Users> users = userService.find(username, email);
 
-		if (users != null && !users.isEmpty()) {
-			String code = emailService.sendSimpleMessage(email);
+	    if (users != null && users.size() == 1 && users.get(0).getUsername().equals(username) && users.get(0).getEmail().equals(email)) {
+	        String code = emailService.sendTempMessage(email);
 
-			// 임시 비밀번호로 패스워드 변경
-			Users user = users.get(0);
-			user.setPassword(passwordEncoder.encode(code));
-			userService.save(user);
+	        // 임시 비밀번호로 패스워드 변경
+	        Users user = users.get(0);
+	        user.setPassword(passwordEncoder.encode(code));
+	        userService.save(user);
 
-			return code;
-		} else {
-			String result = null;
-			return result;
-		}
-
+	        return code;
+	    } else {
+	        throw new Exception("회원이 아니거나 아이디와 이메일이 맞지 않습니다."); // 오류를 나타내는 예외를 던집니다.
+	    }
 	}
 
 	/* 아이디 찾기 페이지 */
@@ -382,15 +381,18 @@ public class UserController {
 	}
 	
 	@PostMapping("/reg_p")
-	public ResponseEntity<String> partner_reg(@RequestParam("company_name") String company_name, @RequestParam("company_address") String company_address,
-	        @RequestParam("partner_name") String partner_name, @RequestParam("partner_tel") String partner_tel, 
-	        @RequestParam("partner_sectors") String partner_sectors, @RequestParam("partner_region") String partner_region, Principal principal) {
+	public ResponseEntity<String> partner_reg(String reg_username, @RequestParam("company_name") String company_name, @RequestParam("company_address") String company_address,
+	        @RequestParam("partner_name") String partner_name, @RequestParam("partner_tel") String partner_tel,
+	        @RequestParam("partner_sectors") String partner_sectors, @RequestParam("partner_region") String partner_region,
+	        @RequestParam("file") MultipartFile file, Principal principal) {
 	    String username = principal.getName();
 	    List<Users> userList = (List<Users>) userService.check(principal.getName());
-		Users users = userList.get(0);
-		//users.setPartner_reg(1);
+	    Users users = userList.get(0);
+	    //users.setPartner_reg(1);
 	    //this.userService.save(users);
-	    regService.create(username,company_name, company_address, partner_name, partner_tel, partner_sectors, partner_region);
+
+	    regService.create(username, company_name, company_address, partner_name, partner_tel, partner_sectors, partner_region, file);
+
 	    return ResponseEntity.ok("partner_reg");
 	}
 
