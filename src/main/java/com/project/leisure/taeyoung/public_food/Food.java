@@ -21,6 +21,7 @@ public class Food {
 	    private Long id;
 
 	    @Column(name = "shop_id")
+
 	    private String shopId; // 공공데이터 내 포함된 공공데이터 id 
 
 	    @Column(name = "shop_addr")

@@ -56,15 +56,15 @@ public class TourController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error saving food: " + e.getMessage());
         }
     }
+ 
     
-    @GetMapping("/daegu_public_food")
-    public String daegu_food(Model model,@RequestParam(value="page", defaultValue="0") int page) {
-        List<Food> foodList = foodService.getAllFoods(); // Assuming you have a FoodService instance called foodService
-
-        Page<Food> paging = this.foodService.getList(page);
-        model.addAttribute("paging", paging);
-        model.addAttribute("foodList", foodList);
-        return "kty/daegufood";
+    @GetMapping("/daegu_food")
+    public String food_test2(Model model, @RequestParam(value="page", defaultValue="0") int page,
+    		@RequestParam(value = "kw", defaultValue = "") String kw) {
+    	Page<Food> paging = this.foodService.getList2(page,kw);
+    	   model.addAttribute("paging", paging);
+           model.addAttribute("foodList", paging.getContent()); 
+           model.addAttribute("kw", kw);
+        return "kty/food_test2";
     }
-    
 }

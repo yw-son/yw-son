@@ -765,3 +765,172 @@ li.mypage_sidebar a.active {
 #check_email:hover {
 	cursor: pointer;
 }
+
+/* search food css  */
+
+        .left-area {
+            position: fixed;
+            top: 16.2%;
+            left: 400px;
+            width: 20%;
+            height: 90%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1;
+         	/*border:1px solid black;*/
+          
+        }
+
+        .search_food {
+        	width:80%;
+        	height:90%;
+        	margin-top:10%;
+        
+        	/*display: flex;
+            justify-content: center;
+            align-items: center;*/
+          padding:40px;
+        
+        }
+        #search_food_title{
+        font-size: 18px;
+        
+        }
+
+        @media (max-width: 768px) {
+            /* 작은 화면 크기에서의 스타일 변경 */
+            .left-area {
+                position: static;
+                width: 100%;
+                height: auto;
+                border: none;
+                display: block;
+            }
+            .search_food {
+                margin-top: 0;
+                
+            }
+        }
+        
+        
+        #search_food {
+	width: 70%;
+	border: none;
+	outline: none;
+	color: #636e72;
+	font-size: 13px;
+	height: 25px;
+	background: none;
+	margin-top:15px;
+	border: 1px solid grey;
+	border-radius: 7px;
+}
+#btn_search_food{
+	border:none;
+	border-radius: 5px;
+	border: 1px solid grey;
+	height: 25px;
+	width:80px;
+	margin-top:20px;
+}
+
+#btn_search_food:hover{
+	cursor:pointer;
+}
+.filter_search_food{
+	padding-top: 20px;
+	border-top: 1px solid rgb(216, 216, 216);
+	margin-top: 30px;
+	 font-size: 18px;
+}
+
+#food_type{
+	font-size:14px;
+	color: rgb(0, 0, 0);
+	
+	}
+
+.food_check_type{
+	font-size:14px;
+	 color: rgb(87, 87, 87)
+}
+#price_type{
+	font-size:14px;
+}
+.price_check_type{
+	font-size:14px;
+	 color: rgb(87, 87, 87)
+}
+
+#parking_type{
+	font-size:14px;
+}
+
+.parking_check_type{
+	font-size:14px;
+	 color: rgb(87, 87, 87)
+}
+
+#region_type{
+	font-size:14px;
+}
+
+#dong_type{
+	font-size:14px;
+}
+
+.right-area {
+    position: fixed;
+    width: 55.3%;
+    height: 80%;
+    right: 72px;
+    top: 150px; /* 기존에는 157px 였으나 100px 위로 이동시킵니다. */
+    border-bottom: 1px solid grey;
+    
+
+	/*border:1px solid black;*/
+}
+.food-entry {
+	  display: flex;
+    border: 1px solid grey;
+    padding: 10px;
+    margin-bottom: 10px;
+    margin: 10px 10px 10px 10px;
+    border-radius: 10px;
+}
+  .food-entry > p:first-child {
+        width: 60%;
+        padding: 10px;
+    }
+
+    .food-entry > p:last-child {
+        width: 40%;
+        padding: 10px;
+    }
+.food-entry:hover{
+	cursor:pointer;
+}
+
+.result_opening{
+	font-size : 14px;
+	color : #f05650;
+	font-weight: light; 
+}
+
+#search_filter_btn{
+	background-color: #77af9c;
+	color: rgb(244, 245, 244);
+	height: 40px;
+	/* 버튼 디자인 */
+	border: none;
+	display: inline-block;
+	border-radius: 15px;
+	font-weight: 600;
+	margin-left: 35px;
+	width: 200px;
+}
+
+#search_filter_btn:hover{
+	cursor:pointer;
+}

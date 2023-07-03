@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<script th:src="@{/js/kty_filter.js}"></script>
+</head>
+
+<body id="userinfo_modify">
+<html layout:decorate="~{jjj/header}">
+<div id="my_infomation_modify" layout:fragment="content"
+	class="container my-3">
+
+	<div class="left-area">
+		<div class="search_food">
+			<span id=search_food_title>검색</span><br>
+
+			<div class="row my-3">
+				<div class="col-6">
+					<div class="input-group">
+						<input type="text" id="search_food" class="form-control"
+							th:value="${kw}">
+						<button class="btn btn-outline-secondary" type="button"
+							id="btn_search_food">찾기</button>
+					</div>
+				</div>
+				<form th:action="@{/tour/daegu_food}" method="get" id="searchForm">
+					<input type="hidden" id="kw" name="kw" th:value="${kw}"> <input
+						type="hidden" id="page" name="page" th:value="${paging.number}">
+				</form>
+			</div>
+
+
+
+			<div class="filter_search_food">
+				<span id="filter_food_title">상세검색</span><br> <br> <span
+					id="region_type">구역 선택</span> <br> <select
+					id="region_dropdown">
+					<option value="중구">중구</option>
+					<option value="북구">북구</option>
+					<option value="서구">서구</option>
+					<option value="남구">남구</option>
+					<option value="동구">동구</option>
+					<option value="달서구">달서구</option>
+					<option value="수성구">수성구</option>
+					<option value="달성군">달성군</option>
+				</select><br> <br>
+				 <span id="food_type">음식 종류</span> <br> <input
+					type="checkbox" id="korean_food" value="한식"> <label
+					class="food_check_type" for="korean_food">한식</label> <input
+					type="checkbox" id="dessert" value="디저트"> <label
+					class="food_check_type" for="dessert">디저트</label> <input
+					type="checkbox" id="tea_coffee" value="차·커피"> <label
+					class="food_check_type" for="tea_coffee">차·커피</label> <input
+					type="checkbox" id="chinese_food" value="중식"> <label
+					class="food_check_type" for="chinese_food">중식</label><br> <input
+					type="checkbox" id="japanese_food" value="일식"> <label
+					class="food_check_type" for="japanese_food">일식</label> <input
+					type="checkbox" id="western_food" value="양식"> <label
+					class="food_check_type" for="western_food">양식</label> <input
+					type="checkbox" id="fusion_buffet" value="퓨전·뷔페"> <label
+					class="food_check_type" for="fusion_buffet">퓨전·뷔페</label> <input
+					type="checkbox" id="bar" value="술집"> <label
+					class="food_check_type" for="bar">술집</label><br> <input
+					type="checkbox" id="other" value="기타"> <label
+					class="food_check_type" for="other">기타</label> <br> 
+					<!--  
+				<span id="price_type">가격</span> <br> <input type="checkbox"
+					id="high_price" value="#" onclick="handleCheckbox(this)"> <label
+					class="price_check_type" for="price_food">높은 가격순</label> <input
+					type="checkbox" id="low_price" value="#"
+					onclick="handleCheckbox(this)"> <label
+					class="price_check_type" for="price_food">낮은 가격순</label> <br>
+ -->
+				<br> <span id="parking_type">주차공간</span> <br> <input
+					type="checkbox" id="high_price" value="#"> <label
+					class="parking_check_type" for="price_food">주차 가능</label>
+
+			</div>
+			<br><br>
+				<button id="search_filter_btn" type="button">검색할래요</button>
+		</div>	
+	</div>
+	<div class="right-area" style="overflow-y: auto;">
+		<div th:each="food : ${paging.content}" class="food-entry">
+    <p>
+        <span style="font-size: 15px; color: #f05650;" id="result_parking" th:if="${food.shopParking == '없음'}">주차 가능</span><br>
+        <span th:text="${food.shopName}" style="font-size: 30px;"></span> <span style="margin-right: 1ch;"></span> 
+        <span th:text="${food.shopCategory}" style="font-size: 13px; color: grey;"></span> 
+        <span style="margin-right: 2ch;"></span> <br> 
+        <span th:text="${food.shopAddr}" class="shop-address"></span><br> 
+        <span class="shop-opening-text" th:text="${food.shopOpening}"></span> 
+        <span class="result_opening"></span><br><br> 
+        <span th:text="${#strings.replace(#strings.replace(#strings.replace(food.shopInfo, '&lt;br /&gt;', ' '), '&amp;', ' '), 'amp;', ' ')}"></span><br><br>
+        <br> Tel. <span th:text="${food.shopTel}"></span>
+    </p>
+    <p class="food_shop_photo">
+    </p>
+</div>
+		<div th:if="${!paging.isEmpty()}"
+			style="display: flex; justify-content: center;">
+			<ul class="pagination" style="flex-direction: row;">
+				<li class="page-item" style="white-space: nowrap;"><a
+					class="page-link" th:if="${paging.number > 0}"
+					th:href="@{|?page=${paging.number-1}&kw=${kw}|}"> <span>이전</span>
+				</a> <th:block
+						th:each="page: ${#numbers.sequence(paging.number-5, paging.number+5)}">
+						<a th:if="${page >= 0 and page < paging.totalPages}"
+							th:classappend="${page == paging.number} ? 'page-link active' : 'page-link'"
+							th:href="@{|?page=${page}&kw=${kw}|}"> <span
+							th:text="${page}"
+							th:style="${page == paging.number ? 'color: #00BFFF;' : ''}"></span>
+						</a>
+					</th:block> <a class="page-link"
+					th:if="${paging.number < paging.totalPages - 1}"
+					th:href="@{|?page=${paging.number+1}&kw=${kw}|}"> <span>다음</span>
+				</a></li>
+			</ul>
+		</div>
+	</div>
+</div>
+</body>
+  
+</html>
