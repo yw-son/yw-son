@@ -33,10 +33,15 @@ public class RegPartner {
 	private String reg_username; // 신청자 아이디
 
 	private String origFilename; // 원본 파일명
-	
+
 	private String filename; // 서버에 저장된 파일 명
-	
+
 	private String filePath; // 파일 저장 경로
-	
+
+	/*
+	 * <<<<<<< HEAD private String username; // 신청자 아이디 ======= >>>>>>>
+	 * c4af8293c2a2ce87953d58587e62d42e99a9048f
+	 * 
+	 */
 
 }
