@@ -63,14 +63,7 @@
 					class="food_check_type" for="bar">술집</label><br> <input
 					type="checkbox" id="other" value="기타"> <label
 					class="food_check_type" for="other">기타</label> <br> 
-					<!--  
-				<span id="price_type">가격</span> <br> <input type="checkbox"
-					id="high_price" value="#" onclick="handleCheckbox(this)"> <label
-					class="price_check_type" for="price_food">높은 가격순</label> <input
-					type="checkbox" id="low_price" value="#"
-					onclick="handleCheckbox(this)"> <label
-					class="price_check_type" for="price_food">낮은 가격순</label> <br>
- -->
+
 				<br> <span id="parking_type">주차공간</span> <br> <input
 					type="checkbox" id="high_price" value="#"> <label
 					class="parking_check_type" for="price_food">주차 가능</label>
@@ -90,7 +83,10 @@
         <span th:text="${food.shopAddr}" class="shop-address"></span><br> 
         <span class="shop-opening-text" th:text="${food.shopOpening}"></span> 
         <span class="result_opening"></span><br><br> 
+        
         <span th:text="${#strings.replace(#strings.replace(#strings.replace(food.shopInfo, '&lt;br /&gt;', ' '), '&amp;', ' '), 'amp;', ' ')}"></span><br><br>
+        <span id="food_menu_title">- 메뉴 - </span> <br>
+        <span th:text="${food.shopMenu}"></span><br>
         <br> Tel. <span th:text="${food.shopTel}"></span>
     </p>
     <p class="food_shop_photo">

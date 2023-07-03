@@ -934,3 +934,9 @@ li.mypage_sidebar a.active {
 #search_filter_btn:hover{
 	cursor:pointer;
 }
+
+
+#food_menu_title{
+	font-size:18px;
+	color: black;
+}
