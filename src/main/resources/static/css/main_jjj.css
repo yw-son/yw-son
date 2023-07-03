@@ -1,0 +1,720 @@
+/* 변수를 할당해서 전체 색상 변경 가능(전체 수정 필요할때 용이) */
+:root {
+    --text-color: #f0f4f5;
+    --background-color: #263343;
+    --accent-color: #d49466;
+}
+
+.jj_main {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+.jj_navbar a {
+    text-decoration: none;
+    color: var(--text-color);
+}
+
+.jj_navbar {
+    /* 네비 상단 고정  */
+    position: sticky;
+    top: 0px;
+    display: flex;
+    /* 한 줄로 나란히 하기 */
+    justify-content: space-between;
+    /* 같은 중심축으로 해서 중간에 스페이스 넣기*/
+    align-items: center;
+    /* 수직적으로 중간으로 배치 */
+    background-color: var(--background-color);
+    padding: 8px 12px;
+}
+
+.jj_navbar_logo {
+    font-size: 24px;
+    color: var(--text-color);
+}
+
+.jj_navbar_logo i {
+    color: var(--accent-color);
+}
+
+.jj_navbar_menu {
+    display: flex;
+    list-style: none;
+    /* 리스트 점 없애기! */
+    padding-left: 0;
+    /* 메뉴 왼쪽 패딩 없애기 */
+}
+
+.jj_navbar_menu a {
+    padding: 8px 12px;
+    /* 클릭 범위 넓히기 위해서 */
+}
+
+.jj_navbar_menu a:hover {
+    background-color: var(--accent-color);
+    border-radius: 4px;
+}
+
+.jj_navbar_toogleBtn {
+    /* 화면이 작아졌을 때만 햄버거 버튼 나오게함 */
+    display: none;
+    /* 햄버거 아이콘이 현재 플렉스 박스 안 왼쪽 밑에 배치되어 있음, 오른쪽 위에 배치하고 싶을 경우 플렉스 박스에서 나와서(흐름에서 나와서) 재포지션  */
+    position: absolute;
+    right: 32px;
+    font-size: 24;
+    color: var(--accent-color);
+}
+
+/* 검색창 */
+
+.jj_search {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.jj_search {
+    position: relative;
+}
+
+.jj_search_input {
+    outline: none;
+    border: none;
+    border-radius: 100px;
+    padding: 5px 10px;
+    width: 40px;
+    transition: width 0.3s ease;
+}
+
+.jj_search_input::placeholder {
+    color: #f0f4f5;
+}
+
+.jj_search.active .jj_search_input {
+    width: 400px;
+}
+
+.jj_search_btn {
+    width: 65px;
+    padding: 7px;
+    margin: -1px;
+    cursor: pointer;
+    border-radius: 100px;
+    border: none;
+    background: #263343;
+    display: inline;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.56);
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: transform 0.3s ease;
+}
+
+.jj_search.active .jj_search_btn {
+    transform: translateX(400px);
+}
+
+.fa-solid {
+    color: #f0f4f5;
+}
+
+/* 배너 슬라이드  */
+
+.jj_slide_container {
+    width: 1200px;
+    height: 600px;
+    display: flex;
+    margin: auto;
+    transition: transform 300ms ease-in;
+    overflow: hidden;
+
+}
+
+.jj_slide-box {
+    flex: 0 0 1200px;
+    /* display: flex; */
+    /* justify-content: center; */
+    /* float: left; */
+
+}
+
+.jj_slide-box img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+}
+
+.jj_btns {
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+    z-index: 5;
+    top: -70px;
+    position: relative;
+}
+
+.jj_dot_btn {
+    background: gray;
+    border: none;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    transform: translate(0, -55%);
+    margin: 05px;
+}
+
+.jj_dot_btn:focus {
+    background: rgb(224, 224, 224);
+}
+
+/* 숙소 카테고리 아이콘 */
+.jj_icon {
+    text-align: center;
+
+}
+
+.jj_icon span {
+    color: var(--background-color);
+    opacity: 0.9;
+}
+
+.jj_icon span:hover {
+    color: var(--background-color);
+    opacity: 0.5;
+}
+
+.jj_icon a {
+    display: inline-block;
+    justify-content: space-around;
+    height: 107px;
+    font-size: 20px;
+    color: rgba(0, 0, 0, 0.56);
+    text-align: center;
+    padding: 0;
+    margin: 0 50px 30px;
+    list-style: none;
+    text-decoration: none;
+
+}
+
+.jj_icon a:hover {
+    color: rgba(0, 0, 0, 0.56);
+    opacity: 0.3;
+}
+
+
+
+/* 추천 숙소 */
+.jj_recommend {
+    margin-top: 100px;
+}
+
+.jj_recommend h2 {
+    width: 1000px;
+    height: 24px;
+    font-size: 18px;
+    /* margin: 0 50px 30px; */
+    line-height: 1;
+    color: rgba(0, 0, 0, 0.56);
+    /* margin: 30px 30px 13px 30px; */
+    text-align: left;
+    display: block;
+    margin: auto;
+    margin-top: 50px;
+
+}
+
+.jj_recommend_container all {
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    list-style: none;
+}
+
+.jj_recommend_container {
+    position: relative;
+    width: 960px;
+    margin: 0px auto;
+    height: 300px;
+    overflow: hidden;
+    margin-top: 20px;
+    /* 이미지 네비 뒤로 */
+    z-index: -1;
+}
+
+.jj_recommend_slide {
+    position: absolute;
+    width: 2610px;
+    margin-top: 0px;
+}
+
+.jj_recommend_slide li:not(:last-child) {
+    float: left;
+    margin-right: 30px;
+}
+
+.jj_recommend_slide li {
+    list-style: none;
+    max-width: 200px;
+    height: 300px;
+
+}
+
+.jj_recommend_slide li img {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    margin: auto;
+    overflow: hidden;
+    border-radius: 8px;
+    object-fit: cover;
+
+}
+
+.jj_controls {
+    margin-top: 10px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.jj_controls span {
+    background: #ebebeb;
+    opacity: 0.8;
+    color: black;
+    padding: 10px 20px;
+    cursor: pointer;
+
+}
+
+.jj_controls span:hover {
+    background: #818181;
+    opacity: 0.5;
+
+}
+
+/* 추천 여행 코스 */
+.jj_course {
+    margin-top: 100px;
+}
+
+.jj_course h2 {
+
+    font-size: 18px;
+    /* margin: 0 50px 30px; */
+    line-height: 1;
+    color: rgba(0, 0, 0, 0.56);
+    /* margin: 30px 30px 13px 30px; */
+    text-align: left;
+    display: block;
+    margin: auto;
+    margin-top: 50px;
+
+}
+
+.jj_course_container {
+    width: 1000px;
+    height: 200px;
+    margin: auto;
+    overflow: hidden;
+    margin-top: 20px;
+    border-radius: 8px;
+    cursor: pointer;
+
+}
+
+.jj_course_container {
+    flex: 0 0 1000px;
+
+}
+
+.jj_course_img_1 {
+    position: relative;
+    z-index: -1;
+}
+
+.jj_course_img_1 img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: relative;
+    top: -480px;
+}
+
+.jj_course h5 a {
+    font-size: 5px;
+    color: #dbdbdb;
+
+    margin-left: 1380px;
+
+}
+
+/* 추천 휴양지 */
+.jj_spot {
+    margin-top: 100px;
+}
+
+.jj_spot h2 {
+    width: 1000px;
+    height: 24px;
+    font-size: 18px;
+    line-height: 1;
+    color: rgba(0, 0, 0, 0.56);
+    text-align: left;
+    display: block;
+    margin-top: 80px;
+}
+
+.jj_spot_container all {
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    list-style: none;
+}
+
+.jj_spot_container {
+    position: relative;
+    width: 960px;
+    margin: 0 auto;
+    height: 200px;
+    overflow: hidden;
+}
+
+.jj_spot_slide {
+    position: relative;
+    left: 0;
+    top: 0;
+    width: 2610px;
+    margin: 20px 30px;
+}
+
+.jj_spot_slide li:not(:last-child) {
+    float: left;
+    margin-right: 30px;
+}
+
+.jj_spot_slide li {
+    list-style: none;
+}
+
+
+.jj_spot_slide img {
+    width: 150px;
+    height: 150px;
+    border-radius: 70%;
+    overflow: hidden;
+    position: relative;
+    z-index: -1;
+}
+
+.jj_spot_img_1 {
+    position: relative;
+
+}
+
+.jj_spot_text_1 {
+    position: absolute;
+    color: white;
+    top: 35%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.jj_spot_text_1:hover {
+    color: white;
+    opacity: 0.5;
+}
+
+.jj_spot_text_2 {
+    position: absolute;
+    color: white;
+    top: 40px;
+    right: 300px;
+    bottom: 90px;
+    left: 240px;
+
+}
+
+.jj_spot_text_2:hover {
+    color: white;
+    opacity: 0.5;
+}
+
+.jj_spot_text_3 {
+    position: absolute;
+    color: white;
+    top: 40px;
+    right: 300px;
+    bottom: 90px;
+    left: 415px;
+}
+
+.jj_spot_text_3:hover {
+    color: white;
+    opacity: 0.5;
+}
+
+.jj_spot_text_4 {
+    position: absolute;
+    color: white;
+    top: 40px;
+    right: 300px;
+    bottom: 90px;
+    left: 595px;
+}
+
+.jj_spot_text_4:hover {
+    color: white;
+    opacity: 0.5;
+}
+
+.jj_spot_text_5 {
+    position: absolute;
+    color: white;
+    top: 40px;
+    right: 300px;
+    bottom: 90px;
+    left: 780px;
+}
+
+.jj_spot_text_5:hover {
+    color: white;
+    opacity: 0.5;
+}
+
+/* 반응형 */
+@media screen and (max-width: 768px) {
+
+    /* 창이 768보다 작아지면 메뉴와 아이템을 밑으로 내림 */
+    .jj_navbar {
+        flex-direction: column;
+        align-items: flex-start;
+        /* 수평 왼쪽으로*/
+        padding: 8px 24px;
+    }
+
+    /* 메뉴도 한줄에서 밑으로 내림 */
+    .jj_navbar_menu {
+        /* 햄버거 눌렀을 때만 메뉴 나오게 */
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        /* 메뉴만 센터로*/
+        width: 100%;
+        /* 센터로 안감, 메뉴 너비를 최대한으로 바꿔줘야함 */
+    }
+
+    .jj_navbar_menu li {
+        /* 메뉴 하이라이트 전체 너비로 */
+        width: 100%;
+        /* 너비가 넓어졌을 때(width :100%) 자동으로 텍스트는 자동으로 왼쪽 정렬됨 */
+        text-align: center;
+    }
+
+    .jj_navbar_toogleBtn {
+        /* 화면이 작아졌을 때만 햄버거 버튼 나오게함 */
+        display: block;
+    }
+
+    /* 768보다 작으면 메뉴 안보여줌 but 햄버거가 클릭됐을 때 메뉴 보여줌*/
+    .jj_navbar_menu.active {
+        display: flex;
+    }
+
+
+
+    .jj_slide-box img {
+        width: 100vw;
+        height: 300px;
+        object-fit: cover;
+        text-align: center;
+    }
+
+    /* 숙소 카테고리 아이콘(수정) */
+    .jj_icon {
+        text-align: center;
+
+    }
+
+    .jj_icon a {
+        display: inline-block;
+        justify-content: space-around;
+        height: 107px;
+        font-size: 16px;
+        color: rgba(0, 0, 0, 0.56);
+        text-align: center;
+        padding: 0;
+        margin: 0 20px 10px;
+        list-style: none;
+        text-decoration: none;
+
+    }
+
+    /* 추천 숙소 */
+    .jj_recommend_slide li img {
+        width: 150px;
+
+    }
+
+    .jj_recommend h2 {
+        width: 443px;
+        height: 14px;
+        font-size: 18px;
+        /* margin: 0 50px 30px; */
+        line-height: 1;
+        color: rgba(0, 0, 0, 0.56);
+        /* margin: 30px 30px 13px 30px; */
+        text-align: left;
+        display: block;
+        margin: auto;
+
+    }
+
+
+
+
+}
+
+@media screen and (max-width: 965px) {
+
+    /* 검색창 */
+    .jj_search.active .jj_search_input {
+        width: 150px;
+    }
+
+    .jj_search.active .jj_search_btn {
+        transform: translateX(150px);
+    }
+
+}
+
+@media (min-width:1024px) {
+    footer all {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        box-sizing: border-box;
+        outline: 0;
+
+    }
+
+    footer {
+        display: block;
+        overflow: hidden;
+        clear: both;
+        position: relative;
+        margin-top: 120px;
+        padding: 63px 31px 40px 31px !important;
+        border-top: 1px solid rgba(0, 0, 0, 0.08);
+        background: rgb(245, 245, 245);
+        font-size: 13px;
+        line-height: 20px;
+        color: rgba(0, 0, 0, 0.38);
+    }
+
+    footer .jj_align {
+        width: 1024px;
+        margin: 0 auto;
+
+    }
+
+    footer .jj_link {
+        overflow: hidden;
+    }
+
+    footer ul {
+        list-style: none;
+        display: block;
+        margin-block-start: 1em;
+        margin-block-end: 1em;
+        margin-inline-start: 0px;
+        margin-inline-end: 0px;
+        padding-inline-start: 0px;
+
+    }
+
+    footer ul li {
+        list-style: none;
+        line-height: 22px;
+        display: inline-block;
+    }
+
+    footer .jj_link li {
+        float: left;
+        margin-bottom: 5px;
+        line-height: normal;
+
+    }
+
+    footer .jj_link:nth-child(5) {
+        clear: none;
+    }
+
+    footer .jj_link li span {
+        display: inline-block;
+        position: relative;
+        top: -2px;
+        width: 24px;
+        font-size: 11px;
+        text-align: center;
+    }
+
+    footer p {
+        clear: both;
+        padding: 37px 0 24px 0;
+        outline: 0;
+    }
+
+    footer p {
+        list-style: none;
+        display: block;
+        margin-block-start: 1em;
+        margin-block-end: 1em;
+        margin-inline-start: 0px;
+        margin-inline-end: 0px;
+    }
+
+    footer p b {
+        display: inline-block;
+        margin-right: 10px;
+        font-weight: bold;
+    }
+
+    footer p span {
+        display: inline-block;
+
+    }
+
+    footer address {
+        display: block;
+        line-height: 22px;
+        display: inline-block;
+        font-style: normal;
+        font-weight: normal;
+        outline: 0;
+    }
+
+    footer address span {
+        display: block;
+        padding-bottom: 7px;
+    }
+
+    footer address .order {
+        display: block;
+        padding: 6px 0;
+    }
+}

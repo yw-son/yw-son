@@ -2,7 +2,6 @@ package com.project.leisure.taeyoung.user;
 
 import java.time.LocalDateTime;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -13,6 +12,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 // 회원DB 엔티티
 @Getter
 @Setter
@@ -24,7 +24,6 @@ public class Users {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id; // 회원 번호(PK)
 
-	@Column(unique = true)
 	private String username; // 회원 ID
 
 	private String password; // 회원 PWD
@@ -51,6 +50,8 @@ public class Users {
 	private String addr3; // 상세 주소
 
 	private int islock = 0; // 계정 잠금 여부(1: 계정 잠김, 0: 계정 안잠김)
+	
+	private LocalDateTime lockTime = LocalDateTime.now(); //계정 잠금 시간
 
 	public Users update(String username) {
 		this.username = username;
@@ -60,9 +61,9 @@ public class Users {
 
 	// 소셜 로그인 시 등록되는 정보
 	@Builder
-	public Users(String nickname, String email, UserRole role, String sns) {
+	public Users(String nickname, UserRole role, String sns) {
 		this.nickname = nickname;
-		this.email = email;
+		//this.email = email;
 		this.sns = sns;
 		this.role = role;
 	}
@@ -79,4 +80,32 @@ public class Users {
 		return this.role.getValue();
 	}
 
+	/////////////////////////////////////////////////////// 효경이 수정
+
+	public UserRole getCurrentRole() {
+
+		if (this.role == UserRole.ADMIN) {
+			return UserRole.ADMIN;
+		} else if (this.role == UserRole.PARTNER)
+
+		{
+			return UserRole.PARTNER;
+		} else if (this.role == UserRole.USER) {
+			return UserRole.USER;
+		} else if (this.role == UserRole.SNS_USER) {
+			return UserRole.SNS_USER;
+		}
+
+		// 기본값으로 USER를 반환하거나 예외 처리 등을 수행할 수 있습니다.
+		return UserRole.USER;
+
+	}
+
+
+	public LocalDateTime getLockTime() {
+	    return this.lockTime;
+	}
+
+	
+	
 }

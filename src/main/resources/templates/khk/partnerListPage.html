@@ -1,0 +1,197 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<style>
+body {
+	font-family: Arial, sans-serif;
+}
+
+h1 {
+	text-align: center;
+}
+
+.container {
+	margin: 20px auto;
+	width: 80%;
+}
+
+table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+th, td {
+	padding: 8px;
+	text-align: left;
+	border-bottom: 1px solid #ddd;
+}
+
+th {
+	background-color: #f2f2f2;
+}
+
+tr:nth-child(even) {
+	background-color: #f9f9f9;
+}
+
+form {
+	display: inline-block;
+}
+
+input[type="submit"] {
+	background-color: #4CAF50;
+	color: white;
+	border: none;
+	padding: 5px 10px;
+	cursor: pointer;
+}
+
+input[type="submit"]:hover {
+	background-color: #45a049;
+}
+
+/* 추가된 CSS */
+span.role-USER {
+	color: black;
+}
+
+span.role-PARTNER {
+	color: blue;
+}
+
+span.role-ADMIN {
+	color: red;
+}
+
+/* 추가된 CSS */
+.role-USER {
+	color: black;
+}
+
+.role-PARTNER {
+	color: blue;
+}
+
+.role-ADMIN {
+	color: red;
+}
+</style>
+
+
+<script th:inline="javascript">
+	var reloadPage = function() {
+		window.location.reload();
+	};
+	document.addEventListener("DOMContentLoaded", function() {
+		document.querySelectorAll("form").forEach(function(form) {
+			form.addEventListener("submit", reloadPage);
+		});
+	});
+</script>
+
+<script>
+function toggleAccount(event, button) {
+    event.preventDefault(); // 기본 동작(페이지 새로고침) 방지
+
+    var form = button.closest("form");
+    var accountStatus = button.closest("tr").querySelector(".account-status"); // 계정 상태 요소
+
+    // 버튼 비활성화
+    button.disabled = true;
+
+    // 서버로 Ajax 요청 보내기
+    var xhr = new XMLHttpRequest();
+    xhr.open(form.method, form.action, true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            /* // 요청이 성공한 경우 계정 상태 변경
+            accountStatus.textContent = "계정 정지됨";
+            accountStatus.classList.add("account-status-disabled"); */
+
+            // 버튼 비활성화 및 텍스트 변경
+              button.style.backgroundColor = "#ccc";
+            button.disabled = true;
+            button.value = "계정 정지됨";
+            button.classList.add("account-status-disabled");
+        } else {
+            // 요청이 실패한 경우 버튼 활성화
+            button.disabled = false;
+        }
+    };
+    xhr.onerror = function() {
+        // 요청이 실패한 경우 버튼 활성화
+        button.disabled = false;
+    };
+    xhr.send(new URLSearchParams(new FormData(form)));
+}
+</script>
+
+</head>
+<body>
+	<h1>회원 리스트</h1>
+	<div class="container">
+		<div>
+			<table>
+				<thead>
+					<tr>
+						<th>회원 번호</th>
+						<th>아이디</th>
+						<th>이메일</th>
+						<th>회원등급</th>
+						<th>계정 상태</th>
+						<th>계정 생성일</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="user : ${users}">
+						<td th:text="${user.id}"></td>
+						<td th:text="${user.username}"></td>
+						<td th:text="${user.email}"></td>
+						<td>
+							<p>
+								<span th:text="${user.role}" th:class="'role-' + ${user.role}"></span>
+							</p>
+
+
+							<form th:action="@{'/admin/' + ${user.id} + '/adminRole'}"
+								method="post">
+								<select name="role" onchange="this.nextElementSibling.click()">
+									<option value="USER" th:selected="${user.role == 'USER'}">일반회원</option>
+									<option value="PARTNER" th:selected="${user.role == 'PARTNER'}">파트너</option>
+									<option value="ADMIN" th:selected="${user.role == 'ADMIN'}">관리자</option>
+								</select> <input type="hidden" name="id" th:value="${user.id}" />
+								<button type="submit">변경</button>
+							</form>
+						</td>
+						   <td>
+                     <form th:action="@{'/admin/toggle-account'}" method="post">
+                        <input type="hidden" name="username" th:value="${user.username}" />
+                        <input type="submit" value="계정 정지"
+                           onclick="toggleAccount(event, this)" />
+                     </form>
+                  </td>
+						
+						
+						
+						
+						<!-- <td>
+							<form th:action="@{'/toggle-account'}" method="post">
+								<input type="hidden" name="username" th:value="${user.username}" />
+								<input type="hidden" name="currentStatus" th:value="${user.islock}" />
+								<input type="hidden" name="newStatus" th:value="${user.islock == 0 ? 1 : 0}" />
+								<input type="submit" th:value="${user.islock == 0 ? '활동 중' : '정지'}" />
+							</form>
+						</td> -->
+						<td
+							th:text="${#temporals.format(user.create_userTime,'yyyy-MM-dd')}"></td>
+					</tr>
+
+
+				</tbody>
+			</table>
+		</div>
+	</div>
+</body>
+</html>
